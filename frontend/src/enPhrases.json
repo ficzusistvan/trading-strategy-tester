@@ -1,0 +1,35 @@
+{
+  "common": { 
+    "hello_world": "Welcome to ESSolutions",
+    "list": "list",
+    "listv": "list",
+    "create": "create",
+    "edit": "edit",
+    "delete": "delete",
+    "save": "save",
+    "cancel": "cancel",
+    "loading": "loading",
+    "admin": "admin",
+    "error_saving": "error saving",
+    "ok": "ok",
+    "nr": "nr.",
+    "from": "from",
+    "remove": "remove",
+    "download": "download pdf",
+    "generate": "generate pdf"
+  },
+  "orderbooks": {
+    "orderbooks": "orderbooks"
+  },
+  "symbols": {
+    "symbols": "symbols",
+    "symbol": "symbol",
+    "currency": "currency",
+    "category_name": "category name",
+    "description": "description",
+    "bid": "bid",
+    "ask": "ask",
+    "high": "high",
+    "low": "low"
+  }
+}
