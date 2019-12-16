@@ -7,6 +7,7 @@ import moment from 'moment';
 import Chart from './Chart';
 import StrategiesComponent from './Strategies.component';
 import PeriodChooserComponent from './PeriodChooser.component';
+import StrategyResultsComponent from './StrategyResults.component';
 
 const DEFAULT_PERIOD = 5;
 const since = new Map();
@@ -28,6 +29,7 @@ class SymbolComponent extends Component {
       period: DEFAULT_PERIOD,
       strategy: null,
       data: [],
+      results: null,
       loading: true
     };
     this.handlePeriodChange = this.handlePeriodChange.bind(this);
@@ -50,6 +52,10 @@ class SymbolComponent extends Component {
         return newObj;
       });
       this.setState({ data: parsed, loading: false });
+    }); 
+    this.socket.on('finishedTest', data => {
+      console.log('finishedTest from socket.io:', data);
+      this.setState({ results: data.trades });
     });
     this.socket.emit('getChartLastRequest', { period: DEFAULT_PERIOD, start: moment().subtract(since.get(DEFAULT_PERIOD), 'month').valueOf(), symbol: this.props.symbol });
   }
@@ -81,6 +87,11 @@ class SymbolComponent extends Component {
           </Col>
           <Col sm="6">
             <StrategiesComponent handleStrategyChange={this.handleStrategyChange} />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12">
+            <StrategyResultsComponent results={this.state.results} />
           </Col>
         </Row>
         <Row>

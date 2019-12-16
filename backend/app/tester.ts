@@ -86,7 +86,7 @@ io.on('connection', socket => {
 });
 
 let isEntered: boolean = false;
-let openTrade: i.ITrade;
+let openedTrade: i.ITrade;
 let trades: Array<i.ITrade> = [];
 let handleCandle = function (idx: number) {
   debug('Handling candle idx [' + idx + ']');
@@ -97,11 +97,11 @@ let handleCandle = function (idx: number) {
       if (res.result === true) {
         logger.info('Entered order %O', res.trade);
         trades.push(res.trade);
-        openTrade = res.trade;
+        openedTrade = res.trade;
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(rateInfos, idx, digits, openTrade);
+      let res: i.IStrategyResult = strategyInst.exit(rateInfos, idx, digits, openedTrade);
       if (res.result === true) {
         logger.info('Exited order %O', res.trade);
         trades.push(res.trade);
@@ -110,7 +110,8 @@ let handleCandle = function (idx: number) {
     }
     eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
   } else {
-    eventHandler.em.emit(eventHandler.FINISHED_TEST);
+    eventHandler.em.emit(eventHandler.FINISHED_TEST, { trades: trades });
+    io.emit('finishedTest', { trades: trades });
   }
 }
 
