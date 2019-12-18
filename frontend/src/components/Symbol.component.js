@@ -52,7 +52,7 @@ class SymbolComponent extends Component {
         return newObj;
       });
       this.setState({ data: parsed, loading: false });
-    }); 
+    });
     this.socket.on('finishedTest', data => {
       console.log('finishedTest from socket.io:', data);
       this.setState({ results: data.trades });
@@ -82,24 +82,25 @@ class SymbolComponent extends Component {
       <>
         <h3>Working with symbol: {this.props.symbol}</h3>
         <Row>
-          <Col sm="6">
-            <PeriodChooserComponent defaultPeriod={period} handlePeriodChange={this.handlePeriodChange} />
+          <Col sm="9">
+            <Row>
+              <Col sm="4">
+                <PeriodChooserComponent defaultPeriod={period} handlePeriodChange={this.handlePeriodChange} />
+              </Col>
+              <Col sm="4">
+                <StrategiesComponent handleStrategyChange={this.handleStrategyChange} />
+              </Col>
+              <Col sm="4">
+                <Button block onClick={this.handleRunTestClick.bind(this)}>Run Test</Button>
+              </Col>
+            </Row>
+            <Chart type='hybrid' data={data} />
           </Col>
-          <Col sm="6">
-            <StrategiesComponent handleStrategyChange={this.handleStrategyChange} />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm="12">
+          <Col sm="3">
+            <h3>Results</h3>
             <StrategyResultsComponent results={this.state.results} />
           </Col>
         </Row>
-        <Row>
-          <Col sm="2">
-            <Button block onClick={this.handleRunTestClick.bind(this)}>Run Test</Button>
-          </Col>
-        </Row>
-        <Chart type='hybrid' data={data} />
       </>
     )
   }

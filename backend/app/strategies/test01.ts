@@ -10,12 +10,17 @@ const STOP_LOSS = -60;
 
 let enter = function (candles: Array<any>, idx: number, digits: number): i.IStrategyResult {
 
+  // ctm: 1576672800000
+  // ctmString: 'Dec 18, 2019 1:40:00 PM'
+  // but ctm = 12/18/2019 @ 12:40pm (UTC) according to https://www.unixtimestamp.com/index.php
+
+  debug('Handling candle: %O', candles[idx]);
   let trade: i.ITrade = { price: 0, side: i.ESide.NONE, ctmString: '' };
   let result: boolean = false;
-  if (moment.tz(candles[idx].ctm, 'Europe/Bucharest').hour() === 9 && moment.tz(candles[idx].ctm, 'Europe/Bucharest').minute() === 5) {
+  if (moment.tz(candles[idx].ctm, 'Europe/Bucharest').hour() === 10 && moment.tz(candles[idx].ctm, 'Europe/Bucharest').minute() === 5) {
     const prevCandle = candles[idx - 1];
     trade.price = (prevCandle.open + prevCandle.close) / (10 * digits);
-    trade.ctmString = candles[idx - 1].ctmString;
+    trade.ctmString = candles[idx].ctmString;
     if (candles[idx].close < 0) {
       trade.side = i.ESide.BUY;
     } else {

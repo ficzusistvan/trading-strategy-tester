@@ -80,6 +80,8 @@ io.on('connection', socket => {
 
   socket.on('runTest', async (data: { strategy: string }) => {
     logger.info('Running test: %O', data);
+    isEntered = false;
+    trades = [];
     strategyInst = await import('./strategies/' + data.strategy);
     eventHandler.em.emit(eventHandler.STRATEGY_IMPORTED);
   });
