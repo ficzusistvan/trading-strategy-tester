@@ -12,8 +12,13 @@ router.use("/api", apiRouter);
 //router.use("/", passportRoutes);
 
 // If no API routes are hit, send the React app
-router.use((req, res) =>
-  res.sendFile(path.join(__dirname, "../client/arbiter/build/index.html"))
+router.use((req, res) => {
+  if (__dirname.toString().includes('build')) {
+    return res.sendFile(path.join(__dirname, "../../../../frontend/build/index.html"))
+  } else {
+    return res.sendFile(path.join(__dirname, "../../../frontend/build/index.html"))
+  }
+}
 );
 
 export = router;

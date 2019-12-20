@@ -68,3 +68,6 @@ config.json
 
 #sqlite3 file(s)
 *.sqlite3
+
+# tsc build folder
+build

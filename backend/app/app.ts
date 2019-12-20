@@ -14,7 +14,11 @@ const app: express.Application = express();
 const APP_PORT = nconf.get('ports:http_server');
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../../frontend/build')));
+if (__dirname.toString().includes('build')) {
+  app.use(express.static(path.join(__dirname, '../../../frontend/build')));
+} else {
+  app.use(express.static(path.join(__dirname, '../../frontend/build')));
+}
 
 import routes from './routes'
 
