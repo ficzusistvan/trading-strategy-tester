@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
     "prod": "tsc && node ./build/app/app.js",
+    "built": "node ./build/app/app.js",
     "tsc": "tsc"
   },
   "dependencies": {
