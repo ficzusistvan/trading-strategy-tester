@@ -42,6 +42,7 @@ let getAllSymbols = function (userId: number, password: string, callback: any) {
     ws.send(JSON.stringify(msg));
   });
   ws.addEventListener('message', async (msg) => {
+    debug('message from ws: %O', msg.data);
     const data = JSON.parse(msg.data);
     if (data.streamSessionId !== undefined) {
       logger.info('Websocket logged in; sending "getAllSymbols"...');
