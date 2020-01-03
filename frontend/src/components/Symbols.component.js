@@ -23,7 +23,11 @@ class SymbolsComponent extends Component {
   }
 
   componentDidMount() {
-    this.socket = socketIOClient('localhost:3005');
+    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE == 1) {
+      this.socket = socketIOClient('localhost:3005');
+    } else {
+      this.socket = socketIOClient(); // auto discovery
+    }
     this.socket.on('getAllSymbols', data => {
       console.log('getAllSymbols from socket.io:', data);
       this.setState( { data: data.returnData, loading: false } );
