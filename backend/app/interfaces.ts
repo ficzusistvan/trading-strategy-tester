@@ -33,3 +33,16 @@ export interface IStrategyResult {
   result: boolean,
   trade: ITrade
 }
+
+export interface ICandle {
+  timestamp: number,
+  open: number,
+  high: number,
+  low: number,
+  close: number,
+  volume: number
+}
+
+export interface ICandles {
+  candles: Array<ICandle>
+}

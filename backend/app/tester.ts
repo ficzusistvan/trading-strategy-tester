@@ -24,6 +24,8 @@ import knex from './db/knex'
 import * as xapi from './data-sources/xAPI/api'
 import * as avapi from './data-sources/alphavantage/api'
 
+import * as dataSource from './data-source'
+
 // VARIABLES
 const PUSHBULLET_API_KEY = nconf.get('pushbullet:api_key');
 const PUSHBULLET_EMAIL = nconf.get('pushbullet:email');
@@ -44,6 +46,8 @@ let rateInfosLen: number;
 
 let start = async function () {
   logger.info('Starting tester...');
+  await dataSource.setSource('alphavantage');
+  await dataSource.getCandles('DE', 1);
 }
 
 const io: socketio.Server = socketio(SOCKET_IO_PORT);
@@ -73,13 +77,13 @@ io.on('connection', socket => {
 
   socket.on('searchSymbol', async (data: string) => {
     logger.info('socket.io received "searchSymbol" [%O]', data);
-    const res = await avapi.searchSymbol(data, AVAPI_API_KEY);
+    const res = await avapi.searchSymbol(data);
     socket.emit('searchSymbol', res);
   });
 
-  socket.on('getTimeSeriesIntraday', async (data: { symbol: string, interval: string }) => {
+  socket.on('getTimeSeriesIntraday', async (data: { symbol: string, interval: number }) => {
     logger.info('socket.io received "getTimeSeriesIntraday"');
-    const res = await avapi.getTimeSeriesIntraday(data.symbol, data.interval, AVAPI_API_KEY);
+    const res = await avapi.getCandles(data.symbol, data.interval);
     socket.emit('getTimeSeriesIntraday', res);
   });
 
