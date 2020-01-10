@@ -10,5 +10,8 @@
   "xapi": {
     "user_id": "xxx",
     "password": "xxx"
+  },
+  "alphavantage": {
+    "api_key": "xxx"
   }
 }

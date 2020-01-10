@@ -7,8 +7,8 @@ import Debug from 'debug'
 const debug = Debug('xapi')
 
 // ARBITER DEPENDENCIES
-import { logger } from '../logger'
-import * as eventHandler from '../event-handler'
+import { logger } from '../../logger'
+import * as eventHandler from '../../event-handler'
 import * as i from './interfaces'
 
 const HOST = 'https://xapi.xtb.com';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Form, FormGroup, Input, Jumbotron, Label } from 'reactstrap';
+import { Card, Form, FormGroup, Input, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 
 class PeriodChooserComponent extends Component {

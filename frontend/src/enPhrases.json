@@ -21,6 +21,16 @@
   "orderbooks": {
     "orderbooks": "orderbooks"
   },
+  "xapi": {
+    "symbols": {
+      "symbols": "XAPI symbols"
+    }
+  },
+  "alphavantage": {
+    "symbols": {
+      "symbols": "Alphavantage symbols"
+    }
+  },
   "symbols": {
     "symbols": "symbols",
     "symbol": "symbol",
@@ -30,6 +40,12 @@
     "bid": "bid",
     "ask": "ask",
     "high": "high",
-    "low": "low"
+    "low": "low",
+    "name": "name",
+    "type": "type",
+    "region": "region",
+    "market_open": "market open",
+    "market_close": "market close",
+    "timezone": "timezone"
   }
 }

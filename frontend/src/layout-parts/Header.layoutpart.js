@@ -34,9 +34,13 @@ class HeaderLayoutPart extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
-              {/* Symbols */}
+              {/* XAPI Symbols */}
               <NavItem>
-                <NavLink tag={RRNavLink} to='/symbols'>{this.props.p.tc('symbols.symbols')}</NavLink>
+                <NavLink tag={RRNavLink} to='/xapi-symbols'>{this.props.p.tc('xapi.symbols.symbols')}</NavLink>
+              </NavItem>
+              {/* Alphavantage Symbols */}
+              <NavItem>
+                <NavLink tag={RRNavLink} to='/alphavantage-symbols'>{this.props.p.tc('alphavantage.symbols.symbols')}</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

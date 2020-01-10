@@ -10,6 +10,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "big.js": "^5.2.2",
     "cron": "^1.7.2",
     "crypto": "^1.0.1",

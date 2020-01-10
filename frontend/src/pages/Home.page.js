@@ -5,7 +5,7 @@ import translate from 'redux-polyglot/translate';
 
 const HomePage = (props) => (
   <Jumbotron>
-    <Container fluid="true">
+    <Container fluid={true}>
       <Row>
         <Col sm={3}>
           <LeftSidebarLayoutpart />

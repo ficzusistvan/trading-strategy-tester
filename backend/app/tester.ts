@@ -21,7 +21,8 @@ import { logger } from './logger'
 import * as i from './interfaces'
 import * as eventHandler from './event-handler'
 import knex from './db/knex'
-import * as xapi from './xAPI/api'
+import * as xapi from './data-sources/xAPI/api'
+import * as avapi from './data-sources/alphavantage/api'
 
 // VARIABLES
 const PUSHBULLET_API_KEY = nconf.get('pushbullet:api_key');
@@ -29,6 +30,7 @@ const PUSHBULLET_EMAIL = nconf.get('pushbullet:email');
 
 const XAPI_USERID = nconf.get('xapi:user_id');
 const XAPI_PASSWORD = nconf.get('xapi:password');
+const AVAPI_API_KEY = nconf.get('alphavantage:api_key');
 
 const SOCKET_IO_PORT = nconf.get('ports:socket_io');
 
@@ -67,6 +69,18 @@ io.on('connection', socket => {
       rateInfosLen = rateInfos.length;
       socket.emit('getChartLastRequest', data);
     });
+  });
+
+  socket.on('searchSymbol', async (data: string) => {
+    logger.info('socket.io received "searchSymbol" [%O]', data);
+    const res = await avapi.searchSymbol(data, AVAPI_API_KEY);
+    socket.emit('searchSymbol', res);
+  });
+
+  socket.on('getTimeSeriesIntraday', async (data: { symbol: string, interval: string }) => {
+    logger.info('socket.io received "getTimeSeriesIntraday"');
+    const res = await avapi.getTimeSeriesIntraday(data.symbol, data.interval, AVAPI_API_KEY);
+    socket.emit('getTimeSeriesIntraday', res);
   });
 
   socket.on('getStrategies', () => {

@@ -10,18 +10,8 @@ import PeriodChooserComponent from './PeriodChooser.component';
 import StrategyResultsComponent from './StrategyResults.component';
 
 const DEFAULT_PERIOD = 5;
-const since = new Map();
-since.set(1, 1);
-since.set(5, 1);
-since.set(15, 1);
-since.set(30, 7);
-since.set(60, 7);
-since.set(240, 13);
-since.set(1440, 13);
-since.set(10080, 60);
-since.set(43200, 60);
 
-class SymbolComponent extends Component {
+class AVSymbolComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -42,26 +32,30 @@ class SymbolComponent extends Component {
     } else {
       this.socket = socketIOClient(); // auto discovery
     }
-    this.socket.on('getChartLastRequest', data => {
-      console.log('getChartLastRequest from socket.io:', data);
-      const SCALE = Math.pow(10, data.returnData.digits);
-      const parsed = data.returnData.rateInfos.map(obj => {
-        const newObj = {};
-        newObj.date = moment(obj.ctm).toDate();
-        newObj.open = obj.open / SCALE;
-        newObj.high = newObj.open + obj.high / SCALE;
-        newObj.low = newObj.open + obj.low / SCALE;
-        newObj.close = newObj.open + obj.close / SCALE;
-        newObj.volume = obj.vol;
-        return newObj;
-      });
+    this.socket.on('getTimeSeriesIntraday', data => {
+      console.log('getTimeSeriesIntraday from socket.io:', data);
+      const parsed = [];
+      for (let [key1, value1] of Object.entries(data)) {
+        if (key1.includes('Time Series')) {
+          for (let [key2, value2] of Object.entries(value1)) {
+            const newObj = {};
+            newObj.date = moment(key2).toDate();
+            newObj.open = value2['1. open'];
+            newObj.high = value2['2. high'];
+            newObj.low = value2['3. low'];
+            newObj.close = value2['4. close'];
+            newObj.volume = value2['5. volume'];
+            parsed.unshift(newObj);
+          }
+        }
+      }
       this.setState({ data: parsed, loading: false });
     });
     this.socket.on('finishedTest', data => {
       console.log('finishedTest from socket.io:', data);
       this.setState({ results: data.trades });
     });
-    this.socket.emit('getChartLastRequest', { period: DEFAULT_PERIOD, start: moment().subtract(since.get(DEFAULT_PERIOD), 'month').valueOf(), symbol: this.props.symbol });
+    this.socket.emit('getTimeSeriesIntraday', { symbol: this.props.symbol, interval: DEFAULT_PERIOD + 'min' });
   }
 
   handleStrategyChange(strategy) {
@@ -69,7 +63,7 @@ class SymbolComponent extends Component {
   }
 
   handlePeriodChange(period) {
-    this.socket.emit('getChartLastRequest', { period: period, start: moment().subtract(since.get(period), 'month').valueOf(), symbol: this.props.symbol });
+    this.socket.emit('getTimeSeriesIntraday', { symbol: this.props.symbol, period: period });
     this.setState({ period: period, loading: true });
   }
 
@@ -110,4 +104,4 @@ class SymbolComponent extends Component {
   }
 }
 
-export default translate(withRouter(SymbolComponent))
+export default translate(withRouter(AVSymbolComponent))

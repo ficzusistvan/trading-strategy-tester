@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, ListGroup, ListGroupItem } from 'reactstrap';
+import { Col, Row, ListGroup } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import ResultComponent from './Result.component';
 

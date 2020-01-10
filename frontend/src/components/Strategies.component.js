@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Form, FormGroup, Input, Label, Row, Col } from 'reactstrap';
+import { Card, Form, FormGroup, Input, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import socketIOClient from 'socket.io-client';
 

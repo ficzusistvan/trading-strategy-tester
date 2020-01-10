@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import socketIOClient from 'socket.io-client';
 
-class SymbolsComponent extends Component {
+class AVSymbolsComponent extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      keyword: '',
       data: [],
       loading: true
     }
@@ -19,26 +20,40 @@ class SymbolsComponent extends Component {
   }
 
   handleClick(symbol) {
-    this.props.history.push("/symbol/" + symbol);
+    this.props.history.push("/avsymbol/" + symbol);
+  }
+
+  onHandleChange(e) {
+    let targt = e.target;
+    this.setState({ keyword: targt.value })
+    this.socket.emit('searchSymbol', targt.value);
   }
 
   componentDidMount() {
-    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === 1) {
+    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === '1') {
       this.socket = socketIOClient('localhost:3005');
     } else {
       this.socket = socketIOClient(); // auto discovery
     }
-    this.socket.on('getAllSymbols', data => {
-      console.log('getAllSymbols from socket.io:', data);
-      this.setState( { data: data.returnData, loading: false } );
+    this.socket.on('searchSymbol', data => {
+      this.setState({ data: data.bestMatches, loading: false });
     });
-    this.socket.emit('getAllSymbols');
+    //this.socket.emit('searchSymbol', 'DE');
   }
 
   render() {
-    const { data, loading } = this.state
+    const { keyword, data, loading } = this.state
     return (
       <>
+        <Row>
+          <Col sm="2">
+            <Input
+              onChange={this.onHandleChange.bind(this)}
+              id="keyword"
+              type="text"
+              value={keyword} />
+          </Col>
+        </Row>
         <Row>
           <Col>
             <ReactTable
@@ -59,43 +74,51 @@ class SymbolsComponent extends Component {
                     /*if (handleOriginal) {
                       handleOriginal()
                     }*/
-                    this.handleClick(rowInfo.original.symbol);
+                    this.handleClick(rowInfo.original['1. symbol']);
                   }
                 }
               }}
               data={data}
               columns={[
                 {
+                  id: 'symbol',
                   Header: this.props.p.tc('symbols.symbol'),
-                  accessor: "symbol"
+                  accessor: d => d['1. symbol']
                 },
                 {
+                  id: 'name',
+                  Header: this.props.p.tc('symbols.name'),
+                  accessor: d => d['2. name']
+                },
+                {
+                  id: 'type',
+                  Header: this.props.p.tc('symbols.type'),
+                  accessor: d => d['3. type']
+                },
+                {
+                  id: 'region',
+                  Header: this.props.p.tc('symbols.region'),
+                  accessor: d => d['4. region']
+                },
+                {
+                  id: 'marketOpen',
+                  Header: this.props.p.tc('symbols.market_open'),
+                  accessor: d => d['5. marketOpen']
+                },
+                {
+                  id: 'marketClose',
+                  Header: this.props.p.tc('symbols.market_close'),
+                  accessor: d => d['6. marketClose']
+                },
+                {
+                  id: 'timezone',
+                  Header: this.props.p.tc('symbols.timezone'),
+                  accessor: d => d['7. timezone']
+                },
+                {
+                  id: 'currency',
                   Header: this.props.p.tc('symbols.currency'),
-                  accessor: "currency"
-                },
-                {
-                  Header: this.props.p.tc('symbols.category_name'),
-                  accessor: "categoryName"
-                },
-                {
-                  Header: this.props.p.tc('symbols.description'),
-                  accessor: "description"
-                },
-                {
-                  Header: this.props.p.tc('symbols.bid'),
-                  accessor: "bid"
-                },
-                {
-                  Header: this.props.p.tc('symbols.ask'),
-                  accessor: "ask"
-                },
-                {
-                  Header: this.props.p.tc('symbols.high'),
-                  accessor: "high"
-                },
-                {
-                  Header: this.props.p.tc('symbols.low'),
-                  accessor: "low"
+                  accessor: d => d['8. currency']
                 }
               ]}
               defaultPageSize={10}
@@ -110,4 +133,4 @@ class SymbolsComponent extends Component {
   }
 }
 
-export default translate(withRouter(SymbolsComponent))
+export default translate(withRouter(AVSymbolsComponent))
