@@ -1,38 +1,29 @@
 import React, { Component } from 'react'
-import { Col, Row, ListGroup } from 'reactstrap';
+import { Card, CardTitle, CardText } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import ResultComponent from '../tester/Result.component';
 
 class TesterConfigComponent extends Component {
 
   render() {
     return (
-      <>
-        <Row>
-          <Col sm={{ size: 12 }}>
-            <h6>Data source:</h6>
-            <p class="text-danger font-weight-bold">{this.props.dataSource}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 12 }}>
-            <h6>Symbol:</h6>
-            <p class="text-danger font-weight-bold">{this.props.symbol}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 12 }}>
-            <h6>Period:</h6>
-            <p class="text-danger font-weight-bold">{this.props.period}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 12 }}>
-            <h6>Strategy:</h6>
-            <p class="text-danger font-weight-bold">{this.props.strategy}</p>
-          </Col>
-        </Row>
-      </>
+      <Card body outline color='info'>
+        <Card body outline color="primary">
+          <CardTitle>Data source:</CardTitle>
+          <CardText className='text-danger'>{this.props.dataSource}</CardText>
+        </Card>
+        <Card body outline color="primary">
+          <CardTitle>Symbol:</CardTitle>
+          <CardText className='text-danger'>{this.props.symbol}</CardText>
+        </Card>
+        <Card body outline color="primary">
+          <CardTitle>Period:</CardTitle>
+          <CardText className='text-danger'>{this.props.period}</CardText>
+        </Card>
+        <Card body outline color="primary">
+          <CardTitle>Strategy:</CardTitle>
+          <CardText className='text-danger'>{this.props.strategy}</CardText>
+        </Card>
+      </Card>
     );
   }
 }

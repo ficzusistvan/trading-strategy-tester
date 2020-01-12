@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { setTestResults } from '../actions/tester';
 import TesterComponent from "../../components/Tester.component"
 
 const mapStateToProps = state => {
@@ -10,6 +11,15 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetTestResults: (results) => {
+      dispatch(setTestResults(results));
+    }
+  };
+};
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(TesterComponent)

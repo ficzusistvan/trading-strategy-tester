@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Col, Button, Row, Input } from 'reactstrap';
+import { Col, Row, Input, Card } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
@@ -13,7 +13,6 @@ class SymbolComponent extends Component {
     this.state = {
       keyword: null,
       symbols: [],
-      symbol: null,
       loading: true
     };
   }
@@ -26,14 +25,13 @@ class SymbolComponent extends Component {
   }
 
   handleClick(symbol) {
-    this.setState({ symbol: symbol });
     this.props.onSetSymbol(symbol);
   }
 
   render() {
-    const { keyword, symbols, symbol, loading } = this.state
+    const { keyword, symbols, loading } = this.state
     return (
-      <>
+      <Card body outline color='warning'>
         <Row>
           <Col sm="2">
             <Input
@@ -99,7 +97,7 @@ class SymbolComponent extends Component {
             />
           </Col>
         </Row>
-      </>
+      </Card>
     )
   }
 }

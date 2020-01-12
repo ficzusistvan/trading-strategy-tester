@@ -2,17 +2,21 @@ import React from "react";
 import { Jumbotron, Container, Row, Col } from 'reactstrap';
 import LeftSidebarLayoutpart from '../layout-parts/LeftSidebar.layoutpart';
 import TesterRedux from '../redux/containers/Tester.redux';
+import TesterResultsRedux from '../redux/containers/TesterResults.redux';
 import translate from 'redux-polyglot/translate';
 
 const HomePage = (props) => (
   <Jumbotron>
     <Container fluid={true}>
       <Row>
-        <Col sm={3}>
+        <Col sm={2}>
           <LeftSidebarLayoutpart />
         </Col>
-        <Col sm={9}>
+        <Col sm={8}>
           <TesterRedux />
+        </Col>
+        <Col sm={2}>
+          <TesterResultsRedux />
         </Col>
       </Row>
     </Container>

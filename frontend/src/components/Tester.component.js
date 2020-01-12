@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
-import { Col, Button, Row } from 'reactstrap';
+import { Button, Card, CardTitle } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios';
 import moment from 'moment';
 import Chart from './tester/Chart';
-import StrategyResultsComponent from './tester/StrategyResults.component';
+import socketIOClient from 'socket.io-client';
 
 class TesterComponent extends Component {
 
@@ -13,7 +13,6 @@ class TesterComponent extends Component {
     super(props);
     this.state = {
       candles: [],
-      results: null,
       loading: true
     };
   }
@@ -36,39 +35,44 @@ class TesterComponent extends Component {
 
       this.setState({ candles: parsedCandles, loading: false })
     }
-    /*this.socket.on('finishedTest', data => {
+
+    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === '1') {
+      this.socket = socketIOClient('localhost:3005');
+    } else {
+      this.socket = socketIOClient(); // auto discovery
+    }
+
+    this.socket.on('finishedTest', data => {
       console.log('finishedTest from socket.io:', data);
-      this.setState({ results: data.trades });
+      this.props.onSetTestResults(data.trades);
     });
-    this.socket.emit('getTimeSeriesIntraday', { symbol: this.props.symbol, interval: DEFAULT_PERIOD + 'min' });*/
   }
 
   handleRunTestClick() {
-    /*this.socket.emit('runTest', { strategy: this.state.strategy });*/
+    this.socket.emit('runTest', { strategy: this.props.strategy });
   }
 
   render() {
     const { candles, loading } = this.state
+    if (this.props.dataSource === null || this.props.symbol === null || this.props.period === null) {
+      return (
+        <Card body outline color='primary'>
+          <CardTitle>Waiting for all infos to be set!</CardTitle>
+        </Card>
+      )
+    }
     if (loading) {
-      return <div>Loading...</div>
+      return (
+        <Card body outline color='primary'>
+          <CardTitle>Loading...</CardTitle>
+        </Card>
+      )
     }
     return (
-      <>
-        <Row>
-          <Col sm="9">
-            <Row>
-              <Col sm="4">
-                <Button block onClick={this.handleRunTestClick.bind(this)}>Run Test</Button>
-              </Col>
-            </Row>
-            <Chart type='hybrid' data={candles} />
-          </Col>
-          <Col sm="3">
-            <h3>Results</h3>
-            <StrategyResultsComponent results={this.state.results} />
-          </Col>
-        </Row>
-      </>
+      <Card body outline color='primary'>
+        <Button color="primary" block onClick={this.handleRunTestClick.bind(this)}>Run Test</Button>
+        <Chart type='hybrid' data={candles} />
+      </Card>
     )
   }
 }

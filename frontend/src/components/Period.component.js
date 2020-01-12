@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
-import { Col, Button, Row, Input } from 'reactstrap';
+import { Input, Card } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 
 const PERIODS = [
@@ -17,30 +17,21 @@ const PERIODS = [
 
 class PeriodComponent extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      period: null
-    };
-  }
-
   onHandleChange(e) {
-    this.setState({ period: e.target.value });
     this.props.onSetPeriod(e.target.value);
   }
 
   render() {
-    const { period } = this.state;
     const options = [];
     for (let i = 0; i < PERIODS.length; i++) {
       options.push(<option value={PERIODS[i].val} key={i}>{PERIODS[i].str}</option>);
     }
     return (
-      <>
-        <Input type="select" name="period" id="periodSelect" value={period} onChange={this.onHandleChange.bind(this)}>
+      <Card body outline color='warning'>
+        <Input type="select" name="period" id="periodSelect" value={this.props.period} onChange={this.onHandleChange.bind(this)}>
           {options}
         </Input>
-      </>
+      </Card>
     )
   }
 }

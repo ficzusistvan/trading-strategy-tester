@@ -1,4 +1,4 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_STRATEGY } from "./types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_STRATEGY, SET_TEST_RESULTS } from "./types";
 
 export const setDataSource = (dataSource) => ({
   type: SET_DATA_SOURCE,
@@ -18,4 +18,9 @@ export const setPeriod = (period) => ({
 export const setStrategy = (strategy) => ({
   type: SET_STRATEGY,
   strategy
+});
+
+export const setTestResults = (results) => ({
+  type: SET_TEST_RESULTS,
+  results
 });

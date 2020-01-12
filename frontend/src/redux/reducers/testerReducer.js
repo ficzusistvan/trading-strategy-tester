@@ -1,6 +1,6 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_STRATEGY } from "../actions/types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_STRATEGY, SET_TEST_RESULTS } from "../actions/types";
 
-const tester = (state = { dataSource: null, symbol: null, period: null, strategy: null }, action) => {
+const tester = (state = { dataSource: null, symbol: null, period: 5, strategy: null, testResults: null }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
       return {
@@ -24,6 +24,13 @@ const tester = (state = { dataSource: null, symbol: null, period: null, strategy
       return {
         ...state,
         strategy: action.strategy
+      }
+    }
+
+    case SET_TEST_RESULTS: {
+      return {
+        ...state,
+        testResults: action.results
       }
     }
 
