@@ -16,7 +16,11 @@
     "from": "from",
     "remove": "remove",
     "download": "download pdf",
-    "generate": "generate pdf"
+    "generate": "generate pdf",
+    "select_data_source": "select data source",
+    "select_symbol": "select symbol",
+    "select_period": "select period",
+    "select_strategy": "select strategy"
   },
   "orderbooks": {
     "orderbooks": "orderbooks"

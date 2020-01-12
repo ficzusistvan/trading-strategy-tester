@@ -1,11 +1,21 @@
 import React from "react";
-import { Jumbotron } from 'reactstrap';
-import SymbolComponent from '../components/Symbol.component';
+import { Jumbotron, Container, Row, Col } from 'reactstrap';
+import SymbolRedux from '../redux/containers/Symbol.redux';
 import translate from 'redux-polyglot/translate';
+import LeftSidebarLayoutpart from "../layout-parts/LeftSidebar.layoutpart";
 
 const SymbolPage = (props) => (
   <Jumbotron>
-    <SymbolComponent symbol={props.match.params.symbol} />
+    <Container fluid={true}>
+      <Row>
+        <Col sm={3}>
+          <LeftSidebarLayoutpart />
+        </Col>
+        <Col sm={9}>
+          <SymbolRedux />
+        </Col>
+      </Row>
+    </Container>
   </Jumbotron>
 );
 

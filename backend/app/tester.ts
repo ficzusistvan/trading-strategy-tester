@@ -5,12 +5,7 @@ nconf.file({
   file: 'config.json',
   search: true
 });
-import moment from 'moment'
-import cron from 'cron'
-const PushBullet = require('pushbullet')
 import socketio from 'socket.io'
-import path from 'path'
-import fs from 'fs'
 
 // DEBUGGING
 import Debug from 'debug'
@@ -20,24 +15,8 @@ const debug = Debug('tester')
 import { logger } from './logger'
 import * as i from './interfaces'
 import * as eventHandler from './event-handler'
-import knex from './db/knex'
-import * as xapi from './data-sources/xAPI/api'
-import * as avapi from './data-sources/alphavantage/api'
-
-import * as dataSource from './data-source'
-
-// VARIABLES
-const PUSHBULLET_API_KEY = nconf.get('pushbullet:api_key');
-const PUSHBULLET_EMAIL = nconf.get('pushbullet:email');
-
-const XAPI_USERID = nconf.get('xapi:user_id');
-const XAPI_PASSWORD = nconf.get('xapi:password');
-const AVAPI_API_KEY = nconf.get('alphavantage:api_key');
 
 const SOCKET_IO_PORT = nconf.get('ports:socket_io');
-
-const pusher = new PushBullet(PUSHBULLET_API_KEY);
-const dirPath = path.join(__dirname, 'strategies');
 
 let strategyInst: any;
 let rateInfos: Array<any>;
@@ -46,8 +25,6 @@ let rateInfosLen: number;
 
 let start = async function () {
   logger.info('Starting tester...');
-  await dataSource.setSource('alphavantage');
-  await dataSource.getCandles('DE', 1);
 }
 
 const io: socketio.Server = socketio(SOCKET_IO_PORT);
@@ -56,44 +33,6 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     logger.info("Socket.io client disconnected [%s]", socket.id);
-  });
-
-  socket.on('getAllSymbols', () => {
-    logger.info('socket.io received "getAllSymbols"');
-    xapi.getAllSymbols(XAPI_USERID, XAPI_PASSWORD, (data: any) => {
-      socket.emit('getAllSymbols', data);
-    });
-  });
-
-  socket.on('getChartLastRequest', (data: { period: number, start: number, symbol: string }) => {
-    logger.info('socket.io received "getChartLastRequest" [%O]', data);
-    xapi.getChartLastRequest(XAPI_USERID, XAPI_PASSWORD, data.period, data.start, data.symbol, (data: any) => {
-      rateInfos = data.returnData.rateInfos;
-      digits = data.returnData.digits;
-      rateInfosLen = rateInfos.length;
-      socket.emit('getChartLastRequest', data);
-    });
-  });
-
-  socket.on('searchSymbol', async (data: string) => {
-    logger.info('socket.io received "searchSymbol" [%O]', data);
-    const res = await avapi.searchSymbol(data);
-    socket.emit('searchSymbol', res);
-  });
-
-  socket.on('getTimeSeriesIntraday', async (data: { symbol: string, interval: number }) => {
-    logger.info('socket.io received "getTimeSeriesIntraday"');
-    const res = await avapi.getCandles(data.symbol, data.interval);
-    socket.emit('getTimeSeriesIntraday', res);
-  });
-
-  socket.on('getStrategies', () => {
-    fs.readdir(dirPath, (err, files) => {
-      if (err) {
-        return logger.error('Unable to scan directory', err);
-      }
-      socket.emit('getStrategies', files);
-    });
   });
 
   socket.on('runTest', async (data: { strategy: string }) => {

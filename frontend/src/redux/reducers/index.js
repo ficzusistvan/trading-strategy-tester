@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './authReducer';
-import worksheet from './worksheetReducer';
+import tester from './testerReducer';
 import { polyglotReducer } from 'redux-polyglot';
 
 export default combineReducers({
   auth,
-  worksheet,
+  tester,
   polyglot: polyglotReducer
 });

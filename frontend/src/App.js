@@ -1,13 +1,13 @@
 import React from 'react';
 import HeaderLayoutPart from './layout-parts/Header.layoutpart';
 import MainLayoutPart from './layout-parts/Main.layoutpart';
+import FooterLayoutPart from './layout-parts/Footer.layoutpart';
 
 const App = () => (
   <div>
     <HeaderLayoutPart />
-    <div className="container-fluid">
-      <MainLayoutPart />
-    </div>
+    <MainLayoutPart />
+    <FooterLayoutPart />
   </div>
 )
 

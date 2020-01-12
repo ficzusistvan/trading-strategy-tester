@@ -1,10 +1,10 @@
 import React from "react";
 import { Jumbotron, Container, Row, Col } from 'reactstrap';
-import LeftSidebarLayoutpart from '../layout-parts/LeftSidebar.layoutpart';
-import TesterRedux from '../redux/containers/Tester.redux';
+import PeriodRedux from '../redux/containers/Period.redux';
 import translate from 'redux-polyglot/translate';
+import LeftSidebarLayoutpart from "../layout-parts/LeftSidebar.layoutpart";
 
-const HomePage = (props) => (
+const PeriodPage = (props) => (
   <Jumbotron>
     <Container fluid={true}>
       <Row>
@@ -12,11 +12,11 @@ const HomePage = (props) => (
           <LeftSidebarLayoutpart />
         </Col>
         <Col sm={9}>
-          <TesterRedux />
+          <PeriodRedux />
         </Col>
       </Row>
     </Container>
   </Jumbotron>
 );
 
-export default translate(HomePage);
+export default translate(PeriodPage);

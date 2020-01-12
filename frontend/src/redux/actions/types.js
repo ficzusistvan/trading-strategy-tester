@@ -2,15 +2,7 @@ export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";
 export const LOGOUT = "LOGOUT";
 
-export const INIT_WORKSHEET = "INIT_WORKSHEET";
-export const CLEAR_WORKSHEET = "CLEAR_WORKSHEET";
-
-export const ADD_PRODUCT = "ADD_PRODUCT";
-export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
-export const UPDATE_PRODUCT_QUANTITY = "UPDATE_PRODUCT_QUANTITY";
-export const SET_PRODUCT_KIND = "SET_PRODUCT_KIND";
-
-export const ADD_OPTION = "ADD_OPTION";
-export const REMOVE_OPTION = "REMOVE_OPTION";
-export const UPDATE_OPTION_QUANTITY = "UPDATE_OPTION_QUANTITY";
-export const SET_OPTION_KIND = "SET_OPTION_KIND";
+export const SET_DATA_SOURCE = "SET_DATA_SOURCE";
+export const SET_SYMBOL = "SET_SYMBOL";
+export const SET_PERIOD = "SET_PERIOD";
+export const SET_STRATEGY = "SET_STRATEGY";

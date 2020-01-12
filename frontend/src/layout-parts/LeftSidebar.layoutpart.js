@@ -1,12 +1,10 @@
 import React from 'react';
-import CoinMarketCapWidgetComponent from '../components/CoinMarketCapWidget.component';
+import TesterRedux from '../redux/containers/TesterConfig.redux';
 import translate from 'redux-polyglot/translate';
 
 const LeftSidebarLayoutPart = () => (
   <>
-    <CoinMarketCapWidgetComponent currencyId="1" />
-    <CoinMarketCapWidgetComponent currencyId="1027" />
-    <CoinMarketCapWidgetComponent currencyId="52" />
+    <TesterRedux />
   </>
 )
 
