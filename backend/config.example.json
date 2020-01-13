@@ -3,10 +3,6 @@
     "http_server": 3003,
     "socket_io": 3005
   },
-  "pushbullet": {
-    "api_key": "xxx",
-    "email": "a@a.a"
-  },
   "xapi": {
     "user_id": "xxx",
     "password": "xxx"
