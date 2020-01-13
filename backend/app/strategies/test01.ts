@@ -9,11 +9,7 @@ const TAKE_PROFIT = 20;
 const STOP_LOSS = -60;
 
 let enter = function (candles: Array<i.ICandle>, idx: number): i.IStrategyResult {
-
-  // ctm: 1576672800000
-  // ctmString: 'Dec 18, 2019 1:40:00 PM'
-  // but ctm = 12/18/2019 @ 12:40pm (UTC) according to https://www.unixtimestamp.com/index.php
-
+  
   debug('Handling candle: %O', candles[idx]);
   let trade: i.ITrade = { price: 0, side: i.ESide.NONE, date: '' };
   let result: boolean = false;

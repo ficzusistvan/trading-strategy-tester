@@ -18,7 +18,7 @@ class TesterResultsComponent extends Component {
     let listItems = [];
     this.props.testResults.forEach((res, idx, arr) => {
       if (res.side !== 'NONE') {
-        const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { date: '', price: '' };
+        const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { date: '', price: res.price };
         listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startDate={res.date} endDate={nextValue.date} />);
         if (res.side === 'BUY') {
           profit += (nextValue.price - res.price);
@@ -29,8 +29,13 @@ class TesterResultsComponent extends Component {
       }
     });
 
+    const cardStyle = {
+      height: "680px",
+      overflowY: "scroll"
+    }
+
     return (
-      <Card body outline color='danger'>
+      <Card body outline color='danger' style={cardStyle}>
         <CardTitle>Profit:</CardTitle>
         <p className="text-danger font-weight-bold">{profit.toFixed(2)}</p>
         <h6>Strategy results:</h6>
