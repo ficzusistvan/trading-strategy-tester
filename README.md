@@ -8,5 +8,6 @@ The demo application can be found at: http://trading-strategy-tester.eu-central-
 
 
 
-## Trading platforms used:
+## Data sources used:
 - xstation http://developers.xstore.pro/documentation/current
+- alphavantage https://www.alphavantage.co/documentation/
