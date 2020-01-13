@@ -5,7 +5,7 @@ import translate from 'redux-polyglot/translate';
 class ResultComponent extends Component {
 
   render() {
-    const { startPrice, endPrice, side, startCtm, endCtm } = this.props;
+    const { startPrice, endPrice, side, startDate, endDate } = this.props;
 
     const diff = startPrice - endPrice;
     let color = 'success';
@@ -14,7 +14,7 @@ class ResultComponent extends Component {
     }
 
     return (
-      <ListGroupItem color={color}>Start {startCtm}: {startPrice} - {side}; End {endCtm}: {endPrice}</ListGroupItem>
+      <ListGroupItem color={color}>Start {startDate}: {startPrice} - {side}; End {endDate}: {endPrice}</ListGroupItem>
     );
   }
 }

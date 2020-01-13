@@ -12,10 +12,10 @@ const HomePage = (props) => (
         <Col sm={2}>
           <LeftSidebarLayoutpart />
         </Col>
-        <Col sm={8}>
+        <Col sm={7}>
           <TesterRedux />
         </Col>
-        <Col sm={2}>
+        <Col sm={3}>
           <TesterResultsRedux />
         </Col>
       </Row>

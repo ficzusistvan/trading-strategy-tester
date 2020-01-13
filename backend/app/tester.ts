@@ -17,17 +17,18 @@ import * as i from './interfaces'
 import * as eventHandler from './event-handler'
 
 const SOCKET_IO_PORT = nconf.get('ports:socket_io');
+const io: socketio.Server = socketio(SOCKET_IO_PORT);
 
 let strategyInst: any;
-let rateInfos: Array<any>;
-let digits: number;
-let rateInfosLen: number;
+let candles: Array<i.ICandle>;
+let isEntered: boolean = false;
+let openedTrade: i.ITrade;
+let trades: Array<i.ITrade> = [];
 
 let start = async function () {
   logger.info('Starting tester...');
 }
 
-const io: socketio.Server = socketio(SOCKET_IO_PORT);
 io.on('connection', socket => {
   logger.info("Socket.io client connected [%s]", socket.id);
 
@@ -44,15 +45,12 @@ io.on('connection', socket => {
   });
 });
 
-let isEntered: boolean = false;
-let openedTrade: i.ITrade;
-let trades: Array<i.ITrade> = [];
 let handleCandle = function (idx: number) {
   debug('Handling candle idx [' + idx + ']');
-  if (idx < rateInfosLen) {
+  if (idx < candles.length) {
     // Running strategy
     if (!isEntered) {
-      let res: i.IStrategyResult = strategyInst.enter(rateInfos, idx, digits);
+      let res: i.IStrategyResult = strategyInst.enter(candles, idx);
       if (res.result === true) {
         logger.info('Entered order %O', res.trade);
         trades.push(res.trade);
@@ -60,7 +58,7 @@ let handleCandle = function (idx: number) {
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(rateInfos, idx, digits, openedTrade);
+      let res: i.IStrategyResult = strategyInst.exit(candles, idx, openedTrade);
       if (res.result === true) {
         logger.info('Exited order %O', res.trade);
         trades.push(res.trade);
@@ -74,7 +72,12 @@ let handleCandle = function (idx: number) {
   }
 }
 
+let retreivedCandles = function(newCandles: Array<i.ICandle>) {
+  candles = newCandles;
+}
+
 export {
   start,
-  handleCandle
+  handleCandle,
+  retreivedCandles
 };

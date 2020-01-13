@@ -14,7 +14,7 @@ const debug = Debug('xapi')
 // ARBITER DEPENDENCIES
 import { logger } from '../../logger'
 import * as eventHandler from '../../event-handler'
-import * as i from '../interfaces'
+import * as i from '../../interfaces'
 import moment from 'moment';
 
 const HOST = 'https://xapi.xtb.com';
@@ -54,21 +54,15 @@ let searchSymbol = async function (keywords: string) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = {};
-      msg.command = "login";
-      let argumentss: i.ILoginArguments = {};
-      argumentss.userId = USER_ID;
-      argumentss.password = PASSWORD;
-      msg.arguments = argumentss;
+      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg) => {
-      debug('message from ws: %O', msg.data);
+      //debug('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         logger.info('Websocket logged in; sending "getAllSymbols"...');
-        let msg: i.IGetAllSymbols = {};
-        msg.command = "getAllSymbols";
+        let msg: i.IGetAllSymbols = { command: "getAllSymbols" };
         ws.send(JSON.stringify(msg));
       } else {
         logger.info('Websocket "getAllSymbols" result received, returning it...');
@@ -94,9 +88,9 @@ let normalizeCandles = function (candles: Array<i.IRateInfoRecord>, scale: numbe
 
     obj.date = moment(candle['ctm']).toDate();
     obj.open = candle['open'] / scale;
-    obj.high = candle['high'] / scale;
-    obj.low = candle['low'] / scale;
-    obj.close = candle['close'] / scale;
+    obj.high = obj.open + candle['high'] / scale;
+    obj.low = obj.open + candle['low'] / scale;
+    obj.close = obj.open + candle['close'] / scale;
     obj.volume = candle['vol'];
 
     return obj;
@@ -120,28 +114,21 @@ let getCandles = async function (symbol: string, period: number) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = {};
-      msg.command = "login";
-      let argumentss: i.ILoginArguments = {};
-      argumentss.userId = USER_ID;
-      argumentss.password = PASSWORD;
-      msg.arguments = argumentss;
+      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg) => {
+      //debug('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         logger.info('Websocket logged in; sending "getChartLastRequest"...');
-        let msg: i.IChartLastRequest = {};
-        msg.command = "getChartLastRequest";
-        let argumentss: i.IChartLastRequestArguments = {};
-        argumentss.info = { period: period, start: moment().subtract(since.get(period), 'month').valueOf(), symbol: symbol }
-        msg.arguments = argumentss;
-        ws.send(JSON.stringify(msg));
+        let msg: i.IChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
+        let strin = JSON.stringify(msg);
+        debug('Strin', strin);
+        ws.send(strin);
       } else {
         logger.info('Websocket "getChartLastRequest" result received, returning it...');
         ws.close();
-        console.log(data);
         resolve(normalizeCandles(data.returnData.rateInfos, Math.pow(10, data.returnData.digits)));
       }
     });

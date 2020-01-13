@@ -18,8 +18,14 @@ class TesterResultsComponent extends Component {
     let listItems = [];
     this.props.testResults.forEach((res, idx, arr) => {
       if (res.side !== 'NONE') {
-        const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { ctmString: '', price: '' };
-        listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startCtm={res.ctmString} endCtm={nextValue.ctmString} />);
+        const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { date: '', price: '' };
+        listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startDate={res.date} endDate={nextValue.date} />);
+        if (res.side === 'BUY') {
+          profit += (nextValue.price - res.price);
+        }
+        if (res.side === 'SELL') {
+          profit += (res.price - nextValue.price);
+        }
       }
     });
 

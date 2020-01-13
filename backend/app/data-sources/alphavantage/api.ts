@@ -6,7 +6,7 @@ nconf.file({
   search: true
 });
 
-import * as i from '../interfaces'
+import * as i from '../../interfaces'
 
 // DEBUGGING
 import Debug from 'debug'
