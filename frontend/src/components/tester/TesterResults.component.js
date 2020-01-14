@@ -30,7 +30,7 @@ class TesterResultsComponent extends Component {
     });
 
     const cardStyle = {
-      height: "680px",
+      height: "810px",
       overflowY: "scroll"
     }
 

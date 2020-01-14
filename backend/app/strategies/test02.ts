@@ -4,8 +4,8 @@ import * as i from './../interfaces';
 import Debug from 'debug'
 const debug = Debug('test02')
 
-const TAKE_PROFIT = 15;
-const STOP_LOSS = -200;
+const TAKE_PROFIT = 2;
+const STOP_LOSS = -3;
 
 let enter = function (candles: Array<i.ICandle>, idx: number): i.IStrategyResult {
 
