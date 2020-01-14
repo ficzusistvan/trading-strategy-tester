@@ -48,6 +48,12 @@ let normalizeSymbols = function (symbols: Array<i.ISymbolRecord>) {
   });
 }
 
+let applySearchterm = function(symbols: Array<i.ISymbol>, keyword: string) {
+  return symbols.filter(symbol => {
+    return symbol.symbol.includes(keyword) || symbol.name.includes(keyword);
+  });
+}
+
 let searchSymbol = async function (keywords: string) {
   const ws: WebSocket = new WebSocket(addr);
 
@@ -67,7 +73,7 @@ let searchSymbol = async function (keywords: string) {
       } else {
         logger.info('Websocket "getAllSymbols" result received, returning it...');
         ws.close();
-        resolve(normalizeSymbols(data.returnData));
+        resolve(applySearchterm(normalizeSymbols(data.returnData), keywords));
       }
     });
     ws.addEventListener('close', () => {

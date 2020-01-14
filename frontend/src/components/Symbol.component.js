@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Col, Row, Input, Card } from 'reactstrap';
+import { Col, Row, Input, Card, Form, FormGroup, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
@@ -32,17 +32,20 @@ class SymbolComponent extends Component {
     const { keyword, symbols, loading } = this.state
     return (
       <Card body outline color='warning'>
-        <Row>
-          <Col sm="2">
-            <Input
-              type="text"
-              name="keyword"
-              id="keyword"
-              value={keyword}
-              onChange={this.onHandleChange.bind(this)}>
-            </Input>
-          </Col>
-        </Row>
+        <Form>
+          <FormGroup row>
+            <Label for="keyword" sm={2}>Enter searchterm:</Label>
+            <Col sm={4}>
+              <Input
+                type="text"
+                name="keyword"
+                id="keyword"
+                value={keyword}
+                onChange={this.onHandleChange.bind(this)}>
+              </Input>
+            </Col>
+          </FormGroup>
+        </Form>
         <Row>
           <Col>
             <ReactTable
