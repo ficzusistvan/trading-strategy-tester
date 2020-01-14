@@ -5,7 +5,7 @@ import Debug from 'debug'
 const debug = Debug('test02')
 
 const TAKE_PROFIT = 15;
-const STOP_LOSS = -40;
+const STOP_LOSS = -200;
 
 let enter = function (candles: Array<i.ICandle>, idx: number): i.IStrategyResult {
 

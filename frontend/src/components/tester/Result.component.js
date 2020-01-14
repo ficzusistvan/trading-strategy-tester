@@ -10,9 +10,17 @@ class ResultComponent extends Component {
   render() {
     const { startPrice, endPrice, side, startDate, endDate } = this.props;
 
-    const diff = startPrice - endPrice;
     let color = 'success';
-    if ((side === 'BUY' && diff > 0) || (side === 'SELL' && diff < 0)) {
+    let profit = 0;
+    if (side === 'BUY') {
+      profit = endPrice - startPrice;
+    } else if (side === 'SELL') {
+      profit = startPrice - endPrice;
+    } else {
+      // not reachable...
+    }
+
+    if (profit < 0) {
       color = 'danger';
     }
 
@@ -25,6 +33,8 @@ class ResultComponent extends Component {
           {moment(startDate).format(MY_FORMAT)}: <Badge pill>{startPrice}</Badge>
           <br />
           {moment(endDate).format(MY_FORMAT)}: <Badge pill>{endPrice}</Badge>
+          <br />
+          Profit: <Badge pill>{profit.toFixed(2)}</Badge>
         </ListGroupItemText>
       </ListGroupItem>
     );
