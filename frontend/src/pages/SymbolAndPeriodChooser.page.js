@@ -1,10 +1,10 @@
 import React from "react";
 import { Jumbotron, Container, Row, Col } from 'reactstrap';
-import PeriodRedux from '../redux/containers/Period.redux';
+import SymbolAndPeriodChooserRedux from '../redux/containers/SymbolAndPeriodChooser.redux';
 import translate from 'redux-polyglot/translate';
 import LeftSidebarLayoutpart from "../layout-parts/LeftSidebar.layoutpart";
 
-const PeriodPage = (props) => (
+const SymbolAndPeriodChooserPage = (props) => (
   <Jumbotron>
     <Container fluid={true}>
       <Row>
@@ -12,11 +12,11 @@ const PeriodPage = (props) => (
           <LeftSidebarLayoutpart />
         </Col>
         <Col sm={9}>
-          <PeriodRedux />
+          <SymbolAndPeriodChooserRedux />
         </Col>
       </Row>
     </Container>
   </Jumbotron>
 );
 
-export default translate(PeriodPage);
+export default translate(SymbolAndPeriodChooserPage);

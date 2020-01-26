@@ -38,13 +38,9 @@ class HeaderLayoutPart extends React.Component {
               <NavItem>
                 <NavLink tag={RRNavLink} to='/data-source'>{this.props.p.tc('common.select_data_source')}</NavLink>
               </NavItem>
-              {/* Symbol */}
+              {/* Symbol and period */}
               <NavItem>
-                <NavLink tag={RRNavLink} to='/symbol'>{this.props.p.tc('common.select_symbol')}</NavLink>
-              </NavItem>
-              {/* Period */}
-              <NavItem>
-                <NavLink tag={RRNavLink} to='/period'>{this.props.p.tc('common.select_period')}</NavLink>
+                <NavLink tag={RRNavLink} to='/symbol-and-period'>{this.props.p.tc('common.select_symbol_and_period')}</NavLink>
               </NavItem>
               {/* Strategy */}
               <NavItem>

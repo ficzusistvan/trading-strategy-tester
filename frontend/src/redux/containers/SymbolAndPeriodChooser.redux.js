@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { setPeriod } from '../actions/tester';
-import PeriodComponent from "../../components/Period.component"
+import { setSymbol, setPeriod } from '../actions/tester';
+import SymbolAndPeriodChooserComponent from "../../components/SymbolAndPeriodChooser.component"
 
 const mapStateToProps = state => {
   return {
@@ -13,6 +13,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onSetSymbol: (symbol) => {
+      dispatch(setSymbol(symbol));
+    },
     onSetPeriod: (period) => {
       dispatch(setPeriod(period));
     }
@@ -22,4 +25,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PeriodComponent)
+)(SymbolAndPeriodChooserComponent)
