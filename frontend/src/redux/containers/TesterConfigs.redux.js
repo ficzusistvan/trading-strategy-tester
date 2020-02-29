@@ -6,6 +6,7 @@ const mapStateToProps = state => {
     dataSource: state.tester.dataSource,
     symbol: state.tester.symbol,
     period: state.tester.period,
+    symbolsAndPeriods: state.tester.symbolsAndPeriods,
     strategy: state.tester.strategy
   };
 };

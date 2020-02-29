@@ -4,15 +4,16 @@ import translate from 'redux-polyglot/translate';
 import SymbolAndPeriodModalRedux from '../redux/containers/SymbolAndPeriodModal.redux';
 import SelectDataSourceModal from './TesterConfigs/SelectDataSource.modal';
 import SelectStrategyModal from './TesterConfigs/SelectStrategy.modal';
+import SymbolAndPeriodItemComponent from './TesterConfigs/SymbolAndPeriodItem.component';
 
 class TesterConfigsComponent extends Component {
 
   render() {
 
     let listItems = [];
-    //this.props.symbolsAndPeriods.forEach((res, idx, arr) => {
-    //  listItems.push(<SymbolAndPeriodComponent symbol={res.symbol} period={res.period} />);
-    //});
+    this.props.symbolsAndPeriods.forEach((res, idx, arr) => {
+      listItems.push(<SymbolAndPeriodItemComponent symbol={res.symbol} period={res.period} />);
+    });
 
     return (
       <>
