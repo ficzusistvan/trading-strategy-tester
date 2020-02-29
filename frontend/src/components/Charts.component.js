@@ -4,7 +4,7 @@ import { Button, Card, CardTitle } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios';
 import moment from 'moment';
-import Chart from './tester/Chart';
+import Chart from './Charts/Chart';
 import socketIOClient from 'socket.io-client';
 
 class TesterComponent extends Component {

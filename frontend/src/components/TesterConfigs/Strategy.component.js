@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
-import { Input, Card } from 'reactstrap';
+import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
@@ -31,13 +30,11 @@ class StrategyComponent extends Component {
       options.push(<option value={strategies[i]} key={i}>{strategies[i]}</option>);
     }
     return (
-      <Card body outline color='warning'>
-        <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleChange.bind(this)}>
-          {options}
-        </Input>
-      </Card>
+      <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleChange.bind(this)}>
+        {options}
+      </Input>
     )
   }
 }
 
-export default translate(withRouter(StrategyComponent))
+export default translate(StrategyComponent)

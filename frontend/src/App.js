@@ -1,13 +1,24 @@
 import React from 'react';
-import HeaderLayoutPart from './layout-parts/Header.layoutpart';
-import MainLayoutPart from './layout-parts/Main.layoutpart';
-import FooterLayoutPart from './layout-parts/Footer.layoutpart';
+import TesterConfigsLayoutPart from './layout-parts/TesterConfigs.layoutpart';
+import ChartsLayoutPart from './layout-parts/Charts.layoutpart';
+import StrategyResultsLayoutPart from './layout-parts/StrategyResults.layoutpart';
+import { Container, Row, Col } from 'reactstrap';
 
 const App = () => (
   <div>
-    <HeaderLayoutPart />
-    <MainLayoutPart />
-    <FooterLayoutPart />
+    <Container fluid="true" >
+      <Row>
+        <Col sm="2">
+          <TesterConfigsLayoutPart />
+        </Col>
+        <Col sm="8">
+          <ChartsLayoutPart />
+        </Col>
+        <Col sm="2">
+          <StrategyResultsLayoutPart />
+        </Col>
+      </Row>
+    </Container>
   </div>
 )
 

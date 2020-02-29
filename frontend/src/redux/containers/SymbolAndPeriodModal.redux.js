@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { setSymbol, setPeriod } from '../actions/tester';
-import SymbolAndPeriodChooserComponent from "../../components/SymbolAndPeriodChooser.component"
+import { addSymbolAndPeriod } from '../actions/tester';
+import SelectSymbolAndPeriodModal from "../../components/TesterConfigs/SelectSymbolAndPeriod.modal"
 
 const mapStateToProps = state => {
   return {
@@ -13,11 +13,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetSymbol: (symbol) => {
-      dispatch(setSymbol(symbol));
-    },
-    onSetPeriod: (period) => {
-      dispatch(setPeriod(period));
+    onAddSymbolAndPeriod: (symbol, period) => {
+      dispatch(addSymbolAndPeriod(symbol, period));
     }
   };
 };
@@ -25,4 +22,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SymbolAndPeriodChooserComponent)
+)(SelectSymbolAndPeriodModal)

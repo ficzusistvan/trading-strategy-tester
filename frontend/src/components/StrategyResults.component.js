@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Card, CardTitle, CardText } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import SymbolAndPeriodComponent from './SymbolAndPeriod.component';
+import DataSourceComponent from './TesterConfigs/DataSource.component';
+import SymbolAndPeriodChooserComponent from './TesterConfigs/SymbolAndPeriodChooser.component';
 
-class TesterConfigComponent extends Component {
+class StrategyResultsComponent extends Component {
 
   render() {
 
@@ -14,6 +15,8 @@ class TesterConfigComponent extends Component {
 
     return (
       <Card body outline color='info'>
+        <DataSourceComponent />
+        <SymbolAndPeriodChooserComponent />
         <Card body outline color="primary">
           <CardTitle>Data source:</CardTitle>
           <CardText className='text-danger font-weight-bold'>{this.props.dataSource}</CardText>
@@ -33,4 +36,4 @@ class TesterConfigComponent extends Component {
   }
 }
 
-export default translate(TesterConfigComponent)
+export default translate(StrategyResultsComponent)

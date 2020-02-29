@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
-import { Input, Card } from 'reactstrap';
+import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
@@ -31,13 +30,11 @@ class DataSourceComponent extends Component {
       options.push(<option value={dataSources[i]} key={i}>{dataSources[i]}</option>);
     }
     return (
-      <Card body outline color='warning'>
-        <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleChange.bind(this)}>
-          {options}
-        </Input>
-      </Card>
+      <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleChange.bind(this)}>
+        {options}
+      </Input>
     )
   }
 }
 
-export default translate(withRouter(DataSourceComponent))
+export default translate(DataSourceComponent)

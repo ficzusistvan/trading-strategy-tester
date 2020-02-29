@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TesterResultsComponent from "../../components/tester/TesterResults.component"
+import StrategyResultsComponent from "../../components/StrategyResults/TesterResults.component"
 
 const mapStateToProps = state => {
   return {
@@ -9,4 +9,4 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps
-)(TesterResultsComponent)
+)(StrategyResultsComponent)

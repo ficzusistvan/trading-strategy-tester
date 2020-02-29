@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { setTestResults } from '../actions/tester';
-import TesterComponent from "../../components/Charts/Chart"
+import { setSymbol, setPeriod } from '../actions/tester';
+import SymbolAndPeriodComponent from "../../components/TesterConfigs/SymbolAndPeriod.component"
 
 const mapStateToProps = state => {
   return {
@@ -13,8 +13,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetTestResults: (results) => {
-      dispatch(setTestResults(results));
+    onSetSymbol: (symbol) => {
+      dispatch(setSymbol(symbol));
+    },
+    onSetPeriod: (period) => {
+      dispatch(setPeriod(period));
     }
   };
 };
@@ -22,4 +25,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TesterComponent)
+)(SymbolAndPeriodComponent)

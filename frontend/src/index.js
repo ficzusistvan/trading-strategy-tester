@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-//import './index.css';
 import App from './App';
-//import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,9 +14,7 @@ store.dispatch(setLanguage('en', enPhrases));
 
 ReactDOM.render((
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </Provider>
 ), document.getElementById('root'));
 

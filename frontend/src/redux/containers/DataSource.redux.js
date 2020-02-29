@@ -1,15 +1,6 @@
 import { connect } from 'react-redux'
 import { setDataSource } from '../actions/tester';
-import DataSourceComponent from "../../components/DataSource.component"
-
-const mapStateToProps = state => {
-  return {
-    dataSource: state.tester.dataSource,
-    symbol: state.tester.symbol,
-    period: state.tester.period,
-    strategy: state.tester.strategy
-  };
-};
+import DataSourceComponent from "../../components/TesterConfigs/DataSource.component"
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -20,6 +11,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(DataSourceComponent)
