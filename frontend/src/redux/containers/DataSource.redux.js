@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setDataSource } from '../actions/tester';
+import { setDataSource } from '../actions/testerConfigs';
 import DataSourceComponent from "../../components/TesterConfigs/DataSource.component"
 
 const mapDispatchToProps = dispatch => {

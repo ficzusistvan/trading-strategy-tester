@@ -1,6 +1,6 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_STRATEGY, ADD_SYMBOL_AND_PERIOD, SET_TEST_RESULTS } from "../actions/types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, ADD_SYMBOL_AND_PERIOD, SET_STRATEGY} from "../actions/types";
 
-const tester = (state = { dataSource: null, symbol: null, period: 5, symbolsAndPeriods: [], strategy: null, testResults: null }, action) => {
+const testerConfigs = (state = { dataSource: null, symbol: null, period: 5, symbolsAndPeriods: [], strategy: null }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
       if (state.dataSource === action.dataSource) {
@@ -25,25 +25,17 @@ const tester = (state = { dataSource: null, symbol: null, period: 5, symbolsAndP
         ...state,
         period: action.period
       }
-    }
-    case SET_STRATEGY: {
-      return {
-        ...state,
-        strategy: action.strategy
-      }
-    }
- 
+    } 
     case ADD_SYMBOL_AND_PERIOD: {
       return {
         ...state,
         symbolsAndPeriods: [...state.symbolsAndPeriods, { symbol: action.symbol, period: action.period }]
       }
     }
-
-    case SET_TEST_RESULTS: {
+    case SET_STRATEGY: {
       return {
         ...state,
-        testResults: action.results
+        strategy: action.strategy
       }
     }
 
@@ -52,4 +44,4 @@ const tester = (state = { dataSource: null, symbol: null, period: 5, symbolsAndP
   }
 }
 
-export default tester
+export default testerConfigs

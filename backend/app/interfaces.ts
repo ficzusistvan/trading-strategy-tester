@@ -113,3 +113,9 @@ export interface ICandle {
   close: number,
   volume: number
 }
+
+export interface IMyCandles {
+  symbol: string,
+  period: string,
+  candles: Array<ICandle>
+}

@@ -1,9 +1,11 @@
 import React from 'react';
+import ChartsRedux from '../redux/containers/Charts.redux';
+import translate from 'redux-polyglot/translate';
 
 const ChartsLayoutPart = () => (
   <div>
-    charts
+    <ChartsRedux />
   </div>
 )
 
-export default ChartsLayoutPart;
+export default translate(ChartsLayoutPart);

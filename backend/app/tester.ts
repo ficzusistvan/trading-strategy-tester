@@ -21,6 +21,7 @@ const io: socketio.Server = socketio(SOCKET_IO_PORT);
 
 let strategyInst: any;
 let candles: Array<i.ICandle>;
+let myCandles: Array<i.IMyCandles>;
 let isEntered: boolean = false;
 let openedTrade: i.ITrade;
 let trades: Array<i.ITrade> = [];
@@ -34,6 +35,18 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     logger.info("Socket.io client disconnected [%s]", socket.id);
+  });
+
+  socket.on('getCandles', async (data: { dataSource: string, symbolsAndPeriods: any }) => {
+    logger.info('getCandles: %O', data);
+    let dataSourceInst = await import('./data-sources/' + data.dataSource + '/api');
+    const promises = data.symbolsAndPeriods.map(async (symbolAndPeriod: any) => {
+      const result = await dataSourceInst.getCandles(symbolAndPeriod.symbol, symbolAndPeriod.period);
+      return { symbol: symbolAndPeriod.symbol, period: symbolAndPeriod.period, candles: result };
+    });
+    const results = await Promise.all<i.IMyCandles>(promises);
+    myCandles = results;
+    io.emit('returnedCandles', results);
   });
 
   socket.on('runTest', async (data: { strategy: string }) => {
@@ -72,12 +85,7 @@ let handleCandle = function (idx: number) {
   }
 }
 
-let retreivedCandles = function(newCandles: Array<i.ICandle>) {
-  candles = newCandles;
-}
-
 export {
   start,
-  handleCandle,
-  retreivedCandles
+  handleCandle
 };

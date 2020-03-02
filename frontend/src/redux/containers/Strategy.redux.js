@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setStrategy } from '../actions/tester';
+import { setStrategy } from '../actions/testerConfigs';
 import StrategyComponent from "../../components/TesterConfigs/Strategy.component"
 
 const mapDispatchToProps = dispatch => {

@@ -24,7 +24,6 @@ export const WEBSOCKET_DISCONNECTED = 'WEBSOCKET_DISCONNECTED';
 export const LOGGED_IN = "LOGGED_IN";
 export const STRATEGY_IMPORTED = 'STRATEGY_IMPORTED';
 export const CANDLE_HANDLED = 'CANDLE_HANDLED';
-export const RETRIEVED_CANDLES = 'RETRIEVED_CANDLES';
 export const FINISHED_TEST = 'FINISHED_TEST';
 
 em.on(HTTP_SERVER_INITIALISED, async (data) => {
@@ -38,11 +37,6 @@ em.on(STRATEGY_IMPORTED, () => {
 
 em.on(CANDLE_HANDLED, (data: { idx: number }) => {
   tester.handleCandle(++data.idx);
-});
-
-em.on(RETRIEVED_CANDLES, (candles: Array<i.ICandle>) => {
-  logger.info('Retreived candles', candles.length);
-  tester.retreivedCandles(candles);
 });
 
 em.on(FINISHED_TEST, () => {

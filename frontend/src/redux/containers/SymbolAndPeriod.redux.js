@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
-import { setSymbol, setPeriod } from '../actions/tester';
+import { setSymbol, setPeriod } from '../actions/testerConfigs';
 import SymbolAndPeriodComponent from "../../components/TesterConfigs/SymbolAndPeriod.component"
 
 const mapStateToProps = state => {
   return {
-    dataSource: state.tester.dataSource,
-    symbol: state.tester.symbol,
-    period: state.tester.period,
-    strategy: state.tester.strategy
+    dataSource: state.testerConfigs.dataSource,
+    symbol: state.testerConfigs.symbol,
+    period: state.testerConfigs.period,
+    strategy: state.testerConfigs.strategy
   };
 };
 
