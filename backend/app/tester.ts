@@ -20,8 +20,7 @@ const SOCKET_IO_PORT = nconf.get('ports:socket_io');
 const io: socketio.Server = socketio(SOCKET_IO_PORT);
 
 let strategyInst: any;
-let candles: Array<i.ICandle>;
-let myCandles: Array<i.IMyCandles>;
+let candles: Array<i.IMyCandles>;
 let isEntered: boolean = false;
 let openedTrade: i.ITrade;
 let trades: Array<i.ITrade> = [];
@@ -44,9 +43,12 @@ io.on('connection', socket => {
       const result = await dataSourceInst.getCandles(symbolAndPeriod.symbol, symbolAndPeriod.period);
       return { symbol: symbolAndPeriod.symbol, period: symbolAndPeriod.period, candles: result };
     });
-    const results = await Promise.all<i.IMyCandles>(promises);
-    myCandles = results;
-    io.emit('returnedCandles', results);
+    candles = await Promise.all<i.IMyCandles>(promises);
+    io.emit('returnedCandles', candles);
+    // TODO: is this the correct way?! The symbol with the smallest period is used for "stepping" in strategy
+    candles.sort((a: any, b: any) => {
+      return a.period - b.period;
+    });
   });
 
   socket.on('runTest', async (data: { strategy: string }) => {
@@ -60,10 +62,10 @@ io.on('connection', socket => {
 
 let handleCandle = function (idx: number) {
   debug('Handling candle idx [' + idx + ']');
-  if (idx < candles.length) {
+  if (idx < candles[0].candles.length) {
     // Running strategy
     if (!isEntered) {
-      let res: i.IStrategyResult = strategyInst.enter(candles, idx);
+      let res: i.IStrategyResult = strategyInst.enter(candles[0].candles, idx);
       if (res.result === true) {
         logger.info('Entered order %O', res.trade);
         trades.push(res.trade);
@@ -71,7 +73,7 @@ let handleCandle = function (idx: number) {
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(candles, idx, openedTrade);
+      let res: i.IStrategyResult = strategyInst.exit(candles[0].candles, idx, openedTrade);
       if (res.result === true) {
         logger.info('Exited order %O', res.trade);
         trades.push(res.trade);

@@ -1,37 +1,39 @@
 import React, { Component } from 'react'
-import { Card, CardTitle, CardText } from 'reactstrap';
+import { Row, ListGroup } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import DataSourceComponent from './TesterConfigs/DataSource.component';
-import SymbolAndPeriodChooserComponent from './TesterConfigs/SymbolAndPeriodChooser.component';
+import ResultComponent from './StrategyResults/Result.component';
 
 class StrategyResultsComponent extends Component {
 
   render() {
+    if (!this.props.testResults) {
+      return (<p>Waiting for results...</p>);
+    }
 
+    let profit = 0;
     let listItems = [];
-    //this.props.symbolsAndPeriods.forEach((res, idx, arr) => {
-    //  listItems.push(<SymbolAndPeriodComponent symbol={res.symbol} period={res.period} />);
-    //});
+    this.props.testResults.forEach((res, idx, arr) => {
+      if (res.side !== 'NONE') {
+        const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { date: '', price: res.price };
+        listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startDate={res.date} endDate={nextValue.date} />);
+        if (res.side === 'BUY') {
+          profit += (nextValue.price - res.price);
+        }
+        if (res.side === 'SELL') {
+          profit += (res.price - nextValue.price);
+        }
+      }
+    });
 
     return (
-      <Card body outline color='info'>
-        <DataSourceComponent />
-        <SymbolAndPeriodChooserComponent />
-        <Card body outline color="primary">
-          <CardTitle>Data source:</CardTitle>
-          <CardText className='text-danger font-weight-bold'>{this.props.dataSource}</CardText>
-        </Card>
-        <Card body outline color="primary">
-          <CardTitle>Symbols and periods:</CardTitle>
-          <CardText>
-            {listItems}
-          </CardText>
-        </Card>
-        <Card body outline color="primary">
-          <CardTitle>Strategy:</CardTitle>
-          <CardText className='text-danger font-weight-bold'>{this.props.strategy}</CardText>
-        </Card>
-      </Card>
+      <Row>
+        <p>Profit:</p>
+        <p className="text-danger font-weight-bold">{profit.toFixed(2)}</p>
+        <p>Strategy results:</p>
+        <ListGroup>
+          {listItems}
+        </ListGroup>
+      </Row>
     );
   }
 }

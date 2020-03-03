@@ -7,7 +7,7 @@ class ChartsComponent extends Component {
 
   render() {
     if (!this.props.candles) {
-      return (<p>Waiting...</p>);
+      return (<p>Waiting for candles...</p>);
     }
 
     const allParsedCandles = this.props.candles.map(candleObj => {

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import StrategyResultsComponent from "../../components/StrategyResults/TesterResults.component"
+import StrategyResultsComponent from "../../components/StrategyResults.component"
 
 const mapStateToProps = state => {
   return {
-    testResults: state.tester.testResults
+    testResults: state.testerResults.testResults
   };
 };
 
