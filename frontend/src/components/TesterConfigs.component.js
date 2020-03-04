@@ -12,7 +12,7 @@ class TesterConfigsComponent extends Component {
 
     let listItems = [];
     this.props.symbolsAndPeriods.forEach((res, idx, arr) => {
-      listItems.push(<SymbolAndPeriodItemComponent symbol={res.symbol} period={res.period} />);
+      listItems.push(<SymbolAndPeriodItemComponent key={res.symbol + res.period} symbol={res.symbol} period={res.period} />);
     });
 
     return (
