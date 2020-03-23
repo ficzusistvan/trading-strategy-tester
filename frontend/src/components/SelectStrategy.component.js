@@ -3,7 +3,7 @@ import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
-class StrategyComponent extends Component {
+class SelectStrategyComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -30,11 +30,14 @@ class StrategyComponent extends Component {
       options.push(<option value={strategies[i]} key={i}>{strategies[i]}</option>);
     }
     return (
-      <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleChange.bind(this)}>
-        {options}
-      </Input>
+      <>
+        <h4>Select strategy</h4>
+        <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleChange.bind(this)}>
+          {options}
+        </Input>
+      </>
     )
   }
 }
 
-export default translate(StrategyComponent)
+export default translate(SelectStrategyComponent)

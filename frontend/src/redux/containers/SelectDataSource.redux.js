@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setDataSource } from '../actions/testerConfigs';
-import DataSourceComponent from "../../components/TesterConfigs/DataSource.component"
+import SelectDataSourceComponent from "../../components/SelectDataSource.component"
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -13,4 +13,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(DataSourceComponent)
+)(SelectDataSourceComponent)

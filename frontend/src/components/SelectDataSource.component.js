@@ -3,7 +3,7 @@ import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
-class DataSourceComponent extends Component {
+class SelectDataSourceComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -30,11 +30,14 @@ class DataSourceComponent extends Component {
       options.push(<option value={dataSources[i]} key={i}>{dataSources[i]}</option>);
     }
     return (
-      <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleChange.bind(this)}>
-        {options}
-      </Input>
+      <>
+        <h4>Select data source</h4>
+        <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleChange.bind(this)}>
+          {options}
+        </Input>
+      </>
     )
   }
 }
 
-export default translate(DataSourceComponent)
+export default translate(SelectDataSourceComponent)

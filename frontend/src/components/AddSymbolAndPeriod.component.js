@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Col, Row, Input } from 'reactstrap';
+import { Col, Row, Input, Button, FormGroup, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import axios from 'axios'
 
@@ -17,7 +17,7 @@ const PERIODS = [
   { str: 'MN1', val: 43200 }
 ];
 
-class SymbolAndPeriodComponent extends Component {
+class AddSymbolAndPeriodComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -34,12 +34,20 @@ class SymbolAndPeriodComponent extends Component {
     this.setState({ symbols: resp.data.symbols, loading: false })
   }
 
-  handleClick(symbol) {
+  onHandleSymbolClick(symbol) {
     this.props.onSetSymbol(symbol);
   }
 
-  onHandleChange(e) {
+  onHandlePeriodChange(e) {
     this.props.onSetPeriod(e.target.value);
+  }
+
+  onHandleDefaultChange(e) {
+    this.props.onSetIsDefault(e.target.checked);
+  }
+
+  onHandleAddClick(e) {
+    this.props.onAddSymbolAndPeriod(this.props.symbol, this.props.period, this.props.isDefault);
   }
 
   render() {
@@ -50,8 +58,10 @@ class SymbolAndPeriodComponent extends Component {
     }
     return (
       <>
+        <h4>Add symbol and period</h4>
         <Row>
-          <Col sm="12">
+          <Col>
+            <h4>Select symbol</h4>
             <ReactTable
               getTdProps={(state, rowInfo, column, instance) => {
                 return {
@@ -70,7 +80,7 @@ class SymbolAndPeriodComponent extends Component {
                     /*if (handleOriginal) {
                       handleOriginal()
                     }*/
-                    this.handleClick(rowInfo.original['symbol']);
+                    this.onHandleSymbolClick(rowInfo.original['symbol']);
                   }
                 }
               }}
@@ -105,10 +115,27 @@ class SymbolAndPeriodComponent extends Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12">
-            <Input type="select" name="period" id="periodSelect" value={this.props.period} onChange={this.onHandleChange.bind(this)}>
+          <Col>
+            <h4>Select period</h4>
+            <Input type="select" name="period" id="periodSelect" value={this.props.period} onChange={this.onHandlePeriodChange.bind(this)}>
               {options}
             </Input>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h4>Default</h4>
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" onChange={this.onHandleDefaultChange.bind(this)} />{' '}
+          Check if default
+        </Label>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row className='mt-5 justify-content-md-center'>
+          <Col sm="6">
+            <Button block onClick={this.onHandleAddClick.bind(this)}>Add symbol and period</Button>
           </Col>
         </Row>
       </>
@@ -116,4 +143,4 @@ class SymbolAndPeriodComponent extends Component {
   }
 }
 
-export default translate(SymbolAndPeriodComponent)
+export default translate(AddSymbolAndPeriodComponent)

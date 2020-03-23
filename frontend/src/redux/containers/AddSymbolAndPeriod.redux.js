@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
-import { setSymbol, setPeriod } from '../actions/testerConfigs';
-import SymbolAndPeriodComponent from "../../components/TesterConfigs/SymbolAndPeriod.component"
+import { setSymbol, setPeriod, addSymbolAndPeriod, setIsDefault } from '../actions/testerConfigs';
+import AddSymbolAndPeriodComponent from "../../components/AddSymbolAndPeriod.component"
 
 const mapStateToProps = state => {
   return {
     dataSource: state.testerConfigs.dataSource,
     symbol: state.testerConfigs.symbol,
     period: state.testerConfigs.period,
+    isDefault: state.testerConfigs.isDefault,
     strategy: state.testerConfigs.strategy
   };
 };
@@ -18,6 +19,12 @@ const mapDispatchToProps = dispatch => {
     },
     onSetPeriod: (period) => {
       dispatch(setPeriod(period));
+    },
+    onSetIsDefault: (isDefault) => {
+      dispatch(setIsDefault(isDefault));
+    },
+    onAddSymbolAndPeriod: (symbol, period, isDefault) => {
+      dispatch(addSymbolAndPeriod(symbol, period, isDefault));
     }
   };
 };
@@ -25,4 +32,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SymbolAndPeriodComponent)
+)(AddSymbolAndPeriodComponent)

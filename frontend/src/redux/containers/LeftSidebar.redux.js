@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TesterConfigsComponent from "../../components/TesterConfigs.component"
+import LeftSidebarLayoutpart from "../../layout-parts/LeftSidebar.layoutpart";
 
 const mapStateToProps = state => {
   return {
@@ -13,4 +13,4 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps
-)(TesterConfigsComponent)
+)(LeftSidebarLayoutpart)

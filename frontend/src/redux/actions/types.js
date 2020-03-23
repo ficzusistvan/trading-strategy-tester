@@ -5,6 +5,7 @@ export const LOGOUT = "LOGOUT";
 export const SET_DATA_SOURCE = "SET_DATA_SOURCE";
 export const SET_SYMBOL = "SET_SYMBOL";
 export const SET_PERIOD = "SET_PERIOD";
+export const SET_IS_DEFAULT = "SET_IS_DEFAULT";
 export const SET_STRATEGY = "SET_STRATEGY";
 export const ADD_SYMBOL_AND_PERIOD = "ADD_SYMBOL_AND_PERIOD";
 

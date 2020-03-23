@@ -36,23 +36,25 @@ io.on('connection', socket => {
     logger.info("Socket.io client disconnected [%s]", socket.id);
   });
 
-  socket.on('getCandles', async (data: { dataSource: string, symbolsAndPeriods: any }) => {
-    logger.info('getCandles: %O', data);
+  socket.on('getCandles', () => {
+    logger.info('socket on getCandles');
+    io.emit('respCandles', candles);
+  });
+
+  socket.on('getTrades', () => {
+    logger.info('socket on getTrades');
+    io.emit('respTrades', trades);
+  });
+
+  socket.on('runTest', async (data: { strategy: string, dataSource: string, symbolsAndPeriods: any }) => {
+    logger.info('socket on runTest: %O', data);
     let dataSourceInst = await import('./data-sources/' + data.dataSource + '/api');
     const promises = data.symbolsAndPeriods.map(async (symbolAndPeriod: any) => {
       const result = await dataSourceInst.getCandles(symbolAndPeriod.symbol, symbolAndPeriod.period);
-      return { symbol: symbolAndPeriod.symbol, period: symbolAndPeriod.period, candles: result };
+      return { symbol: symbolAndPeriod.symbol, period: symbolAndPeriod.period, isDefault: symbolAndPeriod.isDefault, candles: result };
     });
     candles = await Promise.all<i.IMyCandles>(promises);
-    io.emit('returnedCandles', candles);
-    // TODO: is this the correct way?! The symbol with the smallest period is used for "stepping" in strategy
-    candles.sort((a: any, b: any) => {
-      return a.period - b.period;
-    });
-  });
 
-  socket.on('runTest', async (data: { strategy: string }) => {
-    logger.info('Running test: %O', data);
     isEntered = false;
     trades = [];
     strategyInst = await import('./strategies/' + data.strategy);
