@@ -150,7 +150,7 @@ class AddSymbolAndPeriodComponent extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Row className='mt-5 justify-content-md-center'>
+        <Row className='my-3 justify-content-md-center'>
           <Col sm="6">
             <Button block onClick={this.onHandleAddClick.bind(this)}>Add symbol and period</Button>
           </Col>
