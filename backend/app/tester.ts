@@ -20,7 +20,8 @@ const SOCKET_IO_PORT = nconf.get('ports:socket_io');
 const io: socketio.Server = socketio(SOCKET_IO_PORT);
 
 let strategyInst: any;
-let candles: Array<i.IMyCandles>;
+let arrayOfCandles: Array<i.IMyCandles>;
+let defaultCandles: i.IMyCandles;
 let isEntered: boolean = false;
 let openedTrade: i.ITrade;
 let trades: Array<i.ITrade> = [];
@@ -38,7 +39,7 @@ io.on('connection', socket => {
 
   socket.on('getCandles', () => {
     logger.info('socket on getCandles');
-    io.emit('respCandles', candles);
+    io.emit('respCandles', arrayOfCandles);
   });
 
   socket.on('getTrades', () => {
@@ -53,7 +54,10 @@ io.on('connection', socket => {
       const result = await dataSourceInst.getCandles(symbolAndPeriod.symbol, symbolAndPeriod.period);
       return { symbol: symbolAndPeriod.symbol, period: symbolAndPeriod.period, isDefault: symbolAndPeriod.isDefault, candles: result };
     });
-    candles = await Promise.all<i.IMyCandles>(promises);
+    arrayOfCandles = await Promise.all<i.IMyCandles>(promises);
+    defaultCandles = arrayOfCandles.filter((candles: i.IMyCandles) => {
+      return candles.isDefault === true;
+    })[0];
 
     isEntered = false;
     trades = [];
@@ -64,10 +68,10 @@ io.on('connection', socket => {
 
 let handleCandle = function (idx: number) {
   debug('Handling candle idx [' + idx + ']');
-  if (idx < candles[0].candles.length) {
+  if (idx < defaultCandles.candles.length) {
     // Running strategy
     if (!isEntered) {
-      let res: i.IStrategyResult = strategyInst.enter(candles[0].candles, idx);
+      let res: i.IStrategyResult = strategyInst.enter(defaultCandles.candles, idx);
       if (res.result === true) {
         logger.info('Entered order %O', res.trade);
         trades.push(res.trade);
@@ -75,7 +79,7 @@ let handleCandle = function (idx: number) {
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(candles[0].candles, idx, openedTrade);
+      let res: i.IStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade);
       if (res.result === true) {
         logger.info('Exited order %O', res.trade);
         trades.push(res.trade);

@@ -117,5 +117,6 @@ export interface ICandle {
 export interface IMyCandles {
   symbol: string,
   period: string,
+  isDefault: boolean,
   candles: Array<ICandle>
 }

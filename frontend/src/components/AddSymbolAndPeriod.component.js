@@ -22,14 +22,18 @@ class AddSymbolAndPeriodComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      keyword: null,
       symbols: [],
       loading: true
     };
   }
 
-  async componentDidMount() {
-    // TODO: fix this!!!
-    const resp = await axios.get('/api/symbol/search/' + this.props.dataSource + '/DE');
+  onHandleKeywordChange(e) {
+    this.setState({keyword: e.target.value});
+  }
+
+  async onHandleSearchClick(e) {
+    const resp = await axios.get('/api/symbol/search/' + this.props.dataSource + '/' + this.state.keyword);
     console.log(resp);
     this.setState({ symbols: resp.data.symbols, loading: false })
   }
@@ -61,7 +65,20 @@ class AddSymbolAndPeriodComponent extends Component {
         <h4>Add symbol and period</h4>
         <Row>
           <Col>
-            <h4>Select symbol</h4>
+            <h5>Search symbol</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="6">
+            <Input type="text" name="keyword" id="keyword" value={this.state.keyword} onChange={this.onHandleKeywordChange.bind(this)} />
+          </Col>
+          <Col sm="6">
+            <Button block onClick={this.onHandleSearchClick.bind(this)}>Search symbol</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h5>Select symbol</h5>
             <ReactTable
               getTdProps={(state, rowInfo, column, instance) => {
                 return {
@@ -116,7 +133,7 @@ class AddSymbolAndPeriodComponent extends Component {
         </Row>
         <Row>
           <Col>
-            <h4>Select period</h4>
+            <h5>Select period</h5>
             <Input type="select" name="period" id="periodSelect" value={this.props.period} onChange={this.onHandlePeriodChange.bind(this)}>
               {options}
             </Input>
@@ -124,7 +141,7 @@ class AddSymbolAndPeriodComponent extends Component {
         </Row>
         <Row>
           <Col>
-            <h4>Default</h4>
+            <h5>Select if default</h5>
             <FormGroup check>
               <Label check>
                 <Input type="checkbox" onChange={this.onHandleDefaultChange.bind(this)} />{' '}
