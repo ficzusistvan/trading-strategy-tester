@@ -57,7 +57,7 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="success" tag={Link} to='symbol-period'>Add symbol & period</Button>
+              <Button block color="success" tag={Link} to='symbol-period' disabled={this.props.dataSource === null}>Add symbol & period</Button>
             </Col>
           </Row>
           <Row className='mt-5'>
@@ -67,17 +67,17 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="primary" onClick={this.onRunTestClick.bind(this)}>Run test</Button>
+              <Button block color="primary" onClick={this.onRunTestClick.bind(this)} disabled={this.props.dataSource === null || this.props.strategy === null || this.props.symbolsAndPeriods.length === 0}>Run test</Button>
             </Col>
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="warning" tag={Link} to='charts'>View charts</Button>
+              <Button block color="warning" tag={Link} to='charts' disabled={this.props.dataSource === null}>View charts</Button>
             </Col>
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="warning" tag={Link} to='results'>View results</Button>
+              <Button block color="warning" tag={Link} to='results' disabled={this.props.dataSource === null}>View results</Button>
             </Col>
           </Row>
         </Col>
