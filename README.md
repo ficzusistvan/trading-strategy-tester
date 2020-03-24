@@ -81,7 +81,11 @@ Open http://localhost:3000
     ```bash 
     npm i 
     ```
-4. Run application:
+4. Build application (tsc):
+   ```bash
+   npm run build
+   ```
+5. Run application:
     ```bash
     npm run prod
     ```
