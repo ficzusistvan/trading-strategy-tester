@@ -5,9 +5,8 @@
   "description": "Trading Strategy Tester",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
-    "prod": "tsc && node ./build/app/app.js",
-    "built": "npm i && node ./build/app/app.js",
-    "tsc": "tsc"
+    "prod": "node ./build/app/app.js",
+    "build": "tsc"
   },
   "dependencies": {
     "axios": "^0.19.1",
