@@ -1,6 +1,6 @@
 {
   "ports": {
-    "http_server": 3003,
+    "http_server": 5000,
     "socket_io": 3005
   },
   "xapi": {

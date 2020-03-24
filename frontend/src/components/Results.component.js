@@ -19,7 +19,7 @@ class StrategyResultsComponent extends Component {
   componentDidMount() {
 
     if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === '1') {
-      this.socket = socketIOClient('localhost:3005');
+      this.socket = socketIOClient('localhost:' + process.env.REACT_APP_SOCKET_IO_PORT);
     } else {
       this.socket = socketIOClient(); // auto discovery
     }
