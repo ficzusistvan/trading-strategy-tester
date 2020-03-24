@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, ListGroup } from 'reactstrap';
+import { Row, ListGroup, Col } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import ResultComponent from './Results/Result.component';
 import socketIOClient from 'socket.io-client';
@@ -54,12 +54,13 @@ class StrategyResultsComponent extends Component {
 
     return (
       <Row>
-        <p>Profit:</p>
-        <p className="text-danger font-weight-bold">{profit.toFixed(2)}</p>
-        <p>Strategy results:</p>
-        <ListGroup>
-          {listItems}
-        </ListGroup>
+        <Col>
+          <h4>Profit: <span className="text-danger font-weight-bold">{profit.toFixed(2)}</span></h4>
+          <h4>Strategy results:</h4>
+          <ListGroup>
+            {listItems}
+          </ListGroup>
+        </Col>
       </Row>
     );
   }
