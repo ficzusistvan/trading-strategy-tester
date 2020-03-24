@@ -1,6 +1,6 @@
 import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_SYMBOL_AND_PERIOD, SET_STRATEGY} from "../actions/types";
 
-const testerConfigs = (state = { dataSource: null, symbol: null, period: 5, isDefault: false, symbolsAndPeriods: [], strategy: null }, action) => {
+const testerConfigs = (state = { dataSource: null, symbol: null, period: 5, isDefault: true, symbolsAndPeriods: [], strategy: null }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
       if (state.dataSource === action.dataSource) {

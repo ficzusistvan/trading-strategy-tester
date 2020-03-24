@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     symbol: state.testerConfigs.symbol,
     period: state.testerConfigs.period,
     isDefault: state.testerConfigs.isDefault,
+    symbolsAndPeriods: state.testerConfigs.symbolsAndPeriods,
     strategy: state.testerConfigs.strategy
   };
 };

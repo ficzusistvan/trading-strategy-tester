@@ -1,7 +1,14 @@
-import { SET_CANDLES, SET_TEST_RESULTS } from "../actions/types";
+import { SET_CANDLES, SET_TEST_RESULTS, SET_IS_TEST_FINISHED } from "../actions/types";
 
-const testerResults = (state = { candles: null, testResults: null }, action) => {
+const testerResults = (state = { isTestFinished: false, candles: null, testResults: null }, action) => {
   switch (action.type) {
+
+    case SET_IS_TEST_FINISHED: {
+      return {
+        ...state,
+        isTestFinished: action.isTestFinished
+      }
+    }
 
     case SET_CANDLES: {
       return {

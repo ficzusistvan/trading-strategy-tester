@@ -26,11 +26,13 @@ class LeftSidebarLayoutPart extends React.Component {
     this.socket.on('finishedTest', data => {
       console.log('finishedTest from socket.io:', data);
       this.setState({ loading: false });
+      this.props.onSetIsTestFinished(true);
     });
   }
 
   onRunTestClick(e) {
     this.setState({ loading: true });
+    this.props.onSetIsTestFinished(false);
     this.socket.emit('runTest', { 
       dataSource: this.props.dataSource, 
       symbolsAndPeriods: this.props.symbolsAndPeriods,
@@ -72,12 +74,12 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="warning" tag={Link} to='charts' disabled={this.props.dataSource === null}>View charts</Button>
+              <Button block color="warning" tag={Link} to='charts' disabled={this.props.isTestFinished === false}>View charts</Button>
             </Col>
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="warning" tag={Link} to='results' disabled={this.props.dataSource === null}>View results</Button>
+              <Button block color="warning" tag={Link} to='results' disabled={this.props.isTestFinished === false}>View results</Button>
             </Col>
           </Row>
         </Col>

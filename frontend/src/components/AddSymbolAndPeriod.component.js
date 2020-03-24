@@ -52,14 +52,19 @@ class AddSymbolAndPeriodComponent extends Component {
 
   onHandleAddClick(e) {
     this.props.onAddSymbolAndPeriod(this.props.symbol, this.props.period, this.props.isDefault);
+    this.props.onSetIsDefault(false);
   }
 
   render() {
     const { symbols, loading } = this.state
+
     const options = [];
     for (let i = 0; i < PERIODS.length; i++) {
       options.push(<option value={PERIODS[i].val} key={i}>{PERIODS[i].str}</option>);
     }
+
+    const isDisabled = this.props.symbolsAndPeriods.find(el => el.isDefault === true) === undefined;
+
     return (
       <>
         <h4>Add symbol and period</h4>
@@ -144,7 +149,7 @@ class AddSymbolAndPeriodComponent extends Component {
             <h5>Select if default</h5>
             <FormGroup check>
               <Label check>
-                <Input type="checkbox" onChange={this.onHandleDefaultChange.bind(this)} />{' '}
+                <Input type="checkbox" onChange={this.onHandleDefaultChange.bind(this)} disabled={!isDisabled} checked={this.props.isDefault}/>{' '}
           Check if default
         </Label>
             </FormGroup>
