@@ -1,4 +1,4 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_SYMBOL_AND_PERIOD, SET_STRATEGY} from "../actions/types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY} from "../actions/types";
 
 const testerConfigs = (state = { dataSource: null, symbol: null, period: 5, isDefault: true, symbolsAndPeriods: [], strategy: null }, action) => {
   switch (action.type) {
@@ -32,10 +32,10 @@ const testerConfigs = (state = { dataSource: null, symbol: null, period: 5, isDe
         isDefault: action.isDefault
       }
     }
-    case ADD_SYMBOL_AND_PERIOD: {
+    case ADD_CANDLES: {
       return {
         ...state,
-        symbolsAndPeriods: [...state.symbolsAndPeriods, { symbol: action.symbol, period: action.period, isDefault: action.isDefault }]
+        symbolsAndPeriods: [...state.symbolsAndPeriods, { symbol: action.symbol, period: action.period, isDefault: action.isDefault, candles: action.candles }]
       }
     }
     case SET_STRATEGY: {

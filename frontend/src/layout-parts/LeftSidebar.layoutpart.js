@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import './LeftSidebar.layoutpart.css';
 import { Link } from 'react-router-dom';
-import socketIOClient from 'socket.io-client';
+import * as eventHandler from '../tester/event-handler';
 
 class LeftSidebarLayoutPart extends React.Component {
 
@@ -15,29 +15,18 @@ class LeftSidebarLayoutPart extends React.Component {
     }
   }
 
-  componentDidMount() {
-
-    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === '1') {
-      this.socket = socketIOClient('localhost:' + process.env.REACT_APP_SOCKET_IO_PORT);
-    } else {
-      this.socket = socketIOClient(); // auto discovery
-    }
-
+  /*componentDidMount() {
     this.socket.on('finishedTest', data => {
       console.log('finishedTest from socket.io:', data);
       this.setState({ loading: false });
       this.props.onSetIsTestFinished(true);
     });
-  }
+  }*/
 
   onRunTestClick(e) {
     this.setState({ loading: true });
     this.props.onSetIsTestFinished(false);
-    this.socket.emit('runTest', { 
-      dataSource: this.props.dataSource, 
-      symbolsAndPeriods: this.props.symbolsAndPeriods,
-      strategy: this.props.strategy 
-    });
+    eventHandler.em.emit(eventHandler.START);
   }
 
   render() {
@@ -74,7 +63,7 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="warning" tag={Link} to='charts' disabled={this.props.isTestFinished === false}>View charts</Button>
+              <Button block color="warning" tag={Link} to='charts' disabled={this.props.symbolsAndPeriods.length === 0}>View charts</Button>
             </Col>
           </Row>
           <Row className='mt-5'>

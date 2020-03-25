@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSymbol, setPeriod, addSymbolAndPeriod, setIsDefault } from '../actions/testerConfigs';
+import { setSymbol, setPeriod, addCandles, setIsDefault } from '../actions/testerConfigs';
 import AddSymbolAndPeriodComponent from "../../components/AddSymbolAndPeriod.component"
 
 const mapStateToProps = state => {
@@ -24,8 +24,8 @@ const mapDispatchToProps = dispatch => {
     onSetIsDefault: (isDefault) => {
       dispatch(setIsDefault(isDefault));
     },
-    onAddSymbolAndPeriod: (symbol, period, isDefault) => {
-      dispatch(addSymbolAndPeriod(symbol, period, isDefault));
+    onAddCandles: (symbol, period, isDefault, candles) => {
+      dispatch(addCandles(symbol, period, isDefault, candles));
     }
   };
 };

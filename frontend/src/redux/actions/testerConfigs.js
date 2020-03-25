@@ -1,4 +1,4 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_SYMBOL_AND_PERIOD, SET_STRATEGY } from "./types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY } from "./types";
 
 export const setDataSource = (dataSource) => ({
   type: SET_DATA_SOURCE,
@@ -20,11 +20,12 @@ export const setIsDefault = (isDefault) => ({
   isDefault
 })
 
-export const addSymbolAndPeriod = (symbol, period, isDefault) => ({
-  type: ADD_SYMBOL_AND_PERIOD,
+export const addCandles = (symbol, period, isDefault, candles) => ({
+  type: ADD_CANDLES,
   symbol,
   period,
-  isDefault
+  isDefault,
+  candles
 });
 
 export const setStrategy = (strategy) => ({

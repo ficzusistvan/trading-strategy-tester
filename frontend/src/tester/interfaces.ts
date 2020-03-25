@@ -1,5 +1,5 @@
 import Big from "big.js";
-import moment = require("moment");
+//import moment = require("moment");
 
 export interface IExchange {
   name: string,

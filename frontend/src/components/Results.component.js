@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Row, ListGroup, Col } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import ResultComponent from './Results/Result.component';
-import socketIOClient from 'socket.io-client';
 import './Results.css';
 
 class StrategyResultsComponent extends Component {
@@ -17,12 +16,6 @@ class StrategyResultsComponent extends Component {
   }
 
   componentDidMount() {
-
-    if (process.env.REACT_APP_IS_SOCKET_IO_IN_DEVELOPMENT_MODE === '1') {
-      this.socket = socketIOClient('localhost:' + process.env.REACT_APP_SOCKET_IO_PORT);
-    } else {
-      this.socket = socketIOClient(); // auto discovery
-    }
 
     this.socket.on('respTrades', data => {
       console.log('respTrades from socket.io:', data);

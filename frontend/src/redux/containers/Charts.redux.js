@@ -3,7 +3,7 @@ import ChartsComponent from "../../components/Charts.component"
 
 const mapStateToProps = state => {
   return {
-    candles: state.testerResults.candles
+    candles: state.testerConfigs.symbolsAndPeriods
   };
 };
 

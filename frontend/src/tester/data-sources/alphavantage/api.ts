@@ -1,10 +1,5 @@
 // GENERAL DEPENDENCIES
 import axios from 'axios'
-import nconf from 'nconf'
-nconf.file({
-  file: 'config.json',
-  search: true
-});
 
 import * as i from '../../interfaces'
 
@@ -13,7 +8,7 @@ import Debug from 'debug'
 import moment from 'moment';
 const debug = Debug('avapi')
 
-const API_KEY = nconf.get('alphavantage:api_key');
+const API_KEY = 0;//nconf.get('alphavantage:api_key');
 
 let normalizeSymbols = function (symbols: Array<i.IBestMatch>) {
   return symbols.map(symbol => {

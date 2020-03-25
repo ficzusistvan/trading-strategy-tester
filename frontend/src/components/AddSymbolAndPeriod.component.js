@@ -3,7 +3,6 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { Col, Row, Input, Button, FormGroup, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import axios from 'axios'
 
 const PERIODS = [
   { str: 'M1', val: 1 },
@@ -33,9 +32,10 @@ class AddSymbolAndPeriodComponent extends Component {
   }
 
   async onHandleSearchClick(e) {
-    const resp = await axios.get('/api/symbol/search/' + this.props.dataSource + '/' + this.state.keyword);
-    console.log(resp);
-    this.setState({ symbols: resp.data.symbols, loading: false })
+    const dataSourceImpl = await import('../tester/data-sources/' + this.props.dataSource + '/api');
+    const symbols = await dataSourceImpl.searchSymbol(this.state.keyword);
+    console.log(symbols);
+    this.setState({ symbols: symbols, loading: false })
   }
 
   onHandleSymbolClick(symbol) {
@@ -50,8 +50,10 @@ class AddSymbolAndPeriodComponent extends Component {
     this.props.onSetIsDefault(e.target.checked);
   }
 
-  onHandleAddClick(e) {
-    this.props.onAddSymbolAndPeriod(this.props.symbol, this.props.period, this.props.isDefault);
+  async onHandleAddClick(e) {
+    const dataSourceImpl = await import('../tester/data-sources/' + this.props.dataSource + '/api');
+    const candles = await dataSourceImpl.getCandles(this.props.symbol, this.props.period);
+    this.props.onAddCandles(this.props.symbol, this.props.period, this.props.isDefault, candles);
     this.props.onSetIsDefault(false);
   }
 

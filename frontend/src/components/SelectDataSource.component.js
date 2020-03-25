@@ -1,25 +1,17 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import axios from 'axios'
 
 class SelectDataSourceComponent extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dataSources: []
+      dataSources: ['alphavantage','xAPI','finnhub']
     };
   }
 
-  async componentDidMount() {
-    const resp = await axios.get('/api/data-source/list');
-    console.log(resp);
-    this.setState({ dataSources: resp.data.dataSources })
-    this.props.onSetDataSource(resp.data.dataSources[0]);
-  }
-
-  onHandleChange(e) {
+  onHandleDataSourceChanged(e) {
     this.props.onSetDataSource(e.target.value);
   }
 
@@ -32,7 +24,7 @@ class SelectDataSourceComponent extends Component {
     return (
       <>
         <h4>Select data source</h4>
-        <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleChange.bind(this)}>
+        <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleDataSourceChanged.bind(this)}>
           {options}
         </Input>
       </>

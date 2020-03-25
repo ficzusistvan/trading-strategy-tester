@@ -1,25 +1,17 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import axios from 'axios'
 
 class SelectStrategyComponent extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      strategies: []
+      strategies: ['test01','test02']
     };
   }
 
-  async componentDidMount() {
-    const resp = await axios.get('/api/strategy/list');
-    console.log(resp);
-    this.setState({ strategies: resp.data.strategies })
-    this.props.onSetStrategy(resp.data.strategies[0]);
-  }
-
-  onHandleChange(e) {
+  onHandleStrategyChanged(e) {
     this.props.onSetStrategy(e.target.value);
   }
 
@@ -32,7 +24,7 @@ class SelectStrategyComponent extends Component {
     return (
       <>
         <h4>Select strategy</h4>
-        <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleChange.bind(this)}>
+        <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleStrategyChanged.bind(this)}>
           {options}
         </Input>
       </>

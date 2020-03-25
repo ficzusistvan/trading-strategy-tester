@@ -1,0 +1,1 @@
+declare module "redux-polyglot/dist/actions"

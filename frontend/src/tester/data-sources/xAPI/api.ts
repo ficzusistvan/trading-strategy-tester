@@ -1,17 +1,17 @@
 // GENERAL DEPENDENCIES
 import WebSocket from 'ws'
-import Big from 'big.js'
 
 // DEBUGGING
 import Debug from 'debug'
-const debug = Debug('xapi')
+
 
 // ARBITER DEPENDENCIES
-import { logger } from '../../logger'
-import * as eventHandler from '../../event-handler'
+//import { logger } from '../../logger'
+//import * as eventHandler from '../../event-handler'
 import * as i from '../../interfaces'
 import moment from 'moment';
 
+const debug = Debug('xapi')
 const HOST = 'https://xapi.xtb.com';
 const DEMO_PORTS = {
   MAIN: 5124,
@@ -29,8 +29,8 @@ const ADDRESS_REAL_STREAM = 'wss://ws.xtb.com/realStream';
 
 const addr = ADDRESS_DEMO;
 
-const USER_ID = nconf.get('xapi:user_id');
-const PASSWORD = nconf.get('xapi:password');
+const USER_ID = 0;//nconf.get('xapi:user_id');
+const PASSWORD = '0';//nconf.get('xapi:password');
 
 let normalizeSymbols = function (symbols: Array<i.ISymbolRecord>) {
   return symbols.map(symbol => {
@@ -54,31 +54,31 @@ let searchSymbol = async function (keywords: string) {
 
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
-      logger.info('Websocket opened for [' + addr + ']');
+      //logger.info('Websocket opened for [' + addr + ']');
       let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
       ws.send(JSON.stringify(msg));
     });
-    ws.addEventListener('message', async (msg) => {
+    ws.addEventListener('message', async (msg: any) => {
       //debug('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
-        logger.info('Websocket logged in; sending "getAllSymbols"...');
+        //logger.info('Websocket logged in; sending "getAllSymbols"...');
         let msg: i.IGetAllSymbols = { command: "getAllSymbols" };
         ws.send(JSON.stringify(msg));
       } else {
-        logger.info('Websocket "getAllSymbols" result received, returning it...');
+        //logger.info('Websocket "getAllSymbols" result received, returning it...');
         ws.close();
         resolve(applySearchterm(normalizeSymbols(data.returnData), keywords));
       }
     });
     ws.addEventListener('close', () => {
-      logger.info('Websocket closed for [' + addr + ']');
+      //logger.info('Websocket closed for [' + addr + ']');
     });
     ws.addEventListener('ping', () => {
       debug('Webocket ping received! [' + addr + ']');
     });
-    ws.addEventListener('error', (error) => {
-      logger.error('Websocket error for [' + addr + ']', error);
+    ws.addEventListener('error', (error: any) => {
+      //logger.error('Websocket error for [' + addr + ']', error);
     });
   });
 }
@@ -114,33 +114,33 @@ let getCandles = async function (symbol: string, period: number) {
 
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
-      logger.info('Websocket opened for [' + addr + ']');
+      //logger.info('Websocket opened for [' + addr + ']');
       let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
       ws.send(JSON.stringify(msg));
     });
-    ws.addEventListener('message', async (msg) => {
+    ws.addEventListener('message', async (msg: any) => {
       //debug('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
-        logger.info('Websocket logged in; sending "getChartLastRequest"...');
+        //logger.info('Websocket logged in; sending "getChartLastRequest"...');
         let msg: i.IChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
         let strin = JSON.stringify(msg);
         debug('Strin', strin);
         ws.send(strin);
       } else {
-        logger.info('Websocket "getChartLastRequest" result received, returning it...');
+        //logger.info('Websocket "getChartLastRequest" result received, returning it...');
         ws.close();
         resolve(normalizeCandles(data.returnData.rateInfos, Math.pow(10, data.returnData.digits)));
       }
     });
     ws.addEventListener('close', () => {
-      logger.info('Websocket closed for [' + addr + ']');
+      //logger.info('Websocket closed for [' + addr + ']');
     });
     ws.addEventListener('ping', () => {
       debug('Webocket ping received! [' + addr + ']');
     });
-    ws.addEventListener('error', (error) => {
-      logger.error('Websocket error for [' + addr + ']', error);
+    ws.addEventListener('error', (error: any) => {
+      //logger.error('Websocket error for [' + addr + ']', error);
     });
   });
 }
