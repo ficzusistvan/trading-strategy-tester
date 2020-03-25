@@ -2,12 +2,14 @@
   "name": "trading-strategy-tester",
   "version": "1.0.1",
   "private": true,
+  "homepage": "https://ficzusistvan.github.io/trading-strategy-tester",
   "dependencies": {
     "axios": "^0.19.0",
     "big.js": "^5.2.2",
     "bootstrap": "^4.3.1",
     "debug": "^4.1.1",
     "emittery": "^0.6.0",
+    "gh-pages": "^2.2.0",
     "moment": "^2.24.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -34,6 +36,8 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
