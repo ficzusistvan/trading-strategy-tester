@@ -10,5 +10,4 @@ export const SET_STRATEGY = "SET_STRATEGY";
 export const ADD_CANDLES = "ADD_CANDLES";
 
 export const SET_IS_TEST_FINISHED = "SET_IS_TEST_FINISHED";
-export const SET_CANDLES = "SET_CANDLES";
-export const SET_TEST_RESULTS = "SET_TEST_RESULTS";
+export const SET_TRADES = "SET_TRADES";

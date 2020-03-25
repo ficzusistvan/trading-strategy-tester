@@ -3,7 +3,7 @@ import ResultsComponent from "../../components/Results.component"
 
 const mapStateToProps = state => {
   return {
-    testResults: state.testerResults.testResults
+    trades: state.testerResults.trades
   };
 };
 

@@ -7,30 +7,13 @@ import * as eventHandler from '../tester/event-handler';
 
 class LeftSidebarLayoutPart extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: false
-    }
-  }
-
-  /*componentDidMount() {
-    this.socket.on('finishedTest', data => {
-      console.log('finishedTest from socket.io:', data);
-      this.setState({ loading: false });
-      this.props.onSetIsTestFinished(true);
-    });
-  }*/
-
   onRunTestClick(e) {
-    this.setState({ loading: true });
     this.props.onSetIsTestFinished(false);
-    eventHandler.em.emit(eventHandler.START);
+    eventHandler.em.emit(eventHandler.START, { strategy: this.props.strategy, allCandles: this.props.symbolsAndPeriods });
   }
 
   render() {
-    if (this.state.loading) {
+    if (!this.props.isTestFinished) {
       return <img alt='' src='loading.gif' />;
     }
     return (

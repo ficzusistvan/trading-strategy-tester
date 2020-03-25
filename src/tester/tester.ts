@@ -11,6 +11,17 @@ let isEntered: boolean = false;
 let openedTrade: i.ITrade;
 let trades: Array<i.ITrade> = [];
 
+let init = async function(strategy: any, allCandles: any) {
+  isEntered = false;
+  trades = [];
+  arrayOfCandles = allCandles;
+  defaultCandles = allCandles.filter((candles: i.IMyCandles) => {
+    return candles.isDefault === true;
+  })[0];
+  strategyInst = await import('./strategies/' + strategy + '.ts');
+  eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
+}
+
 let handleCandle = function (idx: number) {
   debug('Handling candle idx [' + idx + ']');
   if (idx < defaultCandles.candles.length) {
@@ -38,5 +49,6 @@ let handleCandle = function (idx: number) {
 }
 
 export {
+  init,
   handleCandle
 };
