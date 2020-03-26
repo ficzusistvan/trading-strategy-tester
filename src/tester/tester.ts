@@ -27,17 +27,17 @@ let handleCandle = function (idx: number) {
   if (idx < defaultCandles.candles.length) {
     // Running strategy
     if (!isEntered) {
-      let res: i.IStrategyResult = strategyInst.enter(defaultCandles.candles, idx);
+      let res: i.IStrategyResult = strategyInst.enter(defaultCandles.candles, idx, arrayOfCandles);
       if (res.result === true) {
-//        logger.info('Entered order %O', res.trade);
+        debug('Entered order %O', res.trade);
         trades.push(res.trade);
         openedTrade = res.trade;
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade);
+      let res: i.IStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade, arrayOfCandles);
       if (res.result === true) {
-//        logger.info('Exited order %O', res.trade);
+        debug('Exited order %O', res.trade);
         trades.push(res.trade);
         isEntered = false;
       }

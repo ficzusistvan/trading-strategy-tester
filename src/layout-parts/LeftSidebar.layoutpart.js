@@ -41,7 +41,7 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
-              <Button block color="primary" onClick={this.onRunTestClick.bind(this)} disabled={this.props.dataSource === null || this.props.strategy === null || this.props.symbolsAndPeriods.length === 0}>Run test</Button>
+              <Button block color="primary" onClick={this.onRunTestClick.bind(this)} disabled={this.props.strategy === null || this.props.symbolsAndPeriods.length === 0}>Run test</Button>
             </Col>
           </Row>
           <Row className='mt-5'>

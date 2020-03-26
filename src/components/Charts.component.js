@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import translate from 'redux-polyglot/translate';
 import moment from 'moment';
+import { Col, Row } from 'reactstrap';
 import Chart from './Charts/Chart';
 import './Charts.css';
 
@@ -18,17 +19,26 @@ class ChartsComponent extends Component {
         obj.volume = candle.volume;
         return obj;
       });
+      parsedCandles.symbol = candleObj.symbol;
+      parsedCandles.period = candleObj.period;
       return parsedCandles;
     });
 
     const charts = allParsedCandles.map(candles => {
-      return <Chart type='hybrid' data={candles} />
+      return (
+        <Row className='mb-5'>
+          <Col>
+            <h4>Chart of symbol {candles.symbol} with {candles.period} period</h4>
+            <Chart type='hybrid' data={candles} />
+          </Col>
+        </Row>
+      )
     });
 
     return (
-      <div>
+      <>
         {charts}
-      </div>
+      </>
     )
   }
 }

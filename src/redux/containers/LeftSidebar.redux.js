@@ -6,8 +6,6 @@ const mapStateToProps = state => {
   return {
     isTestFinished: state.testerResults.isTestFinished,
     dataSource: state.testerConfigs.dataSource,
-    symbol: state.testerConfigs.symbol,
-    period: state.testerConfigs.period,
     symbolsAndPeriods: state.testerConfigs.symbolsAndPeriods,
     strategy: state.testerConfigs.strategy
   };

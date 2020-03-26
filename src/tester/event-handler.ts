@@ -1,6 +1,5 @@
 import Emittery from 'emittery';
 import Debug from 'debug'
-import * as i from './interfaces'
 import * as tester from './tester'
 import store from '../redux/store'
 import { setIsTestFinished, setTrades } from '../redux/actions/testerResults';
@@ -25,7 +24,7 @@ em.on(TESTER_INITIALIZED, () => {
 });
 
 em.on(CANDLE_HANDLED, (data: any) => {
-  console.log('Handling candle', data.idx+1);
+  debug('Handling candle', data.idx+1);
   tester.handleCandle(++data.idx);
 });
 

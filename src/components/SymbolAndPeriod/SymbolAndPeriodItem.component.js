@@ -24,7 +24,7 @@ class SymbolAndPeriodItemComponent extends Component {
     return (
       <Row>
         <Col>
-          <p>Symbol: {this.props.symbol} Period: {per[0].str} {this.props.isDefault ? 'default' : ''}</p>
+          <p>Symbol: {this.props.symbol} Period: {per[0].str} {this.props.isDefault ? 'default' : ''}; {this.props.nrOfCandles} candles</p>
         </Col>
       </Row>
     )

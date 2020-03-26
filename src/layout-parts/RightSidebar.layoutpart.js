@@ -7,7 +7,7 @@ const RightSidebarLayoutPart = (props) => {
 
   let listItems = [];
   props.symbolsAndPeriods.forEach((res, idx, arr) => {
-    listItems.push(<SymbolAndPeriodItemComponent key={res.symbol + res.period} symbol={res.symbol} period={res.period} isDefault={res.isDefault} />);
+    listItems.push(<SymbolAndPeriodItemComponent key={res.symbol + res.period} symbol={res.symbol} period={res.period} isDefault={res.isDefault} nrOfCandles={res.candles.length} />);
   });
 
   return (<Row className='right-sidebar'>

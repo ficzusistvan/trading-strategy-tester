@@ -8,7 +8,7 @@ import Debug from 'debug'
 import moment from 'moment';
 const debug = Debug('avapi')
 
-const API_KEY = 0;//nconf.get('alphavantage:api_key');
+const API_KEY = process.env.REACT_APP_ALPHAVANTAGE_API_KEY;
 
 let normalizeSymbols = function (symbols: Array<i.IBestMatch>) {
   return symbols.map(symbol => {

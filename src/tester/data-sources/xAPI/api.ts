@@ -12,25 +12,25 @@ import * as i from '../../interfaces'
 import moment from 'moment';
 
 const debug = Debug('xapi')
-const HOST = 'https://xapi.xtb.com';
-const DEMO_PORTS = {
-  MAIN: 5124,
-  STREAM: 5125
-};
-const REAL_PORTS = {
-  MAIN: 5112,
-  STREAM: 5113
-};
+//const HOST = 'https://xapi.xtb.com';
+//const DEMO_PORTS = {
+//  MAIN: 5124,
+//  STREAM: 5125
+//};
+//const REAL_PORTS = {
+//  MAIN: 5112,
+//  STREAM: 5113
+//};
 
 const ADDRESS_DEMO = 'wss://ws.xtb.com/demo';
-const ADDRESS_DEMO_STREAM = 'wss://ws.xtb.com/demoStream';
-const ADDRESS_REAL = 'wss://ws.xtb.com/real';
-const ADDRESS_REAL_STREAM = 'wss://ws.xtb.com/realStream';
+//const ADDRESS_DEMO_STREAM = 'wss://ws.xtb.com/demoStream';
+//const ADDRESS_REAL = 'wss://ws.xtb.com/real';
+//const ADDRESS_REAL_STREAM = 'wss://ws.xtb.com/realStream';
 
 const addr = ADDRESS_DEMO;
 
-const USER_ID = 0;//nconf.get('xapi:user_id');
-const PASSWORD = '0';//nconf.get('xapi:password');
+const USER_ID = process.env.REACT_APP_XAPI_USER_ID;
+const PASSWORD = process.env.REACT_APP_XAPI_PASSWORD;
 
 let normalizeSymbols = function (symbols: Array<i.ISymbolRecord>) {
   return symbols.map(symbol => {
@@ -55,7 +55,7 @@ let searchSymbol = async function (keywords: string) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       //logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
+      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
@@ -115,7 +115,7 @@ let getCandles = async function (symbol: string, period: number) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       //logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID, password: PASSWORD } };
+      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
