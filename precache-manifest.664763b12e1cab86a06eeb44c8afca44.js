@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a3bc0b7f481c02cce3e37e218c30cc82",
+    "revision": "6be4dff7a7e37c995516ca93782774ca",
     "url": "/trading-strategy-tester/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/trading-strategy-tester/static/css/2.b835c1ff.chunk.css"
   },
   {
-    "revision": "2c9ee4761b5579a8ef6d",
+    "revision": "cb6e0330c5fe7f6185fa",
     "url": "/trading-strategy-tester/static/css/main.a28b299e.chunk.css"
   },
   {
@@ -36,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/trading-strategy-tester/static/js/7.ea4f3a66.chunk.js"
   },
   {
-    "revision": "2c9ee4761b5579a8ef6d",
-    "url": "/trading-strategy-tester/static/js/main.6d0c3d61.chunk.js"
+    "revision": "cb6e0330c5fe7f6185fa",
+    "url": "/trading-strategy-tester/static/js/main.6db9d570.chunk.js"
   },
   {
     "revision": "a69c28bb58924a2cfad2",
