@@ -9,15 +9,15 @@ import { setLanguage } from 'redux-polyglot/dist/actions';
 
 //import roPhrases from './roPhrases.json';
 import enPhrases from './enPhrases.json';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 //store.dispatch(setLanguage('ro', roPhrases));
 store.dispatch(setLanguage('en', enPhrases));
 
 ReactDOM.render((
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 ), document.getElementById('root'));
 
