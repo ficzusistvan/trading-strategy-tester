@@ -37,7 +37,8 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build",
+    "deploy": "gh-pages -d build",
+    "clean-deploy": "gh-pages-clean",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,6 +59,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
   "license": "GPLv3"
 }
