@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d5011aac422ec1a824ab1e6a6694a24f",
+    "revision": "a3bc0b7f481c02cce3e37e218c30cc82",
     "url": "/trading-strategy-tester/index.html"
   },
   {
