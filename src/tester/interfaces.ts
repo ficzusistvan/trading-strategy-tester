@@ -97,6 +97,23 @@ export interface ITimeSeries {
   "5. volume": number;
 }
 
+/** Finnhub */
+export interface IStockSymbol {
+  description: string,
+  displaySymbol: string,
+  symbol: string
+}
+
+export interface IStockData {
+  c: Array<number>,
+  h: Array<number>,
+  l: Array<number>,
+  o: Array<number>,
+  s: string,
+  t: Array<number>,
+  v: Array<number>
+}
+
 /** Common */
 export interface ISymbol {
   symbol: string;
