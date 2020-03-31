@@ -1,13 +1,5 @@
-// GENERAL DEPENDENCIES
-import WebSocket from 'ws'
 import * as helpers from '../helpers'
-// DEBUGGING
 import Debug from 'debug'
-
-
-// ARBITER DEPENDENCIES
-//import { logger } from '../../logger'
-//import * as eventHandler from '../../event-handler'
 import * as i from '../../interfaces'
 import moment from 'moment';
 
