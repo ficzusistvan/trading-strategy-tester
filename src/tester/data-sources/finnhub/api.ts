@@ -1,6 +1,6 @@
 // GENERAL DEPENDENCIES
 import axios from 'axios'
-
+import * as helpers from '../helpers'
 import * as i from '../../interfaces'
 
 // DEBUGGING
@@ -10,9 +10,9 @@ const debug = Debug('finnhub')
 
 const API_KEY = process.env.REACT_APP_FINNHUB_API_KEY;
 
-let normalizeSymbols = function (symbols: Array<i.IStockSymbol>) {
+let normalizeSymbols = function (symbols: Array<i.IFinnhubStockSymbol>) {
   return symbols.map(symbol => {
-    let obj: i.ISymbol = { symbol: '', name: '', type: '', currency: '' };
+    let obj: i.ICommonSymbol = { symbol: '', name: '', type: '', currency: '' };
     obj.symbol = symbol.symbol;
     obj.name = symbol.description;
     obj.type = symbol.description;
@@ -22,16 +22,24 @@ let normalizeSymbols = function (symbols: Array<i.IStockSymbol>) {
 }
 
 let searchSymbol = async function (keywords: string) {
-  const resp = await axios.get('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=' + API_KEY);
-  debug('searchSymbol', resp.data);
-  return normalizeSymbols(resp.data);
+  const exchanges = await axios.get('https://finnhub.io/api/v1/stock/exchange?token=boqnodnrh5rbk6e6gaf0');
+  console.log('exchanges', exchanges.data);
+  let allSymbols: Array<i.ICommonSymbol> = [];
+  for (const exchange of exchanges.data) {
+    let symbols = await axios.get('https://finnhub.io/api/v1/stock/symbol?exchange=' + exchange.code + '&token=' + API_KEY);
+    console.log('symbols', symbols.data);
+    const filteredSymbols: Array<i.ICommonSymbol> = helpers.applySearchterm(normalizeSymbols(symbols.data), keywords);
+    allSymbols = allSymbols.concat(filteredSymbols);
+  }
+  debug('searchSymbol', allSymbols);
+  return allSymbols;
 }
 
-let normalizeCandles = function (candles: i.IStockData) {
+let normalizeCandles = function (candles: i.IFinnhubStockData) {
   const parsed = [];
 
   for (let i = 0; i < candles.t.length; i++) {
-    let obj: i.ICandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
+    let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
     obj.date = moment(candles.t[i]).toDate();
     obj.open = candles.o[i];

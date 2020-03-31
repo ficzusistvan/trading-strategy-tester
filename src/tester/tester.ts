@@ -5,17 +5,17 @@ import * as eventHandler from './event-handler'
 const debug = Debug('tester')
 
 let strategyInst: any;
-let arrayOfCandles: Array<i.IMyCandles>;
-let defaultCandles: i.IMyCandles;
+let arrayOfCandles: Array<i.ICommonCandles>;
+let defaultCandles: i.ICommonCandles;
 let isEntered: boolean = false;
-let openedTrade: i.ITrade;
-let trades: Array<i.ITrade> = [];
+let openedTrade: i.ITesterTrade;
+let trades: Array<i.ITesterTrade> = [];
 
 let init = async function(strategy: any, allCandles: any) {
   isEntered = false;
   trades = [];
   arrayOfCandles = allCandles;
-  defaultCandles = allCandles.filter((candles: i.IMyCandles) => {
+  defaultCandles = allCandles.filter((candles: i.ICommonCandles) => {
     return candles.isDefault === true;
   })[0];
   strategyInst = await import('./strategies/' + strategy + '.ts');
@@ -27,7 +27,7 @@ let handleCandle = function (idx: number) {
   if (idx < defaultCandles.candles.length) {
     // Running strategy
     if (!isEntered) {
-      let res: i.IStrategyResult = strategyInst.enter(defaultCandles.candles, idx, arrayOfCandles);
+      let res: i.ITesterStrategyResult = strategyInst.enter(defaultCandles.candles, idx, arrayOfCandles);
       if (res.result === true) {
         debug('Entered order %O', res.trade);
         trades.push(res.trade);
@@ -35,7 +35,7 @@ let handleCandle = function (idx: number) {
         isEntered = true;
       }
     } else {
-      let res: i.IStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade, arrayOfCandles);
+      let res: i.ITesterStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade, arrayOfCandles);
       if (res.result === true) {
         debug('Exited order %O', res.trade);
         trades.push(res.trade);

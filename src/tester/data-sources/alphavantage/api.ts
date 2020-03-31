@@ -10,9 +10,9 @@ const debug = Debug('avapi')
 
 const API_KEY = process.env.REACT_APP_ALPHAVANTAGE_API_KEY;
 
-let normalizeSymbols = function (symbols: Array<i.IBestMatch>) {
+let normalizeSymbols = function (symbols: Array<i.IAVBestMatch>) {
   return symbols.map(symbol => {
-    let obj: i.ISymbol = { symbol: '', name: '', type: '', currency: '' };
+    let obj: i.ICommonSymbol = { symbol: '', name: '', type: '', currency: '' };
     obj.symbol = symbol['1. symbol'];
     obj.name = symbol['2. name'];
     obj.type = symbol['3. type'];
@@ -27,11 +27,11 @@ let searchSymbol = async function (keywords: string) {
   return normalizeSymbols(resp.data.bestMatches);
 }
 
-let normalizeCandles = function (candles: Array<i.ITimeSeries>) {
+let normalizeCandles = function (candles: Array<i.IAVTimeSeries>) {
   const parsed = [];
 
   for (let [key2, value2] of Object.entries(candles)) {
-    let obj: i.ICandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
+    let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
     obj.date = moment(key2).toDate();
     obj.open = value2['1. open'];
@@ -57,7 +57,7 @@ let getCandles = async function (symbol: string, period: number) {
   debug('getTimeSeriesIntraday', resp.data);
   for (let [key1, value1] of Object.entries(resp.data)) {
     if (key1.includes('Time Series')) {
-      return normalizeCandles(value1 as Array<i.ITimeSeries>);
+      return normalizeCandles(value1 as Array<i.IAVTimeSeries>);
     }
   }
 }

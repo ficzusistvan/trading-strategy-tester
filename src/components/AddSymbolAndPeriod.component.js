@@ -21,7 +21,7 @@ class AddSymbolAndPeriodComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      keyword: null,
+      keyword: '',
       symbols: [],
       loading: true
     };

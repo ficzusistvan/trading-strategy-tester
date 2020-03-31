@@ -1,6 +1,6 @@
 // GENERAL DEPENDENCIES
 import WebSocket from 'ws'
-
+import * as helpers from '../helpers'
 // DEBUGGING
 import Debug from 'debug'
 
@@ -32,20 +32,14 @@ const addr = ADDRESS_DEMO;
 const USER_ID = process.env.REACT_APP_XAPI_USER_ID;
 const PASSWORD = process.env.REACT_APP_XAPI_PASSWORD;
 
-let normalizeSymbols = function (symbols: Array<i.ISymbolRecord>) {
+let normalizeSymbols = function (symbols: Array<i.IXAPISymbolRecord>) {
   return symbols.map(symbol => {
-    let obj: i.ISymbol = { symbol: '', name: '', type: '', currency: '' };
+    let obj: i.ICommonSymbol = { symbol: '', name: '', type: '', currency: '' };
     obj.symbol = symbol['symbol'];
     obj.name = symbol['description'];
     obj.type = symbol['categoryName'];
     obj.currency = symbol['currency'];
     return obj;
-  });
-}
-
-let applySearchterm = function(symbols: Array<i.ISymbol>, keyword: string) {
-  return symbols.filter(symbol => {
-    return symbol.symbol.includes(keyword) || symbol.name.includes(keyword);
   });
 }
 
@@ -55,7 +49,7 @@ let searchSymbol = async function (keywords: string) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       //logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
+      let msg: i.IXAPILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
@@ -63,12 +57,12 @@ let searchSymbol = async function (keywords: string) {
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         //logger.info('Websocket logged in; sending "getAllSymbols"...');
-        let msg: i.IGetAllSymbols = { command: "getAllSymbols" };
+        let msg: i.IXAPIGetAllSymbols = { command: "getAllSymbols" };
         ws.send(JSON.stringify(msg));
       } else {
         //logger.info('Websocket "getAllSymbols" result received, returning it...');
         ws.close();
-        resolve(applySearchterm(normalizeSymbols(data.returnData), keywords));
+        resolve(helpers.applySearchterm(normalizeSymbols(data.returnData), keywords));
       }
     });
     ws.addEventListener('close', () => {
@@ -83,9 +77,9 @@ let searchSymbol = async function (keywords: string) {
   });
 }
 
-let normalizeCandles = function (candles: Array<i.IRateInfoRecord>, scale: number) {
+let normalizeCandles = function (candles: Array<i.IXAPIRateInfoRecord>, scale: number) {
   return candles.map(candle => {
-    let obj: i.ICandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
+    let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
     obj.date = moment(candle['ctm']).toDate();
     obj.open = candle['open'] / scale;
@@ -115,7 +109,7 @@ let getCandles = async function (symbol: string, period: number) {
   return new Promise((resolve, reject) => {
     ws.addEventListener('open', () => {
       //logger.info('Websocket opened for [' + addr + ']');
-      let msg: i.ILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
+      let msg: i.IXAPILogin = { command: "login", arguments: { userId: USER_ID ? Number(USER_ID) : 0, password: PASSWORD ? PASSWORD : '' } };
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
@@ -123,7 +117,7 @@ let getCandles = async function (symbol: string, period: number) {
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         //logger.info('Websocket logged in; sending "getChartLastRequest"...');
-        let msg: i.IChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
+        let msg: i.IXAPIChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
         let strin = JSON.stringify(msg);
         debug('Strin', strin);
         ws.send(strin);

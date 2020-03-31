@@ -12,7 +12,7 @@ class StrategyResultsComponent extends Component {
     this.props.trades.forEach((res, idx, arr) => {
       if (res.side !== 'NONE') {
         const nextValue = idx < arr.length - 1 ? arr[idx + 1] : { date: '', price: res.price };
-        listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startDate={res.date} endDate={nextValue.date} />);
+        listItems.push(<ResultComponent startPrice={res.price} endPrice={nextValue.price} side={res.side} startDate={res.date} endDate={nextValue.date} key={idx} />);
         if (res.side === 'BUY') {
           profit += (nextValue.price - res.price);
         }

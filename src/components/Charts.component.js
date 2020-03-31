@@ -26,7 +26,7 @@ class ChartsComponent extends Component {
 
     const charts = allParsedCandles.map(candles => {
       return (
-        <Row className='mb-5'>
+        <Row className='mb-5' key={candles.symbol+'_'+candles.period}>
           <Col>
             <h4>Chart of symbol {candles.symbol} with {candles.period} period</h4>
             <Chart type='hybrid' data={candles} />

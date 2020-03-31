@@ -1,42 +1,23 @@
-//import Big from "big.js";
-//import moment = require("moment");
-
-export interface IExchange {
-  name: string,
-  fixed_length_name: string,
-  api_key: string,
-  secret_key: string,
-  passphrase?: string,
-  ws_timeout_ms: {
-    ping: number,
-    restart: number
-  },
-  symbol: string,
-  base_asset: string,
-  quote_asset: string,
-  min_trade_amount: number
-}
-
 /** Tester */
-export enum ESide {
+export enum ETesterSide {
   NONE = 'NONE',
   BUY = 'BUY',
   SELL = 'SELL'
 }
 
-export interface ITrade {
+export interface ITesterTrade {
   price: number,
-  side: ESide,
+  side: ETesterSide,
   date: string
 }
 
-export interface IStrategyResult {
+export interface ITesterStrategyResult {
   result: boolean,
-  trade: ITrade
+  trade: ITesterTrade
 }
 
 /** XAPI */
-export interface ILogin {
+export interface IXAPILogin {
   command: string;
   arguments: {
     userId: number;
@@ -44,11 +25,11 @@ export interface ILogin {
   }
 }
 
-export interface IGetAllSymbols {
+export interface IXAPIGetAllSymbols {
   command: string;
 }
 
-export interface IChartLastRequest {
+export interface IXAPIChartLastRequest {
   command: string;
   arguments: {
     info: {
@@ -59,14 +40,14 @@ export interface IChartLastRequest {
   };
 }
 
-export interface ISymbolRecord {
+export interface IXAPISymbolRecord {
   "symbol": string;
   "description": string;
   "categoryName": string;
   "currency": string;
 }
 
-export interface IRateInfoRecord {
+export interface IXAPIRateInfoRecord {
   close: number;
   ctm: number;
   ctmString: string;
@@ -77,7 +58,7 @@ export interface IRateInfoRecord {
 }
 
 /** Alphavantage */
-export interface IBestMatch {
+export interface IAVBestMatch {
   "1. symbol": string;
   "2. name": string;
   "3. type": string;
@@ -89,7 +70,7 @@ export interface IBestMatch {
   "9. matchScore": string;
 }
 
-export interface ITimeSeries {
+export interface IAVTimeSeries {
   "1. open": number;
   "2. high": number;
   "3. low": number;
@@ -98,13 +79,13 @@ export interface ITimeSeries {
 }
 
 /** Finnhub */
-export interface IStockSymbol {
+export interface IFinnhubStockSymbol {
   description: string,
   displaySymbol: string,
   symbol: string
 }
 
-export interface IStockData {
+export interface IFinnhubStockData {
   c: Array<number>,
   h: Array<number>,
   l: Array<number>,
@@ -114,15 +95,21 @@ export interface IStockData {
   v: Array<number>
 }
 
+export interface IFinnhubExchange {
+  name: string,
+  code: string,
+  currency: string
+}
+
 /** Common */
-export interface ISymbol {
+export interface ICommonSymbol {
   symbol: string;
   name: string;
   type: string;
   currency: string;
 }
 
-export interface ICandle {
+export interface ICommonCandle {
   date: any,
   open: number,
   high: number,
@@ -131,9 +118,9 @@ export interface ICandle {
   volume: number
 }
 
-export interface IMyCandles {
+export interface ICommonCandles {
   symbol: string,
   period: string,
   isDefault: boolean,
-  candles: Array<ICandle>
+  candles: Array<ICommonCandle>
 }
