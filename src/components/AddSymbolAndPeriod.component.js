@@ -23,7 +23,8 @@ class AddSymbolAndPeriodComponent extends Component {
     this.state = {
       keyword: '',
       symbols: [],
-      loading: true
+      loading: true,
+      selectedRowIndex: null
     };
   }
 
@@ -38,7 +39,10 @@ class AddSymbolAndPeriodComponent extends Component {
     this.setState({ symbols: symbols, loading: false })
   }
 
-  onHandleSymbolClick(symbol) {
+  onHandleSymbolClick(symbol, rowInfoIndex) {
+    this.setState({
+      selectedRowIndex: rowInfoIndex
+    })
     this.props.onSetSymbol(symbol);
   }
 
@@ -93,7 +97,7 @@ class AddSymbolAndPeriodComponent extends Component {
                     //console.log('A Td Element was clicked!')
                     //console.log('it produced this event:', e)
                     //console.log('It was in this column:', column)
-                    //console.log('It was in this row:', rowInfo)
+                    console.log('It was in this row:', rowInfo)
                     //console.log('It was in this table instance:', instance)
 
                     // IMPORTANT! React-Table uses onClick internally to trigger
@@ -104,7 +108,11 @@ class AddSymbolAndPeriodComponent extends Component {
                     /*if (handleOriginal) {
                       handleOriginal()
                     }*/
-                    this.onHandleSymbolClick(rowInfo.original['symbol']);
+                    this.onHandleSymbolClick(rowInfo.original['symbol'], rowInfo.index);
+                  },
+                  style: {
+                    background: rowInfo !== undefined && rowInfo.index === this.state.selectedRowIndex ? '#00afec' : 'white',
+                    color: rowInfo !== undefined && rowInfo.index === this.state.selectedRowIndex ? 'white' : 'black'
                   }
                 }
               }}
