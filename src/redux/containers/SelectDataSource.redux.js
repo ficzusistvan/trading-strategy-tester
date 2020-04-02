@@ -2,6 +2,12 @@ import { connect } from 'react-redux'
 import { setDataSource } from '../actions/testerConfigs';
 import SelectDataSourceComponent from "../../components/SelectDataSource.component"
 
+const mapStateToProps = state => {
+  return {
+    dataSource: state.testerConfigs.dataSource
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onSetDataSource: (dataSource) => {
@@ -11,6 +17,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SelectDataSourceComponent)

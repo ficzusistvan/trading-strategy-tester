@@ -1,8 +1,13 @@
-import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY } from "./types";
+import { SET_DATA_SOURCE, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY, SET_LOCAL_CSV } from "./types";
 
 export const setDataSource = (dataSource) => ({
   type: SET_DATA_SOURCE,
   dataSource
+});
+
+export const setCSV = (csv) => ({
+  type: SET_LOCAL_CSV,
+  csv
 });
 
 export const setSymbol = (symbol) => ({

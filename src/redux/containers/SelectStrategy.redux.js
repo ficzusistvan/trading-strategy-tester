@@ -2,6 +2,12 @@ import { connect } from 'react-redux'
 import { setStrategy } from '../actions/testerConfigs';
 import SelectStrategyComponent from "../../components/SelectStrategy.component"
 
+const mapStateToProps = state => {
+  return {
+    strategy: state.testerConfigs.strategy
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onSetStrategy: (strategy) => {
@@ -11,6 +17,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SelectStrategyComponent)
