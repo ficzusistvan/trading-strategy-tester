@@ -30,7 +30,9 @@ let searchSymbol = async function (keywords: string) {
 let normalizeCandles = function (candles: Array<i.IAVTimeSeries>) {
   const parsed = [];
 
+  // TODO: handle timezone!!!
   for (let [key2, value2] of Object.entries(candles)) {
+    console.log('alphavantage candle timestamp:', key2); // "2020-03-31 14:15:00". Ok with doc!
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
     obj.date = moment(key2).toDate();

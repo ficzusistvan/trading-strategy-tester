@@ -24,3 +24,6 @@ yarn-error.log*
 
 # mystuff
 .env
+
+# csvs folder
+csvs

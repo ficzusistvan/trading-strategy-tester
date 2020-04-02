@@ -39,16 +39,17 @@ let normalizeCandles = function (candles: i.IFinnhubStockData) {
   const parsed = [];
 
   for (let i = 0; i < candles.t.length; i++) {
+    console.log('finnhub candle timestamp:', candles.t[i]); // 1585747800. Ok with doc example...
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
-    obj.date = moment(candles.t[i]).toDate();
+    obj.date = moment(candles.t[i] * 1000).toDate(); // UNIX timestamp. e.g.: 1569297600
     obj.open = candles.o[i];
     obj.high = candles.h[i];
     obj.low = candles.l[i];
     obj.close = candles.c[i];
     obj.volume = candles.v[i];
 
-    parsed.unshift(obj);
+    parsed.push(obj);
   }
   return parsed;
 }

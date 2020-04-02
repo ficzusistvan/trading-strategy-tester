@@ -71,9 +71,10 @@ let searchSymbol = async function (keywords: string) {
 
 let normalizeCandles = function (candles: Array<i.IXAPIRateInfoRecord>, scale: number) {
   return candles.map(candle => {
+    console.log('xapi candle timestamp:', candle['ctm']); // 1585830600000. Ok with doc!
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
-    obj.date = moment(candle['ctm']).toDate();
+    obj.date = moment(candle['ctm']).toDate(); // Time is number of milliseconds from 01.01.1970, 00:00 GMT. e.g.: 1272529161605
     obj.open = candle['open'] / scale;
     obj.high = obj.open + candle['high'] / scale;
     obj.low = obj.open + candle['low'] / scale;
