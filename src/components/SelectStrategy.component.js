@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input } from 'reactstrap';
+import { Input, Row, Col } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 
 class SelectStrategyComponent extends Component {
@@ -7,12 +7,15 @@ class SelectStrategyComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      strategies: ['test01','test02','test03_Zoli']
+      strategies: ['test01', 'test02', 'test03_Zoli'],
+      description: ''
     };
   }
 
-  onHandleStrategyChanged(e) {
+  async onHandleStrategyChanged(e) {
     this.props.onSetStrategy(e.target.value);
+    let strategyInst = await import('../tester/strategies/' + e.target.value);
+    this.setState({ description: strategyInst.getDescription() });
   }
 
   render() {
@@ -23,10 +26,20 @@ class SelectStrategyComponent extends Component {
     }
     return (
       <>
-        <h4>Select strategy</h4>
-        <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleStrategyChanged.bind(this)}>
-          {options}
-        </Input>
+        <Row>
+          <Col>
+            <h4>Select strategy</h4>
+            <Input type="select" name="strategy" id="strategySelect" value={this.props.strategy} onChange={this.onHandleStrategyChanged.bind(this)}>
+              {options}
+            </Input>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h5>Strategy description:</h5>
+            <p>{this.state.description}</p>
+          </Col>
+        </Row>
       </>
     )
   }

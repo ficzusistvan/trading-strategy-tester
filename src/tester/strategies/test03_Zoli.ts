@@ -133,7 +133,12 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
   return { result: result, trade: trade };
 }
 
+let getDescription = function() {
+  return "The 'new' strategy. Considering the up down trend from day open to 9 o'clock."
+}
+
 export {
   enter,
-  exit
+  exit,
+  getDescription
 }

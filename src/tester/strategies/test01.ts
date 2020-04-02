@@ -119,7 +119,12 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
   return { result: result, trade: trade };
 }
 
+let getDescription = function() {
+  return "First strategy ever! 9:05 open time!"
+}
+
 export {
   enter,
-  exit
+  exit,
+  getDescription
 }

@@ -126,7 +126,12 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
   return { result: result, trade: trade };
 }
 
+let getDescription = function() {
+  return "A simple test strategy"
+}
+
 export {
   enter,
-  exit
+  exit,
+  getDescription
 }
