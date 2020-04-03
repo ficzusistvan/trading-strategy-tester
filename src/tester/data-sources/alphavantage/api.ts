@@ -5,7 +5,8 @@ import * as i from '../../interfaces'
 
 // DEBUGGING
 import Debug from 'debug'
-import moment from 'moment';
+//import moment from 'moment';
+import moment from 'moment-timezone';
 const debug = Debug('avapi')
 
 const API_KEY = process.env.REACT_APP_ALPHAVANTAGE_API_KEY;
@@ -27,15 +28,19 @@ let searchSymbol = async function (keywords: string) {
   return normalizeSymbols(resp.data.bestMatches);
 }
 
-let normalizeCandles = function (candles: Array<i.IAVTimeSeries>) {
+let normalizeCandles = function (candles: Array<i.IAVTimeSeries>, timeZone: string) {
   const parsed = [];
 
   // TODO: handle timezone!!!
   for (let [key2, value2] of Object.entries(candles)) {
-    console.log('alphavantage candle timestamp:', key2); // "2020-03-31 14:15:00". Ok with doc!
+    //console.log('alphavantage candle timestamp:', key2); // "2020-03-31 14:15:00". Ok with doc!
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
-    obj.date = moment(key2).toDate();
+    let tmp1 = moment(key2).tz(timeZone).utcOffset();
+    console.log('tmp1', tmp1.toString());
+    let tmp2 = moment(key2).tz("Europe/Bucharest").utcOffset();
+    console.log('tmp2', tmp2.toString());
+    obj.date = moment(key2).subtract(tmp1, 'minutes').add(tmp2, 'minutes').toDate();
     obj.open = value2['1. open'];
     obj.high = value2['2. high'];
     obj.low = value2['3. low'];
@@ -57,9 +62,11 @@ let getCandles = async function (symbol: string, period: number) {
   debug('getTimeSeriesIntraday', url);
   const resp = await axios.get(url);
   debug('getTimeSeriesIntraday', resp.data);
+  const timeZone = resp.data['Meta Data']['6. Time Zone'];
+  console.log('Using timezone', timeZone);
   for (let [key1, value1] of Object.entries(resp.data)) {
     if (key1.includes('Time Series')) {
-      return normalizeCandles(value1 as Array<i.IAVTimeSeries>);
+      return normalizeCandles(value1 as Array<i.IAVTimeSeries>, timeZone);
     }
   }
 }
