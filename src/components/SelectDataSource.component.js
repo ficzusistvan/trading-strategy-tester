@@ -12,6 +12,12 @@ class SelectDataSourceComponent extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.dataSource === '') {
+      this.props.onSetDataSource(this.state.dataSources[0]);
+    }
+  }
+
   onHandleDataSourceChanged(e) {
     this.props.onSetDataSource(e.target.value);
   }

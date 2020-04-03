@@ -12,10 +12,23 @@ class SelectStrategyComponent extends Component {
     };
   }
 
-  async onHandleStrategyChanged(e) {
-    this.props.onSetStrategy(e.target.value);
-    let strategyInst = await import('../tester/strategies/' + e.target.value);
+  async updateDescription(strategy) {
+    let strategyInst = await import('../tester/strategies/' + strategy);
     this.setState({ description: strategyInst.getDescription() });
+  }
+
+  componentDidMount() {
+    if (this.props.strategy === '') {
+      this.props.onSetStrategy(this.state.strategies[0]);
+      this.updateDescription(this.state.strategies[0]);
+    } else {
+      this.updateDescription(this.props.strategy);
+    }
+  }
+
+  onHandleStrategyChanged(e) {
+    this.props.onSetStrategy(e.target.value);
+    this.updateDescription(e.target.value);
   }
 
   render() {
