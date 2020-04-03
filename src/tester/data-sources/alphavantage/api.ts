@@ -31,16 +31,13 @@ let searchSymbol = async function (keywords: string) {
 let normalizeCandles = function (candles: Array<i.IAVTimeSeries>, timeZone: string) {
   const parsed = [];
 
-  // TODO: handle timezone!!!
   for (let [key2, value2] of Object.entries(candles)) {
-    //console.log('alphavantage candle timestamp:', key2); // "2020-03-31 14:15:00". Ok with doc!
+    console.log('alphavantage candle timestamp:', key2); // "2020-03-31 14:15:00". Ok with doc!
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
     let tmp1 = moment(key2).tz(timeZone).utcOffset();
-    console.log('tmp1', tmp1.toString());
     let tmp2 = moment(key2).tz("Europe/Bucharest").utcOffset();
-    console.log('tmp2', tmp2.toString());
-    obj.date = moment(key2).subtract(tmp1, 'minutes').add(tmp2, 'minutes').toDate();
+    obj.date = moment(key2).subtract(tmp1, 'minutes').add(tmp2, 'minutes').toDate(); // voodoo
     obj.open = value2['1. open'];
     obj.high = value2['2. high'];
     obj.low = value2['3. low'];
