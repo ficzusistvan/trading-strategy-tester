@@ -4,6 +4,7 @@ export const LOGOUT = "LOGOUT";
 
 export const SET_DATA_SOURCE = "SET_DATA_SOURCE";
 export const SET_LOCAL_CSV = "SET_LOCAL_CSV";
+export const SET_MY_REST_API_URL = "SET_MY_REST_API_URL";
 export const SET_SYMBOL = "SET_SYMBOL";
 export const SET_PERIOD = "SET_PERIOD";
 export const SET_IS_DEFAULT = "SET_IS_DEFAULT";

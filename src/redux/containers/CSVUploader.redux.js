@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setCSV } from '../actions/testerConfigs';
-import CSVUploaderComponent from "../../components/DataSource/CSVUploader"
+import CSVUploaderComponent from "../../components/DataSource/CSVUploader.component"
 
 const mapDispatchToProps = dispatch => {
   return {

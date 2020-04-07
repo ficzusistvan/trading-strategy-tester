@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 
-class CSVUploader extends Component {
+class CSVUploaderComponent extends Component {
   constructor() {
     super();
     this.onDrop = (files) => {
@@ -48,4 +48,4 @@ class CSVUploader extends Component {
   }
 }
 
-export default CSVUploader;
+export default CSVUploaderComponent;

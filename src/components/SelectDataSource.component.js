@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import CSVUploaderRedux from '../redux/containers/CSVUploader.redux';
+import MyRestApiUrlRedux from '../redux/containers/MyRestApiUrl.redux';
 
 class SelectDataSourceComponent extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dataSources: ['alphavantage', 'xAPI', 'finnhub', 'localcsv']
+      dataSources: ['alphavantage', 'xAPI', 'finnhub', 'local-csv', 'my-rest-api']
     };
   }
 
@@ -34,8 +35,11 @@ class SelectDataSourceComponent extends Component {
         <Input type="select" name="data-source" id="dataSourceSelect" value={this.props.dataSource} onChange={this.onHandleDataSourceChanged.bind(this)}>
           {options}
         </Input>
-        {this.props.dataSource === 'localcsv' &&
+        {this.props.dataSource === 'local-csv' &&
           <CSVUploaderRedux />
+        }
+        {this.props.dataSource === 'my-rest-api' &&
+          <MyRestApiUrlRedux />
         }
       </>
     )
