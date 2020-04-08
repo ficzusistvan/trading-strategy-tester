@@ -1,9 +1,7 @@
 import * as helpers from '../helpers'
-import Debug from 'debug'
 import * as i from '../../interfaces'
 import moment from 'moment';
 
-const debug = Debug('xapi')
 //const HOST = 'https://xapi.xtb.com';
 //const DEMO_PORTS = {
 //  MAIN: 5124,
@@ -45,7 +43,7 @@ let searchSymbol = async function (keywords: string) {
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
-      //debug('message from ws: %O', msg.data);
+      //console.log('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         //logger.info('Websocket logged in; sending "getAllSymbols"...');
@@ -61,7 +59,7 @@ let searchSymbol = async function (keywords: string) {
       //logger.info('Websocket closed for [' + addr + ']');
     });
     ws.addEventListener('ping', () => {
-      debug('Webocket ping received! [' + addr + ']');
+      console.log('Webocket ping received! [' + addr + ']');
     });
     ws.addEventListener('error', (error: any) => {
       //logger.error('Websocket error for [' + addr + ']', error);
@@ -106,13 +104,13 @@ let getCandles = async function (symbol: string, period: number) {
       ws.send(JSON.stringify(msg));
     });
     ws.addEventListener('message', async (msg: any) => {
-      //debug('message from ws: %O', msg.data);
+      //console.log('message from ws: %O', msg.data);
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         //logger.info('Websocket logged in; sending "getChartLastRequest"...');
         let msg: i.IXAPIChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
         let strin = JSON.stringify(msg);
-        debug('Strin', strin);
+        console.log('Strin', strin);
         ws.send(strin);
       } else {
         //logger.info('Websocket "getChartLastRequest" result received, returning it...');
@@ -124,7 +122,7 @@ let getCandles = async function (symbol: string, period: number) {
       //logger.info('Websocket closed for [' + addr + ']');
     });
     ws.addEventListener('ping', () => {
-      debug('Webocket ping received! [' + addr + ']');
+      console.log('Webocket ping received! [' + addr + ']');
     });
     ws.addEventListener('error', (error: any) => {
       //logger.error('Websocket error for [' + addr + ']', error);

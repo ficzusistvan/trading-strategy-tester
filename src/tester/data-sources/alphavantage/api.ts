@@ -1,13 +1,6 @@
-// GENERAL DEPENDENCIES
 import axios from 'axios'
-
 import * as i from '../../interfaces'
-
-// DEBUGGING
-import Debug from 'debug'
-//import moment from 'moment';
 import moment from 'moment-timezone';
-const debug = Debug('avapi')
 
 const API_KEY = process.env.REACT_APP_ALPHAVANTAGE_API_KEY;
 
@@ -24,7 +17,7 @@ let normalizeSymbols = function (symbols: Array<i.IAVBestMatch>) {
 
 let searchSymbol = async function (keywords: string) {
   const resp = await axios.get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=' + keywords + '&apikey=' + API_KEY);
-  debug('searchSymbol', resp.data);
+  console.log('searchSymbol', resp.data);
   return normalizeSymbols(resp.data.bestMatches);
 }
 
@@ -56,9 +49,9 @@ let getCandles = async function (symbol: string, period: number) {
   } else {
     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=' + API_KEY;
   }
-  debug('getTimeSeriesIntraday', url);
+  console.log('getTimeSeriesIntraday', url);
   const resp = await axios.get(url);
-  debug('getTimeSeriesIntraday', resp.data);
+  console.log('getTimeSeriesIntraday', resp.data);
   const timeZone = resp.data['Meta Data']['6. Time Zone'];
   console.log('Using timezone', timeZone);
   for (let [key1, value1] of Object.entries(resp.data)) {

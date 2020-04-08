@@ -1,12 +1,7 @@
-// GENERAL DEPENDENCIES
 import axios from 'axios'
 import * as helpers from '../helpers'
 import * as i from '../../interfaces'
-
-// DEBUGGING
-import Debug from 'debug'
 import moment from 'moment';
-const debug = Debug('finnhub')
 
 const API_KEY = process.env.REACT_APP_FINNHUB_API_KEY;
 
@@ -31,7 +26,7 @@ let searchSymbol = async function (keywords: string) {
     const filteredSymbols: Array<i.ICommonSymbol> = helpers.applySearchterm(normalizeSymbols(symbols.data), keywords);
     allSymbols = allSymbols.concat(filteredSymbols);
   }
-  debug('searchSymbol', allSymbols);
+  console.log('searchSymbol', allSymbols);
   return allSymbols;
 }
 
@@ -57,9 +52,9 @@ let normalizeCandles = function (candles: i.IFinnhubStockData) {
 let getCandles = async function (symbol: string, period: number) {
   const count = 259200;
   const url = 'https://finnhub.io/api/v1/stock/candle?symbol=' + symbol + '&resolution=' + period + '&count=' + count + '&token=' + API_KEY;
-  debug('Stock Candles', url);
+  console.log('Stock Candles', url);
   const resp = await axios.get(url);
-  debug('Stock Candles', resp.data);
+  console.log('Stock Candles', resp.data);
   if (resp.data.s === "ok") {
     return normalizeCandles(resp.data);
   } else {

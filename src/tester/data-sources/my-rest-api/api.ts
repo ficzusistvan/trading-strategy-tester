@@ -1,15 +1,12 @@
 import * as i from '../../interfaces'
 
-// DEBUGGING
-import Debug from 'debug'
 import moment from 'moment';
 import store from '../../../redux/store'
 import axios from 'axios';
-const debug = Debug('my-rest-api')
 
 let searchSymbol = async function (keywords: string) {
   let obj: i.ICommonSymbol = { symbol: 'my-rest-api-' + keywords, name: 'my-rest-api-name', type: 'my-rest-api-type', currency: 'my-rest-api-currency' };
-  debug('Symbols:', [obj]);
+  console.log('Symbols:', [obj]);
   return [obj];
 }
 

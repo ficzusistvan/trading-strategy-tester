@@ -1,8 +1,5 @@
-import Debug from 'debug'
 import * as i from './interfaces'
 import * as eventHandler from './event-handler'
-
-const debug = Debug('tester')
 
 let strategyInst: any;
 let arrayOfCandles: Array<i.ICommonCandles>;
@@ -23,13 +20,12 @@ let init = async function(strategy: any, allCandles: any) {
 }
 
 let handleCandle = function (idx: number) {
-  debug('Handling candle idx [' + idx + ']');
   if (idx < defaultCandles.candles.length) {
     // Running strategy
     if (!isEntered) {
       let res: i.ITesterStrategyResult = strategyInst.enter(defaultCandles.candles, idx, arrayOfCandles);
       if (res.result === true) {
-        debug('Entered order %O', res.trade);
+        //console.log('Entered order %O', res.trade);
         trades.push(res.trade);
         openedTrade = res.trade;
         isEntered = true;
@@ -37,7 +33,7 @@ let handleCandle = function (idx: number) {
     } else {
       let res: i.ITesterStrategyResult = strategyInst.exit(defaultCandles.candles, idx, openedTrade, arrayOfCandles);
       if (res.result === true) {
-        debug('Exited order %O', res.trade);
+        //console.log('Exited order %O', res.trade);
         trades.push(res.trade);
         isEntered = false;
       }

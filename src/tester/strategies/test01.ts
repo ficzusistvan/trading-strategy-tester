@@ -2,15 +2,12 @@ import moment from 'moment';
 //import moment from 'moment-timezone';
 import * as i from './../interfaces';
 
-import Debug from 'debug'
-const debug = Debug('test01')
-
 const TAKE_PROFIT = 20;
 const STOP_LOSS = -60;
 
 let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterStrategyResult {
   
-  debug('Handling candle: %O', candles[idx]);
+  console.log('Handling candle: %O', candles[idx]);
   let trade: i.ITesterTrade = { price: 0, side: i.ETesterSide.NONE, date: '' };
   let result: boolean = false;
   if (moment(candles[idx].date).hour() === 9 && moment(candles[idx].date).minute() === 5) {
@@ -23,7 +20,7 @@ let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterSt
       trade.side = i.ETesterSide.SELL;
     }
     result = true;
-    debug('Enter strategy result: %O', trade);
+    console.log('Enter strategy result: %O', trade);
   }
 
   return { result: result, trade: trade };
@@ -41,7 +38,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -51,7 +48,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -61,7 +58,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -71,7 +68,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
   } else if (openedTrade.side === i.ETesterSide.SELL) {
@@ -79,7 +76,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -89,7 +86,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -99,7 +96,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
 
@@ -109,7 +106,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
       trade.price = curPrice;
       trade.date = candles[idx].date;
       result = true;
-      debug('Exit strategy result: %O', trade);
+      console.log('Exit strategy result: %O', trade);
       return { result: result, trade: trade };
     }
   } else {
