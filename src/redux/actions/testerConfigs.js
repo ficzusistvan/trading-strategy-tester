@@ -5,7 +5,7 @@ export const setDataSource = (dataSource) => ({
   dataSource
 });
 
-export const setCSV = (csv) => ({
+export const setLocalCsv = (csv) => ({
   type: SET_LOCAL_CSV,
   csv
 });

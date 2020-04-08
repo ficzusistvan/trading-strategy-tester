@@ -1,6 +1,6 @@
 import { SET_DATA_SOURCE, SET_LOCAL_CSV, SET_MY_REST_API_URL, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY} from "../actions/types";
 
-const testerConfigs = (state = { dataSource: '', csv: null, myRestApiUrl: 'http://fieaam.go.ro:8081/candles/DE30/5', symbol: null, period: 5, isDefault: true, symbolsAndPeriods: [], strategy: '' }, action) => {
+const testerConfigs = (state = { dataSource: '', localCsv: '', myRestApiUrl: process.env.REACT_APP_MY_REST_API_URL, symbol: null, period: 5, isDefault: true, symbolsAndPeriods: [], strategy: '' }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
       if (state.dataSource === action.dataSource) {
@@ -18,7 +18,7 @@ const testerConfigs = (state = { dataSource: '', csv: null, myRestApiUrl: 'http:
     case SET_LOCAL_CSV: {
       return {
         ...state,
-        csv: action.csv
+        localCsv: action.csv
       }
     }
     case SET_MY_REST_API_URL: {

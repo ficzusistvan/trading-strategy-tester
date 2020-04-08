@@ -5,10 +5,10 @@ import Debug from 'debug'
 import moment from 'moment';
 import store from '../../../redux/store'
 import Papa from 'papaparse'
-const debug = Debug('localcsv')
+const debug = Debug('local-csv')
 
 let searchSymbol = async function (keywords: string) {
-  let obj: i.ICommonSymbol = { symbol: 'csv-' + keywords, name: 'csv-name', type: 'csv-type', currency: 'csv-currency' };
+  let obj: i.ICommonSymbol = { symbol: 'local-csv-' + keywords, name: 'local-csv-name', type: 'local-csv-type', currency: 'local-csv-currency' };
   debug('Symbols:', [obj]);
   return [obj];
 }
@@ -30,7 +30,7 @@ let normalizeCandles = function (candles: Array<any>) {
 }
 
 let getCandles = function (symbol: string, period: number) {
-  const results = Papa.parse(store.getState().testerConfigs.csv, {
+  const results = Papa.parse(store.getState().testerConfigs.localCsv, {
     header: true
   });
   if (results.meta.aborted === false) {

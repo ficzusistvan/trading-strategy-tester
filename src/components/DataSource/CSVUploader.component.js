@@ -11,7 +11,7 @@ class CSVUploaderComponent extends Component {
         reader.onabort = () => console.log('file reading was aborted')
         reader.onerror = () => console.log('file reading has failed')
         reader.onload = () => {
-          this.props.onSetCSV(reader.result);
+          this.props.onSetLocalCsv(reader.result);
         }
         reader.readAsText(file)
       });
