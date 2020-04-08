@@ -27,3 +27,8 @@ yarn-error.log*
 
 # csvs folder
 csvs
+
+# specific strategies and datasources
+data-sources/local-csv
+data-sources/my-rest-api
+strategies/test03_Zoli.ts
