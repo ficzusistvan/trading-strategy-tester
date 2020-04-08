@@ -29,6 +29,6 @@ yarn-error.log*
 csvs
 
 # specific strategies and datasources
-data-sources/local-csv
-data-sources/my-rest-api
-strategies/test03_Zoli.ts
+src/tester/data-sources/local-csv/api.ts
+src/tester/data-sources/my-rest-api/api.ts
+src/tester/strategies/test03_Zoli.ts
