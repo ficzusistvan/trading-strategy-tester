@@ -32,3 +32,4 @@ csvs
 src/tester/data-sources/local-csv/api.ts
 src/tester/data-sources/my-rest-api/api.ts
 src/tester/strategies/test03_Zoli.ts
+src/tester/strategies/test04_Zoli.ts

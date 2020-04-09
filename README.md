@@ -8,4 +8,4 @@ See live app on: https://ficzusistvan.github.io/trading-strategy-tester/#/
 
 ## Limitations
 
-1. Finnhub only handles 'EU' stocks only for the moment.
+~~1. Finnhub only handles 'EU' stocks only for the moment.~~

@@ -7,7 +7,7 @@ class SelectStrategyComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      strategies: ['test01', 'test02', 'test03_Zoli'],
+      strategies: ['test01', 'test02', 'test03_Zoli', 'test04_Zoli'],
       description: ''
     };
   }
