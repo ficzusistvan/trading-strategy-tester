@@ -13,3 +13,4 @@ export const ADD_CANDLES = "ADD_CANDLES";
 
 export const SET_IS_TEST_FINISHED = "SET_IS_TEST_FINISHED";
 export const SET_TRADES = "SET_TRADES";
+export const SET_CONFIGS = "SET_CONFIGS";

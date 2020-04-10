@@ -40,7 +40,7 @@ let handleCandle = function (idx: number) {
     }
     eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
   } else {
-    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades });
+    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, configs: strategyInst.getConfigs() });
   }
 }
 

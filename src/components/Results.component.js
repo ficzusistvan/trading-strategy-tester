@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, ListGroup, Col } from 'reactstrap';
+import { Row, ListGroup, Col, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import ResultComponent from './Results/Result.component';
 import './Results.css';
@@ -8,6 +8,7 @@ import TradesCounterComponent from './Results/TradesCounter.component';
 class StrategyResultsComponent extends Component {
 
   render() {
+    let configItems = [];
     let profit = 0;
     let listItems = [];
     let profits = 0;
@@ -35,9 +36,24 @@ class StrategyResultsComponent extends Component {
       }
     });
 
+    for (let [key, value] of Object.entries(this.props.configs)) {
+      configItems.push(<ListGroupItem>
+        <ListGroupItemHeading>
+          {key}
+        </ListGroupItemHeading>
+        <ListGroupItemText>
+          {value}
+        </ListGroupItemText>
+      </ListGroupItem>);
+    };
+
     return (
       <Row>
         <Col>
+          <h4>Configs:</h4>
+          <ListGroup>
+            {configItems}
+          </ListGroup>
           <h4>Profit: <span className="text-danger font-weight-bold">{profit.toFixed(2)}</span></h4>
           <TradesCounterComponent profits={profits} losses={losses} />
           <h4>Strategy results:</h4>
