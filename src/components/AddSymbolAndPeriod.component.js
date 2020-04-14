@@ -33,7 +33,8 @@ class AddSymbolAndPeriodComponent extends Component {
   }
 
   async onHandleSearchClick(e) {
-    const dataSourceImpl = await import('../tester/data-sources/' + this.props.dataSource + '/api');
+    const path = process.env.REACT_APP_PUBLIC_DATA_SOURCES.split(',').includes(this.props.dataSource) ? 'public' : 'private';
+    const dataSourceImpl = await import('../tester/' + path + '/data-sources/' + this.props.dataSource + '/api');
     const symbols = await dataSourceImpl.searchSymbol(this.state.keyword);
     console.log(symbols);
     this.setState({ symbols: symbols, loading: false })
@@ -55,7 +56,8 @@ class AddSymbolAndPeriodComponent extends Component {
   }
 
   async onHandleAddClick(e) {
-    const dataSourceImpl = await import('../tester/data-sources/' + this.props.dataSource + '/api');
+    const path = process.env.REACT_APP_PUBLIC_DATA_SOURCES.split(',').includes(this.props.dataSource) ? 'public' : 'private';
+    const dataSourceImpl = await import('../tester/' + path + '/data-sources/' + this.props.dataSource + '/api');
     const candles = await dataSourceImpl.getCandles(this.props.symbol, this.props.period);
     this.props.onAddCandles(this.props.symbol, this.props.period, this.props.isDefault, candles);
     this.props.onSetIsDefault(false);

@@ -15,7 +15,11 @@ let init = async function(strategy: any, allCandles: any) {
   defaultCandles = allCandles.filter((candles: i.ICommonCandles) => {
     return candles.isDefault === true;
   })[0];
-  strategyInst = await import('./strategies/' + strategy + '.ts');
+  let path = 'public';
+  if (process.env.REACT_APP_PUBLIC_STRATEGIES) {
+    path = process.env.REACT_APP_PUBLIC_STRATEGIES.split(',').includes(strategy) ? 'public' : 'private';
+  }
+  strategyInst = await import('./' + path + '/strategies/' + strategy + '.ts');
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
 }
 

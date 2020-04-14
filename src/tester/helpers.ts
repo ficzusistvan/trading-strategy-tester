@@ -1,4 +1,4 @@
-import * as i from '../interfaces';
+import * as i from './interfaces';
 
 export let applySearchterm = function(symbols: Array<i.ICommonSymbol>, keyword: string) {
   return symbols.filter(symbol => {

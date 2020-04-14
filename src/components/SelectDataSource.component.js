@@ -9,7 +9,7 @@ class SelectDataSourceComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSources: process.env.REACT_APP_DATA_SOURCES.split(',')
+      dataSources: [...process.env.REACT_APP_PUBLIC_DATA_SOURCES.split(','), ...process.env.REACT_APP_PRIVATE_DATA_SOURCES.split(',')]
     };
   }
 

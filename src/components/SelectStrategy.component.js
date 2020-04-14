@@ -7,13 +7,14 @@ class SelectStrategyComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      strategies: process.env.REACT_APP_STRATEGIES.split(','),
+      strategies: [...process.env.REACT_APP_PUBLIC_STRATEGIES.split(','), ...process.env.REACT_APP_PRIVATE_STRATEGIES.split(',')],
       description: ''
     };
   }
 
   async updateDescription(strategy) {
-    let strategyInst = await import('../tester/strategies/' + strategy);
+    const path = process.env.REACT_APP_PUBLIC_STRATEGIES.split(',').includes(strategy) ? 'public' : 'private';
+    let strategyInst = await import('../tester/' + path + '/strategies/' + strategy);
     this.setState({ description: strategyInst.getDescription() });
   }
 
