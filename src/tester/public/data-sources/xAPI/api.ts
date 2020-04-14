@@ -1,5 +1,5 @@
-import * as helpers from '../helpers'
-import * as i from '../../interfaces'
+import * as helpers from '../../../helpers'
+import * as i from '../../../interfaces'
 import moment from 'moment';
 
 //const HOST = 'https://xapi.xtb.com';

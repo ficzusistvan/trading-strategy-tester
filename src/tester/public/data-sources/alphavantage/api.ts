@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as i from '../../interfaces'
+import * as i from '../../../interfaces'
 import moment from 'moment-timezone';
 
 const API_KEY = process.env.REACT_APP_ALPHAVANTAGE_API_KEY;

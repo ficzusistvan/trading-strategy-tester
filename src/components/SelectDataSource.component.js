@@ -9,7 +9,7 @@ class SelectDataSourceComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSources: ['alphavantage', 'xAPI', 'finnhub', 'local-csv', 'my-rest-api']
+      dataSources: process.env.REACT_APP_DATA_SOURCES.split(',')
     };
   }
 

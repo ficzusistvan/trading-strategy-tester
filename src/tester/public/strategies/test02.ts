@@ -1,27 +1,34 @@
-import moment from 'moment';
-//import moment from 'moment-timezone';
-import * as i from './../interfaces';
+//import moment from 'moment';
+import * as i from './../../interfaces';
 
-const TAKE_PROFIT = 20;
-const STOP_LOSS = -60;
+const TAKE_PROFIT = 2;
+const STOP_LOSS = -3;
 
 let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterStrategyResult {
-  
+
   console.log('Handling candle: %O', candles[idx]);
   let trade: i.ITesterTrade = { price: 0, side: i.ETesterSide.NONE, date: '' };
   let result: boolean = false;
-  if (moment(candles[idx].date).hour() === 9 && moment(candles[idx].date).minute() === 5) {
-    const prevCandle = candles[idx - 1];
-    trade.price = candles[idx].open;
-    trade.date = candles[idx].date;
-    if (prevCandle.open > prevCandle.close) {
-      trade.side = i.ETesterSide.BUY;
-    } else {
+  if (idx > 2) {
+    const prev1Candle = candles[idx - 1];
+    const prev2Candle = candles[idx - 2];
+    const prev3Candle = candles[idx - 3];
+    if (prev1Candle.open < prev1Candle.close && prev2Candle.open < prev2Candle.close && prev3Candle.open < prev3Candle.close) {
+      // price is rising fast, expect fall
+      trade.price = candles[idx].open;
+      trade.date = candles[idx].date;
       trade.side = i.ETesterSide.SELL;
+      result = true;
     }
-    result = true;
-    console.log('Enter strategy result: %O', trade);
+    if (prev1Candle.open > prev1Candle.close && prev2Candle.open > prev2Candle.close && prev3Candle.open > prev3Candle.close) {
+      // price is falling fast, expect rise
+      trade.price = candles[idx].open;
+      trade.date = candles[idx].date;
+      trade.side = i.ETesterSide.BUY;
+      result = true;
+    }
   }
+  console.log('Enter strategy result: %O', trade);
 
   return { result: result, trade: trade };
 }
@@ -117,7 +124,7 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: 
 }
 
 let getDescription = function() {
-  return "First strategy ever! 9:05 open time!"
+  return "A simple test strategy"
 }
 
 export {

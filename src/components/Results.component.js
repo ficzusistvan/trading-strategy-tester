@@ -37,7 +37,7 @@ class StrategyResultsComponent extends Component {
     });
 
     for (let [key, value] of Object.entries(this.props.configs)) {
-      configItems.push(<ListGroupItem>
+      configItems.push(<ListGroupItem key={key+value}>
         <ListGroupItemHeading>
           {key}
         </ListGroupItemHeading>
