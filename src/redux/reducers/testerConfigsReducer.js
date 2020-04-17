@@ -5,26 +5,16 @@ import {
   SET_IS_DEFAULT,
   ADD_CANDLES,
   SET_STRATEGY,
-  SET_LOCAL_CSV,
-  SET_MY_REST_API_URL,
-  SET_CURRENCY_PRICE,
-  SET_LEVERAGE,
-  SET_NOMINAL_VALUE,
   SET_INIT_BALANCE
 } from "../actions/types";
 
 const testerConfigs = (state = {
   dataSource: '',
-  localCsv: '',
-  myRestApiUrl: process.env.REACT_APP_MY_REST_API_URL,
   symbol: null,
   period: 5,
   isDefault: true,
   symbolsAndPeriods: [],
   strategy: '',
-  currencyPrice: 4.835,
-  leverage: 20,
-  nominalValue: 25,
   initBalance: 50000
 }, action) => {
   switch (action.type) {
@@ -39,18 +29,6 @@ const testerConfigs = (state = {
         symbol: null,
         period: 5,
         symbolsAndPeriods: []
-      }
-    }
-    case SET_LOCAL_CSV: {
-      return {
-        ...state,
-        localCsv: action.csv
-      }
-    }
-    case SET_MY_REST_API_URL: {
-      return {
-        ...state,
-        myRestApiUrl: action.url
       }
     }
     case SET_SYMBOL: {
@@ -83,35 +61,12 @@ const testerConfigs = (state = {
         strategy: action.strategy
       }
     }
-
-    case SET_CURRENCY_PRICE: {
-      return {
-        ...state,
-        currencyPrice: action.currencyPrice
-      }
-    }
-
-    case SET_LEVERAGE: {
-      return {
-        ...state,
-        leverage: action.leverage
-      }
-    }
-
-    case SET_NOMINAL_VALUE: {
-      return {
-        ...state,
-        nominalValue: action.nominalValue
-      }
-    }
-
     case SET_INIT_BALANCE: {
       return {
         ...state,
         initBalance: action.initBalance
       }
     }
-
     default:
       return state;
   }

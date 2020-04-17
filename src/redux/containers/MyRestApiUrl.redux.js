@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { setMyRestApiUrl } from '../actions/testerConfigs';
+import { setMyRestApiUrl } from '../actions/dataSourceConfigs';
 import MyRestApiUrlComponent from "../../components/DataSource/MyRestApiUrl.component"
 
 const mapStateToProps = state => {
   return {
-    myRestApiUrl: state.testerConfigs.myRestApiUrl,
+    myRestApiUrl: state.dataSourceConfigs.myRestApiUrl,
   };
 };
 

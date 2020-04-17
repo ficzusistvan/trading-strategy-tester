@@ -27,9 +27,9 @@ let init = async function (strategy: any, allCandles: any) {
   }
   strategyInst = await import('./' + path + '/strategies/' + strategy + '.ts');
   const insInfo: i.ICommonInstrumentBasicInfo = {
-    currencyPrice: store.getState().testerConfigs.currencyPrice,
-    leverage: store.getState().testerConfigs.leverage,
-    nominalValue: store.getState().testerConfigs.nominalValue
+    currencyPrice: store.getState().dataSourceConfigs.currencyPrice,
+    leverage: store.getState().dataSourceConfigs.leverage,
+    nominalValue: store.getState().dataSourceConfigs.nominalValue
   };
   strategyInst.init(insInfo);
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);

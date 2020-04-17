@@ -27,7 +27,7 @@ let normalizeCandles = function (candles: Array<any>) {
 }
 
 let getCandles = function (symbol: string, period: number) {
-  const results = Papa.parse(store.getState().testerConfigs.localCsv, {
+  const results = Papa.parse(store.getState().dataSourceConfigs.localCsv, {
     header: true
   });
   if (results.meta.aborted === false) {

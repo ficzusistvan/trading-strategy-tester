@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import auth from './authReducer';
+import dataSourceConfigs from './dataSourceConfigsReducer';
 import testerConfigs from './testerConfigsReducer';
 import testerResults from './testerResultsReducer';
 import { polyglotReducer } from 'redux-polyglot';
 
 export default combineReducers({
-  auth,
+  dataSourceConfigs,
   testerConfigs,
   testerResults,
   polyglot: polyglotReducer
