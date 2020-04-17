@@ -1,6 +1,32 @@
-import { SET_DATA_SOURCE, SET_LOCAL_CSV, SET_MY_REST_API_URL, SET_SYMBOL, SET_PERIOD, SET_IS_DEFAULT, ADD_CANDLES, SET_STRATEGY} from "../actions/types";
+import {
+  SET_DATA_SOURCE,
+  SET_SYMBOL,
+  SET_PERIOD,
+  SET_IS_DEFAULT,
+  ADD_CANDLES,
+  SET_STRATEGY,
+  SET_LOCAL_CSV,
+  SET_MY_REST_API_URL,
+  SET_CURRENCY_PRICE,
+  SET_LEVERAGE,
+  SET_NOMINAL_VALUE,
+  SET_INIT_BALANCE
+} from "../actions/types";
 
-const testerConfigs = (state = { dataSource: '', localCsv: '', myRestApiUrl: process.env.REACT_APP_MY_REST_API_URL, symbol: null, period: 5, isDefault: true, symbolsAndPeriods: [], strategy: '' }, action) => {
+const testerConfigs = (state = {
+  dataSource: '',
+  localCsv: '',
+  myRestApiUrl: process.env.REACT_APP_MY_REST_API_URL,
+  symbol: null,
+  period: 5,
+  isDefault: true,
+  symbolsAndPeriods: [],
+  strategy: '',
+  currencyPrice: 4.835,
+  leverage: 20,
+  nominalValue: 25,
+  initBalance: 50000
+}, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
       if (state.dataSource === action.dataSource) {
@@ -38,7 +64,7 @@ const testerConfigs = (state = { dataSource: '', localCsv: '', myRestApiUrl: pro
         ...state,
         period: action.period
       }
-    } 
+    }
     case SET_IS_DEFAULT: {
       return {
         ...state,
@@ -55,6 +81,34 @@ const testerConfigs = (state = { dataSource: '', localCsv: '', myRestApiUrl: pro
       return {
         ...state,
         strategy: action.strategy
+      }
+    }
+
+    case SET_CURRENCY_PRICE: {
+      return {
+        ...state,
+        currencyPrice: action.currencyPrice
+      }
+    }
+
+    case SET_LEVERAGE: {
+      return {
+        ...state,
+        leverage: action.leverage
+      }
+    }
+
+    case SET_NOMINAL_VALUE: {
+      return {
+        ...state,
+        nominalValue: action.nominalValue
+      }
+    }
+
+    case SET_INIT_BALANCE: {
+      return {
+        ...state,
+        initBalance: action.initBalance
       }
     }
 

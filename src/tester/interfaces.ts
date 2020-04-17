@@ -5,15 +5,24 @@ export enum ETesterSide {
   SELL = 'SELL'
 }
 
-export interface ITesterTrade {
-  price: number,
+export interface ITesterEnter {
   side: ETesterSide,
-  date: string
+  openPrice: number,
+  openDate: string,
+  volume: number,
+  pip: number,
+  openMargin: number
 }
 
-export interface ITesterStrategyResult {
-  result: boolean,
-  trade: ITesterTrade
+export interface ITesterExit {
+  closePrice: number,
+  closeDate: string,
+  profit: number
+}
+
+export interface ITesterTrade {
+  enter: ITesterEnter,
+  exit: ITesterExit
 }
 
 /** XAPI */
@@ -123,4 +132,10 @@ export interface ICommonCandles {
   period: string,
   isDefault: boolean,
   candles: Array<ICommonCandle>
+}
+
+export interface ICommonInstrumentBasicInfo {
+  currencyPrice: number,
+  leverage: number,
+  nominalValue: number
 }

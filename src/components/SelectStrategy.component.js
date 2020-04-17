@@ -8,14 +8,15 @@ class SelectStrategyComponent extends Component {
     super(props);
     this.state = {
       strategies: [...process.env.REACT_APP_PUBLIC_STRATEGIES.split(','), ...process.env.REACT_APP_PRIVATE_STRATEGIES.split(',')],
-      description: ''
+      description: '',
+      configs: {}
     };
   }
 
   async updateDescription(strategy) {
     const path = process.env.REACT_APP_PUBLIC_STRATEGIES.split(',').includes(strategy) ? 'public' : 'private';
     let strategyInst = await import('../tester/' + path + '/strategies/' + strategy);
-    this.setState({ description: strategyInst.getDescription() });
+    this.setState({ description: strategyInst.getDescription(), configs: strategyInst.getConfigs() });
   }
 
   componentDidMount() {
@@ -38,6 +39,10 @@ class SelectStrategyComponent extends Component {
     for (let i = 0; i < strategies.length; i++) {
       options.push(<option value={strategies[i]} key={i}>{strategies[i]}</option>);
     }
+    const configItems = [];
+    for (let [key, value] of Object.entries(this.state.configs)) {
+      configItems.push(<p key={key}>{key} : {value}</p>)
+    };
     return (
       <>
         <Row>
@@ -52,6 +57,12 @@ class SelectStrategyComponent extends Component {
           <Col>
             <h5>Strategy description:</h5>
             <p>{this.state.description}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h5>Strategy configs:</h5>
+            {configItems}
           </Col>
         </Row>
       </>

@@ -1,6 +1,6 @@
-import { SET_TRADES, SET_IS_TEST_FINISHED, SET_CONFIGS } from "../actions/types";
+import { SET_TRADES, SET_IS_TEST_FINISHED, SET_END_BALANCE } from "../actions/types";
 
-const testerResults = (state = { isTestFinished: true, trades: [], configs: {} }, action) => {
+const testerResults = (state = { isTestFinished: true, trades: [], endBalance: 0 }, action) => {
   switch (action.type) {
 
     case SET_IS_TEST_FINISHED: {
@@ -17,10 +17,10 @@ const testerResults = (state = { isTestFinished: true, trades: [], configs: {} }
       }
     }
 
-    case SET_CONFIGS: {
+    case SET_END_BALANCE: {
       return {
         ...state,
-        configs: action.configs
+        endBalance: action.endBalance
       }
     }
 

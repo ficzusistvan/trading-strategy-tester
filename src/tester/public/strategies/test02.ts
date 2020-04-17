@@ -4,7 +4,7 @@ import * as i from './../../interfaces';
 const TAKE_PROFIT = 2;
 const STOP_LOSS = -3;
 
-let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterStrategyResult {
+/*let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterStrategyResult {
 
   console.log('Handling candle: %O', candles[idx]);
   let trade: i.ITesterTrade = { price: 0, side: i.ETesterSide.NONE, date: '' };
@@ -131,4 +131,4 @@ export {
   enter,
   exit,
   getDescription
-}
+}*/

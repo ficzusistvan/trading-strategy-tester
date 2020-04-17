@@ -1,4 +1,4 @@
-import { SET_IS_TEST_FINISHED, SET_TRADES, SET_CONFIGS } from "./types";
+import { SET_IS_TEST_FINISHED, SET_TRADES, SET_END_BALANCE } from "./types";
 
 export const setIsTestFinished = (isTestFinished) => ({
   type: SET_IS_TEST_FINISHED,
@@ -10,7 +10,7 @@ export const setTrades = (trades) => ({
   trades
 });
 
-export const setConfigs = (configs) => ({
-  type: SET_CONFIGS,
-  configs
+export const setEndBalance = (endBalance) => ({
+  type: SET_END_BALANCE,
+  endBalance
 });

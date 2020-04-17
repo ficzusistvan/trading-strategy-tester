@@ -4,7 +4,8 @@ import ResultsComponent from "../../components/Results.component"
 const mapStateToProps = state => {
   return {
     trades: state.testerResults.trades,
-    configs: state.testerResults.configs
+    initBalance: state.testerConfigs.initBalance,
+    endBalance: state.testerResults.endBalance
   };
 };
 

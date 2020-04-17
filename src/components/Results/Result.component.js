@@ -8,18 +8,9 @@ const MY_FORMAT = 'MMM D ddd HH:mm'
 class ResultComponent extends Component {
 
   render() {
-    const { startPrice, endPrice, side, startDate, endDate } = this.props;
+    const { side, openPrice, openDate, closePrice, closeDate, profit } = this.props;
 
     let color = 'success';
-    let profit = 0;
-    if (side === 'BUY') {
-      profit = endPrice - startPrice;
-    } else if (side === 'SELL') {
-      profit = startPrice - endPrice;
-    } else {
-      // not reachable...
-    }
-
     if (profit < 0) {
       color = 'danger';
     }
@@ -30,9 +21,9 @@ class ResultComponent extends Component {
           {side}
         </ListGroupItemHeading>
         <ListGroupItemText>
-          {moment(startDate).format(MY_FORMAT)}: <Badge pill>{startPrice}</Badge>
+          {moment(openDate).format(MY_FORMAT)}: <Badge pill>{openPrice}</Badge>
           <br />
-          {moment(endDate).format(MY_FORMAT)}: <Badge pill>{endPrice}</Badge>
+          {moment(closeDate).format(MY_FORMAT)}: <Badge pill>{closePrice}</Badge>
           <br />
           Profit: <Badge pill>{profit.toFixed(2)}</Badge>
         </ListGroupItemText>
