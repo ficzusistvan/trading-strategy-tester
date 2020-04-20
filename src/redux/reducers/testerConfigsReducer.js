@@ -5,7 +5,8 @@ import {
   SET_IS_DEFAULT,
   ADD_CANDLES,
   SET_STRATEGY,
-  SET_INIT_BALANCE
+  SET_INIT_BALANCE,
+  SET_MARGIN_TO_BALANCE_PERCENT
 } from "../actions/types";
 
 const testerConfigs = (state = {
@@ -15,7 +16,8 @@ const testerConfigs = (state = {
   isDefault: true,
   symbolsAndPeriods: [],
   strategy: '',
-  initBalance: 50000
+  initBalance: 50000,
+  marginToBalancePercent: 50
 }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
@@ -65,6 +67,12 @@ const testerConfigs = (state = {
       return {
         ...state,
         initBalance: action.initBalance
+      }
+    }
+    case SET_MARGIN_TO_BALANCE_PERCENT: {
+      return {
+        ...state,
+        marginToBalancePercent: action.marginToBalancePercent
       }
     }
     default:

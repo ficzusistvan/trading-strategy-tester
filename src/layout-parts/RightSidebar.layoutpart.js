@@ -16,6 +16,12 @@ const RightSidebarLayoutPart = (props) => {
         <Col className="border-bottom border-top">
           <p className="font-weight-bold">Selected data source:</p>
           <p>{props.dataSource}</p>
+          <p className="font-weight-bolder">Currency price:</p>
+          <p>{props.currencyPrice}</p>
+          <p className="font-weight-bolder">Leverage:</p>
+          <p>{props.leverage}</p>
+          <p className="font-weight-bolder">Nominal value:</p>
+          <p>{props.nominalValue}</p>
         </Col>
       </Row>
       <Row className='my-5'>
@@ -28,6 +34,10 @@ const RightSidebarLayoutPart = (props) => {
         <Col className="border-bottom border-top">
           <p className="font-weight-bold">Selected strategy:</p>
           <p>{props.strategy}</p>
+          <p className="font-weight-bolder">Init balance:</p>
+          <p>{props.initBalance}</p>
+          <p className="font-weight-bolder">Margin to balance percent:</p>
+          <p>{props.marginToBalancePercent}</p>
         </Col>
       </Row>
     </Col>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Row, Col } from 'reactstrap';
+import { Input, Row, Col, FormGroup, Label } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 
 class SelectStrategyComponent extends Component {
@@ -31,6 +31,14 @@ class SelectStrategyComponent extends Component {
   onHandleStrategyChanged(e) {
     this.props.onSetStrategy(e.target.value);
     this.updateDescription(e.target.value);
+  }
+
+  onHandleInitBalanceChanged(e) {
+    this.props.onSetInitBalance(e.target.value);
+  }
+
+  onHandleMarginToBalancePercentChanged(e) {
+    this.props.onSetMarginToBalancePercent(e.target.value);
   }
 
   render() {
@@ -65,6 +73,18 @@ class SelectStrategyComponent extends Component {
             {configItems}
           </Col>
         </Row>
+        <FormGroup row>
+          <Label for="initBalance" sm={4}>Initial balance</Label>
+          <Col sm={8}>
+            <Input type="text" name="initBalance" id="initBalance" placeholder="Initial balance" value={this.props.initBalance} onChange={this.onHandleInitBalanceChanged.bind(this)} />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="marginToBalancePercent" sm={4}>Margin to balance percent</Label>
+          <Col sm={8}>
+            <Input type="text" name="marginToBalancePercent" id="marginToBalancePercent" placeholder="Margin to balance percent" value={this.props.marginToBalancePercent} onChange={this.onHandleMarginToBalancePercentChanged.bind(this)} />
+          </Col>
+        </FormGroup>
       </>
     )
   }

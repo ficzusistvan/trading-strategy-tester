@@ -31,6 +31,11 @@ class LeftSidebarLayoutPart extends React.Component {
           </Row>
           <Row className='mt-5'>
             <Col>
+              <Button block color="success" tag={Link} to='setup-data-source'>Setup data source</Button>
+            </Col>
+          </Row>
+          <Row className='mt-5'>
+            <Col>
               <Button block color="success" tag={Link} to='symbol-period' disabled={this.props.dataSource === null}>Add symbol & period</Button>
             </Col>
           </Row>

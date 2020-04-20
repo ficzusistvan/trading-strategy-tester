@@ -5,7 +5,8 @@ import {
   SET_IS_DEFAULT,
   ADD_CANDLES,
   SET_STRATEGY,
-  SET_INIT_BALANCE
+  SET_INIT_BALANCE,
+  SET_MARGIN_TO_BALANCE_PERCENT
 } from "./types";
 
 export const setDataSource = (dataSource) => ({
@@ -44,4 +45,9 @@ export const setStrategy = (strategy) => ({
 export const setInitBalance = (initBalance) => ({
   type: SET_INIT_BALANCE,
   initBalance
+})
+
+export const setMarginToBalancePercent = (marginToBalancePercent) => ({
+  type: SET_MARGIN_TO_BALANCE_PERCENT,
+  marginToBalancePercent
 })

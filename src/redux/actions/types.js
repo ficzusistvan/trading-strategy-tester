@@ -7,6 +7,7 @@ export const SET_PERIOD = "SET_PERIOD";
 export const SET_IS_DEFAULT = "SET_IS_DEFAULT";
 export const SET_STRATEGY = "SET_STRATEGY";
 export const ADD_CANDLES = "ADD_CANDLES";
+export const SET_MARGIN_TO_BALANCE_PERCENT = "SET_MARGIN_TO_BALANCE_PERCENT";
 
 // data source configs
 export const SET_CURRENCY_PRICE = "SET_CURRENCY_PRICE";
