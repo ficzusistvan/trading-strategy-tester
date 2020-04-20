@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Badge } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
+import * as numbers from '../../utils/numbers';
 
 class BalancesComponent extends Component {
 
@@ -9,9 +10,9 @@ class BalancesComponent extends Component {
 
     return (
       <>
-        <p>Initial Balance: <Badge pill>{initBalance}</Badge></p>
-        <p>End Balance: <Badge pill>{endBalance}</Badge></p>
-        <p>Total Profit: <Badge pill>{endBalance - initBalance}</Badge></p>
+        <p>Initial Balance: <Badge pill>{numbers.formatRon(initBalance)}</Badge></p>
+        <p>End Balance: <Badge pill>{numbers.formatRon(endBalance)}</Badge></p>
+        <p>Total Profit: <Badge pill>{numbers.formatRon(endBalance - initBalance)}</Badge></p>
       </>
     );
   }

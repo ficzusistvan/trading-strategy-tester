@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { ListGroupItem, ListGroupItemHeading, ListGroupItemText, Badge } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
-import moment from 'moment'
+import moment from 'moment';
+import * as numbers from '../../utils/numbers';
 
 const MY_FORMAT = 'MMM D ddd HH:mm'
 
@@ -21,11 +22,11 @@ class ResultComponent extends Component {
           {side}
         </ListGroupItemHeading>
         <ListGroupItemText>
-          {moment(openDate).format(MY_FORMAT)}: <Badge pill>{openPrice}</Badge>
+          {moment(openDate).format(MY_FORMAT)}: <Badge pill>{numbers.formatEuro(openPrice)}</Badge>
           <br />
-          {moment(closeDate).format(MY_FORMAT)}: <Badge pill>{closePrice}</Badge>
+          {moment(closeDate).format(MY_FORMAT)}: <Badge pill>{numbers.formatEuro(closePrice)}</Badge>
           <br />
-          Profit: <Badge pill>{profit.toFixed(2)}</Badge>
+          Profit: <Badge pill>{numbers.formatRon(profit)}</Badge>
         </ListGroupItemText>
       </ListGroupItem>
     );

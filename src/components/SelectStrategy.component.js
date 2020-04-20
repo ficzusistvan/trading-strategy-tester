@@ -49,7 +49,7 @@ class SelectStrategyComponent extends Component {
     }
     const configItems = [];
     for (let [key, value] of Object.entries(this.state.configs)) {
-      configItems.push(<p key={key}>{key} : {value}</p>)
+      configItems.push(<p key={key}>{key} : {value.toString()}</p>)
     };
     return (
       <>

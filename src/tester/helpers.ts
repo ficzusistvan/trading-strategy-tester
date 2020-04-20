@@ -1,5 +1,6 @@
 import * as i from './interfaces';
 import moment from 'moment-timezone';
+import Big from 'big.js';
 
 export let applySearchterm = function (symbols: Array<i.ICommonSymbol>, keyword: string) {
   return symbols.filter(symbol => {
@@ -42,17 +43,19 @@ export let getPrevDayMinMaxDiff = function (date: moment.Moment, candles: Array<
   return 240;
 }
 
-export let calculateMaxVolume = function (balance: number, price: number, currencyPrice: number, leverage: number, nominalValue: number): number {
-  const volume = Math.floor(balance / (price * currencyPrice * (1 / leverage) * nominalValue) * 100) / 100;
+export let calculateMaxVolume = function (balance: Big, price: Big, currencyPrice: Big, leverage: Big, nominalValue: Big): Big {
+  const lvrg = Big(1).div(leverage);
+  const volume = balance.div(price.mul(currencyPrice).mul(lvrg).mul(nominalValue)).round(2);
   return volume;
 }
 
-export let calculatePip = function (volume: number, currencyPrice: number, nominalValue: number): number {
-  const pip = volume * currencyPrice * nominalValue;
+export let calculatePip = function (volume: Big, currencyPrice: Big, nominalValue: Big): Big {
+  const pip = volume.mul(currencyPrice).mul(nominalValue);
   return pip;
 }
 
-export let calculateMargin = function (pip: number, price: number, leverage: number): number {
-  const margin = pip * price * (1 / leverage);
+export let calculateMargin = function (pip: Big, price: Big, leverage: Big): Big {
+  const lvrg = Big(1).div(leverage);
+  const margin = pip.mul(price).mul(lvrg);
   return margin;
 }

@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 /** Tester */
 export enum ETesterSide {
   NONE = 'NONE',
@@ -7,17 +9,17 @@ export enum ETesterSide {
 
 export interface ITesterEnter {
   side: ETesterSide,
-  openPrice: number,
+  openPrice: Big,
   openDate: string,
-  volume: number,
-  pip: number,
-  openMargin: number
+  volume: Big,
+  pip: Big,
+  openMargin: Big
 }
 
 export interface ITesterExit {
-  closePrice: number,
+  closePrice: Big,
   closeDate: string,
-  profit: number
+  profit: Big
 }
 
 export interface ITesterTrade {
@@ -135,7 +137,7 @@ export interface ICommonCandles {
 }
 
 export interface ICommonInstrumentBasicInfo {
-  currencyPrice: number,
-  leverage: number,
-  nominalValue: number
+  currencyPrice: Big,
+  leverage: Big,
+  nominalValue: Big
 }

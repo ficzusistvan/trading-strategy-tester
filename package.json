@@ -5,6 +5,7 @@
   "homepage": "https://ficzusistvan.github.io/trading-strategy-tester",
   "dependencies": {
     "axios": "^0.19.0",
+    "big.js": "^5.2.2",
     "bootstrap": "^4.3.1",
     "colors": "^1.4.0",
     "emittery": "^0.6.0",
@@ -23,6 +24,7 @@
     "redux-polyglot": "^0.7.0"
   },
   "devDependencies": {
+    "@types/big.js": "^4.0.5",
     "@types/jest": "^25.1.4",
     "@types/moment-timezone": "^0.5.13",
     "@types/node": "^13.9.3",

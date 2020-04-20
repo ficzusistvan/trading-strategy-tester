@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Badge } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
+import * as numbers from '../../utils/numbers';
 
 class TradesCounterComponent extends Component {
 
@@ -9,8 +10,8 @@ class TradesCounterComponent extends Component {
 
     return (
       <>
-        <p>Nr. of profitable trades: <Badge pill>{profits}</Badge></p>
-        <p>Nr. of loosing trades: <Badge pill>{losses}</Badge></p>
+        <p>Nr. of profitable trades: <Badge pill>{numbers.formatNumber(profits)}</Badge></p>
+        <p>Nr. of loosing trades: <Badge pill>{numbers.formatNumber(losses)}</Badge></p>
       </>
     );
   }
