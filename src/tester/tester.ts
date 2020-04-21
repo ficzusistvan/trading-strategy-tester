@@ -34,7 +34,7 @@ let init = async function (strategy: any, allCandles: any) {
     leverage: Big(store.getState().dataSourceConfigs.leverage),
     nominalValue: Big(store.getState().dataSourceConfigs.nominalValue)
   };
-  strategyInst.init(insInfo);
+  strategyInst.init(insInfo, store.getState().testerConfigs.marginToBalancePercent);
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
 }
 

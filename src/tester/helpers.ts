@@ -43,9 +43,10 @@ export let getPrevDayMinMaxDiff = function (date: moment.Moment, candles: Array<
   return 240;
 }
 
-export let calculateMaxVolume = function (balance: Big, price: Big, currencyPrice: Big, leverage: Big, nominalValue: Big): Big {
+export let calculateMaxVolume = function (balance: Big, marginToBalancePercent: Big, price: Big, currencyPrice: Big, leverage: Big, nominalValue: Big): Big {
   const lvrg = Big(1).div(leverage);
-  const volume = balance.div(price.mul(currencyPrice).mul(lvrg).mul(nominalValue)).round(2);
+  const adjustedBalance = balance.mul(marginToBalancePercent).div(100);
+  const volume = adjustedBalance.div(price.mul(currencyPrice).mul(lvrg).mul(nominalValue)).round(2);
   return volume;
 }
 
