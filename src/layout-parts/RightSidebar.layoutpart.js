@@ -13,7 +13,7 @@ const RightSidebarLayoutPart = (props) => {
 
   return (<Row className='right-sidebar'>
     <Col>
-      <Row className='my-5'>
+      <Row className='my-1'>
         <Col className="border-bottom border-top">
           <p className="font-weight-bold">Selected data source:</p>
           <p>{props.dataSource}</p>
@@ -25,13 +25,13 @@ const RightSidebarLayoutPart = (props) => {
           <p>{numbers.formatNumber(props.nominalValue)}</p>
         </Col>
       </Row>
-      <Row className='my-5'>
+      <Row className='my-1'>
         <Col className="border-bottom border-top">
           <p className="font-weight-bold">Added symbols and periods:</p>
           {listItems}
         </Col>
       </Row>
-      <Row className='my-5'>
+      <Row className='my-1'>
         <Col className="border-bottom border-top">
           <p className="font-weight-bold">Selected strategy:</p>
           <p>{props.strategy}</p>

@@ -12,7 +12,7 @@ class ResultComponent extends Component {
     const { side, openPrice, openDate, closePrice, closeDate, profit } = this.props;
 
     let color = 'success';
-    if (profit < 0) {
+    if (profit <= 0) {
       color = 'danger';
     }
 
