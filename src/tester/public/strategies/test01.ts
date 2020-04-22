@@ -1,132 +1,123 @@
 import moment from 'moment';
 //import moment from 'moment-timezone';
 import * as i from './../../interfaces';
+import * as helpers from '../../helpers';
+import Big from 'big.js';
+var colors = require('colors/safe');
+colors.enable();
 
-const TAKE_PROFIT = 20;
-const STOP_LOSS = -60;
+let instrumentInfo: i.ICommonInstrumentBasicInfo = { currencyPrice: Big(1), leverage: Big(1), nominalValue: Big(1) };
+let marginToBalancePercent: Big = Big(100);
+let entr: i.ITesterEnter;
+let exiit: i.ITesterExit;
 
-/*let enter = function (candles: Array<i.ICommonCandle>, idx: number): i.ITesterStrategyResult {
-  
-  console.log('Handling candle: %O', candles[idx]);
-  let trade: i.ITesterTrade = { price: 0, side: i.ETesterSide.NONE, date: '' };
-  let result: boolean = false;
-  if (moment(candles[idx].date).hour() === 9 && moment(candles[idx].date).minute() === 5) {
-    const prevCandle = candles[idx - 1];
-    trade.price = candles[idx].open;
-    trade.date = candles[idx].date;
-    if (prevCandle.open > prevCandle.close) {
-      trade.side = i.ETesterSide.BUY;
-    } else {
-      trade.side = i.ETesterSide.SELL;
-    }
-    result = true;
-    console.log('Enter strategy result: %O', trade);
-  }
+const STOP_LOSS: Big = Big(-60);
+const TAKE_PROFIT: Big = Big(20);
 
-  return { result: result, trade: trade };
+let init = function (insInfo: i.ICommonInstrumentBasicInfo, mToBPercent: Big) {
+  instrumentInfo = insInfo;
+  marginToBalancePercent = mToBPercent;
 }
 
-let exit = function (candles: Array<i.ICommonCandle>, idx: number, openedTrade: i.ITesterTrade): i.ITesterStrategyResult {
+let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: Big): boolean {
 
-  let trade: i.ITesterTrade = { price: 0, side: i.ETesterSide.NONE, date: '' };
-  let result: boolean = false;
+  console.log('Handling candle: %O', candles[idx]);
+  if (moment(candles[idx].date).hour() === 9 && moment(candles[idx].date).minute() === 5) {
+    const openPrice: Big = Big(candles[idx].open);
+    const prevCandle = candles[idx - 1];
 
-  let curPrice = candles[idx].open;
-  let diff = curPrice - openedTrade.price;
-  if (openedTrade.side === i.ETesterSide.BUY) {
-    if (diff < STOP_LOSS || diff > TAKE_PROFIT) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
+    const diff = candles[idx].open - prevCandle.close;
+    let side: i.ETesterSide;
+    if (diff > 0) {
+      side = i.ETesterSide.BUY;
+    } else {
+      side = i.ETesterSide.SELL;
+    }
+    const cVolume = helpers.calculateMaxVolume(balance, marginToBalancePercent, openPrice, instrumentInfo.currencyPrice, instrumentInfo.leverage, instrumentInfo.nominalValue);
+    const cPip = helpers.calculatePip(cVolume, instrumentInfo.currencyPrice, instrumentInfo.nominalValue);
+    const cMargin = helpers.calculateMargin(cPip, openPrice, instrumentInfo.leverage);
+
+    entr = {
+      side: side,
+      openPrice: openPrice,
+      openDate: candles[idx].date,
+      volume: cVolume,
+      pip: cPip,
+      openMargin: cMargin
     }
 
-    curPrice = candles[idx].high;
-    diff = curPrice - openedTrade.price;
-    if (diff < STOP_LOSS || diff > TAKE_PROFIT) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-
-    curPrice = candles[idx].low;
-    diff = curPrice - openedTrade.price;
-    if (diff < STOP_LOSS || diff > TAKE_PROFIT) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-
-    curPrice = candles[idx].close;
-    diff = curPrice - openedTrade.price;
-    if (diff < STOP_LOSS || diff > TAKE_PROFIT) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-  } else if (openedTrade.side === i.ETesterSide.SELL) {
-    if (diff > (STOP_LOSS * -1) || diff < (TAKE_PROFIT * -1)) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-
-    curPrice = candles[idx].high;
-    diff = curPrice - openedTrade.price;
-    if (diff > (STOP_LOSS * -1) || diff < (TAKE_PROFIT * -1)) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-
-    curPrice = candles[idx].low;
-    diff = curPrice - openedTrade.price;
-    if (diff > (STOP_LOSS * -1) || diff < (TAKE_PROFIT * -1)) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-
-    curPrice = candles[idx].close;
-    diff = curPrice - openedTrade.price;
-    if (diff > (STOP_LOSS * -1) || diff < (TAKE_PROFIT * -1)) {
-      trade.price = curPrice;
-      trade.date = candles[idx].date;
-      result = true;
-      console.log('Exit strategy result: %O', trade);
-      return { result: result, trade: trade };
-    }
-  } else {
-    // Shouldn't happen
+    console.log(colors.blue('Enter strategy: ' + JSON.stringify(entr)));
+    return true;
   }
 
-  return { result: result, trade: trade };
-}*/
+  return false;
+}
+
+let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>): boolean {
+
+  const curHighPrice: Big = Big(candles[idx].high);
+  const curLowPrice: Big = Big(candles[idx].low);
+  if (entr.side === i.ETesterSide.BUY) {
+    if (curHighPrice.minus(entr.openPrice) > TAKE_PROFIT) {
+      exiit = {
+        closePrice: curHighPrice,
+        closeDate: candles[idx].date,
+        profit: (curHighPrice.minus(entr.openPrice)).mul(entr.pip)
+      }
+      console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
+      return true;
+    }
+    if (curLowPrice.minus(entr.openPrice) < STOP_LOSS) {
+      exiit = {
+        closePrice: curLowPrice,
+        closeDate: candles[idx].date,
+        profit: (curLowPrice.minus(entr.openPrice)).mul(entr.pip)
+      }
+      console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
+      return true;
+    }
+  }
+  if (entr.side === i.ETesterSide.SELL) {
+    if (entr.openPrice.minus(curLowPrice) > TAKE_PROFIT) {
+      exiit = {
+        closePrice: curLowPrice,
+        closeDate: candles[idx].date,
+        profit: (entr.openPrice.minus(curLowPrice)).mul(entr.pip)
+      }
+      console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
+      return true;
+    }
+    if (entr.openPrice.minus(curHighPrice) > STOP_LOSS) {
+      exiit = {
+        closePrice: curHighPrice,
+        closeDate: candles[idx].date,
+        profit: (entr.openPrice.minus(curHighPrice)).mul(entr.pip)
+      }
+      console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
+      return true;
+    }
+  }
+
+  return false;
+}
+
+let getTrade = function (): i.ITesterTrade {
+  return { enter: entr, exit: exiit };
+}
 
 let getDescription = function () {
-  return "First strategy ever! 9:05 open time!"
+  return "First strategy ever! Entering trade at 9:05."
 }
 
 let getConfigs = function () {
-  return { ez: "az" }
+  return { 'STOP LOSS': STOP_LOSS, 'TAKE PROFIT': TAKE_PROFIT }
 }
 
 export {
-  //enter,
-  //exit,
+  init,
+  enter,
+  exit,
+  getTrade,
   getDescription,
   getConfigs
 }
