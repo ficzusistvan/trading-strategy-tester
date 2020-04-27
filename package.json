@@ -21,7 +21,8 @@
     "react-stockcharts": "^0.7.8",
     "react-table": "^6.10.3",
     "reactstrap": "^8.1.1",
-    "redux-polyglot": "^0.7.0"
+    "redux-polyglot": "^0.7.0",
+    "technicalindicators": "^3.1.0"
   },
   "devDependencies": {
     "@types/big.js": "^4.0.5",
