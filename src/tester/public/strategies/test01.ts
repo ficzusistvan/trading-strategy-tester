@@ -19,6 +19,9 @@ let init = function (insInfo: i.ICommonInstrumentBasicInfo, mToBPercent: Big) {
   marginToBalancePercent = mToBPercent;
 }
 
+let runTA = function (candles: Array<i.ICommonCandle>) {
+}
+
 let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: Big): boolean {
 
   console.log('Handling candle: %O', candles[idx]);
@@ -123,6 +126,7 @@ let getConfigs = function () {
 
 export {
   init,
+  runTA,
   enter,
   exit,
   getTrade,
