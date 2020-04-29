@@ -19,7 +19,8 @@ export interface ITesterEnter {
 export interface ITesterExit {
   closePrice: Big,
   closeDate: string,
-  profit: Big
+  profit: Big,
+  newBalance: string
 }
 
 export interface ITesterTrade {

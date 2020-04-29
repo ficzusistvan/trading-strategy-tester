@@ -12,12 +12,15 @@ class StrategyResultsComponent extends Component {
     let listItems = [];
     let nrOfProfits = 0;
     let nrOfLosses = 0;
+    let nrOfZeros = 0;
     this.props.trades.forEach((trade) => {
-      listItems.push(<ResultComponent side={trade.enter.side} openPrice={trade.enter.openPrice} openDate={trade.enter.openDate} closePrice={trade.exit.closePrice} closeDate={trade.exit.closeDate} profit={trade.exit.profit} key={trade.enter.openDate} />);
+      listItems.push(<ResultComponent side={trade.enter.side} openPrice={trade.enter.openPrice} openDate={trade.enter.openDate} closePrice={trade.exit.closePrice} closeDate={trade.exit.closeDate} profit={trade.exit.profit} volume={trade.enter.volume} pip={trade.enter.pip} openMargin={trade.enter.openMargin} newBalance={trade.exit.newBalance} key={trade.enter.openDate} />);
       if (trade.exit.profit > 0) {
         nrOfProfits++;
-      } else {
+      } else if (trade.exit.profit < 0) {
         nrOfLosses++;
+      } else {
+        nrOfZeros++;
       }
     });
 
@@ -25,7 +28,7 @@ class StrategyResultsComponent extends Component {
       <Row>
         <Col>
           <BalancesComponent initBalance={this.props.initBalance} endBalance={this.props.endBalance} />
-          <TradesCounterComponent profits={nrOfProfits} losses={nrOfLosses} />
+          <TradesCounterComponent profits={nrOfProfits} losses={nrOfLosses} zeros={nrOfZeros} />
           <h4>Strategy results:</h4>
           <ListGroup>
             {listItems}

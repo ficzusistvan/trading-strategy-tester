@@ -53,25 +53,29 @@ let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandl
   return false;
 }
 
-let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>): boolean {
+let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: Big): boolean {
 
   const curHighPrice: Big = Big(candles[idx].high);
   const curLowPrice: Big = Big(candles[idx].low);
   if (entr.side === i.ETesterSide.BUY) {
     if (curHighPrice.minus(entr.openPrice) > TAKE_PROFIT) {
+      const profit = (curHighPrice.minus(entr.openPrice)).mul(entr.pip);
       exiit = {
         closePrice: curHighPrice,
         closeDate: candles[idx].date,
-        profit: (curHighPrice.minus(entr.openPrice)).mul(entr.pip)
+        profit: profit,
+        newBalance: balance.plus(profit).toFixed(2)
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
     }
     if (curLowPrice.minus(entr.openPrice) < STOP_LOSS) {
+      const profit = (curLowPrice.minus(entr.openPrice)).mul(entr.pip);
       exiit = {
         closePrice: curLowPrice,
         closeDate: candles[idx].date,
-        profit: (curLowPrice.minus(entr.openPrice)).mul(entr.pip)
+        profit: profit,
+        newBalance: balance.plus(profit).toFixed(2)
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
@@ -79,19 +83,23 @@ let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandle
   }
   if (entr.side === i.ETesterSide.SELL) {
     if (entr.openPrice.minus(curLowPrice) > TAKE_PROFIT) {
+      const profit = (entr.openPrice.minus(curLowPrice)).mul(entr.pip);
       exiit = {
         closePrice: curLowPrice,
         closeDate: candles[idx].date,
-        profit: (entr.openPrice.minus(curLowPrice)).mul(entr.pip)
+        profit: profit,
+        newBalance: balance.plus(profit).toFixed(2)
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
     }
     if (entr.openPrice.minus(curHighPrice) > STOP_LOSS) {
+      const profit = (entr.openPrice.minus(curHighPrice)).mul(entr.pip);
       exiit = {
         closePrice: curHighPrice,
         closeDate: candles[idx].date,
-        profit: (entr.openPrice.minus(curHighPrice)).mul(entr.pip)
+        profit: profit,
+        newBalance: balance.plus(profit).toFixed(2)
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;

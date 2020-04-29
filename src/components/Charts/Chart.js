@@ -74,10 +74,11 @@ const mouseEdgeAppearance = {
 const annotationProps = {
   fontSize: 18,
   fill: d => {
-    if (d.text === 'b') return '#353535';
-    if (d.text === 's') return '#353535';
+    if (d.text === 'b') return '#35FF35';
+    if (d.text === 's') return '#FF3535';
     if (d.text === 'ep') return '#00FF00';
     if (d.text === 'en') return '#FF0000';
+    if (d.text === 'ez') return '#0000FF';
   },
   opacity: 0.8,
   text: d => d.text,

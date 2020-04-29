@@ -16,6 +16,7 @@ let init = async function (strategy: any, allCandles: any) {
   trades = [];
   balance = Big(store.getState().testerConfigs.initBalance);
   console.log('Init balance:', balance.toFixed(2));
+  chartMainCandles = [];
   arrayOfCandles = allCandles;
   const filteredCandles = allCandles.filter((candles: i.ICommonCandles) => {
     return candles.isDefault === true;
@@ -53,15 +54,21 @@ let handleCandle = function (idx: number) {
         curCandle.text = trade.enter.side === i.ETesterSide.BUY ? 'b' : 's';
       }
     } else {
-      let res: boolean = strategyInst.exit(defaultCandles.candles, idx, arrayOfCandles);
+      let res: boolean = strategyInst.exit(defaultCandles.candles, idx, arrayOfCandles, balance);
       if (res === true) {
         //console.log('Exited order %O', res.trade);
         const trade: i.ITesterTrade = strategyInst.getTrade();
         trades.push(trade);
-        balance = balance.plus(trade.exit.profit);
+        balance = Big(trade.exit.newBalance);
         isEntered = false;
         console.log('New balance:', balance.toFixed(2));
-        curCandle.text = trade.exit.profit.gt(0) ? 'ep' : 'en';
+        if (trade.exit.profit.gt(0)) {
+          curCandle.text = 'ep';
+        } else if (trade.exit.profit.lt(0)) {
+          curCandle.text = 'en';
+        } else {
+          curCandle.text = 'ez';
+        }
       }
     }
     chartMainCandles.push(curCandle);
