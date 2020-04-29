@@ -5,7 +5,8 @@ const mapStateToProps = state => {
   return {
     trades: state.testerResults.trades,
     initBalance: state.testerConfigs.initBalance,
-    endBalance: state.testerResults.endBalance
+    endBalance: state.testerResults.endBalance,
+    reason: state.testerResults.reason
   };
 };
 

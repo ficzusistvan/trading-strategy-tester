@@ -27,9 +27,10 @@ class StrategyResultsComponent extends Component {
     return (
       <Row>
         <Col>
+          <h5>Reason: {this.props.reason}</h5>
           <BalancesComponent initBalance={this.props.initBalance} endBalance={this.props.endBalance} />
           <TradesCounterComponent profits={nrOfProfits} losses={nrOfLosses} zeros={nrOfZeros} />
-          <h4>Strategy results:</h4>
+          <h6>Strategy results:</h6>
           <ListGroup>
             {listItems}
           </ListGroup>

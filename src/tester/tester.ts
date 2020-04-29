@@ -10,6 +10,7 @@ let isEntered: boolean = false;
 let trades: Array<i.ITesterTrade> = [];
 let balance: Big;
 let chartMainCandles: Array<i.IChartMainCandle> = [];
+let isVolumeZero: boolean;
 
 let init = async function (strategy: any, allCandles: any) {
   isEntered = false;
@@ -17,6 +18,7 @@ let init = async function (strategy: any, allCandles: any) {
   balance = Big(store.getState().testerConfigs.initBalance);
   console.log('Init balance:', balance.toFixed(2));
   chartMainCandles = [];
+  isVolumeZero = false;
   arrayOfCandles = allCandles;
   const filteredCandles = allCandles.filter((candles: i.ICommonCandles) => {
     return candles.isDefault === true;
@@ -52,6 +54,10 @@ let handleCandle = function (idx: number) {
         isEntered = true;
         const trade: i.ITesterTrade = strategyInst.getTrade();
         curCandle.text = trade.enter.side === i.ETesterSide.BUY ? 'b' : 's';
+        // Stop strategy if not enough money
+        if (trade.enter.volume.eq(0)) {
+          isVolumeZero = true;
+        }
       }
     } else {
       let res: boolean = strategyInst.exit(defaultCandles.candles, idx, arrayOfCandles, balance);
@@ -72,9 +78,13 @@ let handleCandle = function (idx: number) {
       }
     }
     chartMainCandles.push(curCandle);
-    eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
+    if (!isVolumeZero) {
+      eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
+    } else {
+      eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'Money not enough' });
+    }
   } else {
-    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles });
+    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'All candles handled' });
   }
 }
 
