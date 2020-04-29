@@ -1,6 +1,12 @@
-.left-sidebar {
-  min-height: 100vh;
+.left-sidebar-1 {
+  height: 40vh;
   background-color: #F5F5F5;
+}
+.left-sidebar-2 {
+  height: 60vh;
+  background-color: #F5F5F5;
+  align-items: center;
+  overflow-y: scroll;
 }
 
 img {
@@ -13,4 +19,12 @@ img {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+}
+
+.btn-ls {
+  padding: 0 !important;
+}
+
+p {
+  margin-bottom: 0 !important;
 }

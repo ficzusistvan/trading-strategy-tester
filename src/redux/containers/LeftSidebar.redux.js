@@ -7,7 +7,12 @@ const mapStateToProps = state => {
     isTestFinished: state.testerResults.isTestFinished,
     dataSource: state.testerConfigs.dataSource,
     symbolsAndPeriods: state.testerConfigs.symbolsAndPeriods,
-    strategy: state.testerConfigs.strategy
+    strategy: state.testerConfigs.strategy,
+    currencyPrice: state.dataSourceConfigs.currencyPrice,
+    leverage: state.dataSourceConfigs.leverage,
+    nominalValue: state.dataSourceConfigs.nominalValue,
+    initBalance: state.testerConfigs.initBalance,
+    marginToBalancePercent: state.testerConfigs.marginToBalancePercent
   };
 };
 
