@@ -1,6 +1,6 @@
-import { SET_TRADES, SET_IS_TEST_FINISHED, SET_END_BALANCE } from "../actions/types";
+import { SET_TRADES, SET_IS_TEST_FINISHED, SET_END_BALANCE, SET_CHART_MAIN_CANDLES } from "../actions/types";
 
-const testerResults = (state = { isTestFinished: true, trades: [], endBalance: 0 }, action) => {
+const testerResults = (state = { isTestFinished: true, trades: [], endBalance: 0, chartMainCandles: [] }, action) => {
   switch (action.type) {
 
     case SET_IS_TEST_FINISHED: {
@@ -21,6 +21,13 @@ const testerResults = (state = { isTestFinished: true, trades: [], endBalance: 0
       return {
         ...state,
         endBalance: action.endBalance
+      }
+    }
+
+    case SET_CHART_MAIN_CANDLES: {
+      return {
+        ...state,
+        chartMainCandles: action.chartMainCandles
       }
     }
 

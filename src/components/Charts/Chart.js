@@ -23,7 +23,14 @@ import {
   MouseCoordinateX,
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates";
-
+import algo from "react-stockcharts/lib/algorithm";
+import {
+  LabelAnnotation,
+  Annotate,
+  SvgPathAnnotation,
+  buyPath,
+  sellPath
+} from "react-stockcharts/lib/annotation";
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 import {
   OHLCTooltip,
@@ -62,6 +69,39 @@ const mouseEdgeAppearance = {
   strokeWidth: 3,
   arrowWidth: 5,
   fill: "#BCDEFA",
+};
+
+const annotationProps = {
+  fontSize: 18,
+  fill: d => {
+    if (d.text === 'b') return '#353535';
+    if (d.text === 's') return '#353535';
+    if (d.text === 'ep') return '#00FF00';
+    if (d.text === 'en') return '#FF0000';
+  },
+  opacity: 0.8,
+  text: d => d.text,
+  y: ({ yScale }) => yScale.range()[0],
+};
+
+const defaultAnnotationProps = {
+  onClick: console.log.bind(console),
+};
+
+const longAnnotationProps = {
+  ...defaultAnnotationProps,
+  y: ({ yScale, datum }) => yScale(datum.low),
+  fill: "#006517",
+  path: buyPath,
+  tooltip: "Go long",
+};
+
+const shortAnnotationProps = {
+  ...defaultAnnotationProps,
+  y: ({ yScale, datum }) => yScale(datum.high),
+  fill: "#FF0000",
+  path: sellPath,
+  tooltip: "Go short",
 };
 
 class MyCandleStickChart extends React.Component {
@@ -110,9 +150,17 @@ class MyCandleStickChart extends React.Component {
       .merge((d, c) => { d.macd = c; })
       .accessor(d => d.macd);
 
+    const buySell = algo()
+      .windowSize(2)
+      .accumulator(([prev, now]) => {
+        if (now.text === 'b') return "LONG";
+        if (now.text === 's') return "SHORT";
+      })
+      .merge((d, c) => { d.longShort = c; });
+
     const { type, data: initialData, width, ratio } = this.props;
 
-    const calculatedData = smaVolume50(rsiCalculator(atr14(bb(macdCalculator(ema12(ema26(initialData)))))));
+    const calculatedData = buySell(smaVolume50(rsiCalculator(atr14(bb(macdCalculator(ema12(ema26(initialData))))))));
     console.log(calculatedData);
     const xScaleProvider = discontinuousTimeScaleProvider
       .inputDateAccessor(d => d.date);
@@ -190,6 +238,16 @@ class MyCandleStickChart extends React.Component {
             origin={[-38, 60]}
             yAccessor={d => d.bb}
             options={bb.options()} />
+
+          <Annotate with={LabelAnnotation}
+            when={d => d.text.length > 0}
+            usingProps={annotationProps} />
+
+          <Annotate with={SvgPathAnnotation} when={d => d.longShort === "LONG"}
+            usingProps={longAnnotationProps} />
+
+          <Annotate with={SvgPathAnnotation} when={d => d.longShort === "SHORT"}
+            usingProps={shortAnnotationProps} />
         </Chart>
         <Chart id={2} height={150}
           yExtents={[d => d.volume, smaVolume50.accessor()]}

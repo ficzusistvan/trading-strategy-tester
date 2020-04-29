@@ -129,6 +129,16 @@ export interface ICommonCandle {
   volume: number
 }
 
+export interface IChartMainCandle {
+  date: any,
+  open: number,
+  high: number,
+  low: number,
+  close: number,
+  volume: number,
+  text: string
+}
+
 export interface ICommonCandles {
   symbol: string,
   period: string,

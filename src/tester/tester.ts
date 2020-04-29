@@ -9,6 +9,7 @@ let defaultCandles: i.ICommonCandles;
 let isEntered: boolean = false;
 let trades: Array<i.ITesterTrade> = [];
 let balance: Big;
+let chartMainCandles: Array<i.IChartMainCandle> = [];
 
 let init = async function (strategy: any, allCandles: any) {
   isEntered = false;
@@ -41,12 +42,15 @@ let init = async function (strategy: any, allCandles: any) {
 
 let handleCandle = function (idx: number) {
   if (idx < defaultCandles.candles.length) {
+    let curCandle: i.IChartMainCandle = { ...defaultCandles.candles[idx], ...{ text: '' } };
     // Running strategy
     if (!isEntered) {
       let res: boolean = strategyInst.enter(defaultCandles.candles, idx, arrayOfCandles, balance);
       if (res === true) {
         //console.log('Entered order %O', res.trade);
         isEntered = true;
+        const trade: i.ITesterTrade = strategyInst.getTrade();
+        curCandle.text = trade.enter.side === i.ETesterSide.BUY ? 'b' : 's';
       }
     } else {
       let res: boolean = strategyInst.exit(defaultCandles.candles, idx, arrayOfCandles);
@@ -57,11 +61,13 @@ let handleCandle = function (idx: number) {
         balance = balance.plus(trade.exit.profit);
         isEntered = false;
         console.log('New balance:', balance.toFixed(2));
+        curCandle.text = trade.exit.profit.gt(0) ? 'ep' : 'en';
       }
     }
+    chartMainCandles.push(curCandle);
     eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
   } else {
-    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance });
+    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles });
   }
 }
 
