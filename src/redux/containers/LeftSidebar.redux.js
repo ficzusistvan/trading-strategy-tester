@@ -12,7 +12,8 @@ const mapStateToProps = state => {
     leverage: state.dataSourceConfigs.leverage,
     nominalValue: state.dataSourceConfigs.nominalValue,
     initBalance: state.testerConfigs.initBalance,
-    marginToBalancePercent: state.testerConfigs.marginToBalancePercent
+    marginToBalancePercent: state.testerConfigs.marginToBalancePercent,
+    chartMainCandles: state.testerResults.chartMainCandles
   };
 };
 

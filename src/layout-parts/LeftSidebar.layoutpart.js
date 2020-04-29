@@ -53,12 +53,12 @@ class LeftSidebarLayoutPart extends React.Component {
             </Row>
             <Row className='mt-1'>
               <Col>
-                <Button className="btn-ls" block color="primary" onClick={this.onRunTestClick.bind(this)} disabled={this.props.strategy === null || this.props.symbolsAndPeriods.length === 0}>Run test</Button>
+                <Button className="btn-ls" block color="primary" onClick={this.onRunTestClick.bind(this)} disabled={this.props.strategy === '' || this.props.symbolsAndPeriods.length === 0}>Run test</Button>
               </Col>
             </Row>
             <Row className='mt-1'>
               <Col>
-                <Button className="btn-ls" block color="warning" tag={Link} to='charts' disabled={this.props.symbolsAndPeriods.length === 0}>View charts</Button>
+                <Button className="btn-ls" block color="warning" tag={Link} to='charts' disabled={this.props.isTestFinished === false || this.props.chartMainCandles.length === 0}>View charts</Button>
               </Col>
             </Row>
             <Row className='mt-1'>
