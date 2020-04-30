@@ -66,6 +66,11 @@ class LeftSidebarLayoutPart extends React.Component {
                 <Button className="btn-ls" block color="warning" tag={Link} to='results' disabled={this.props.isTestFinished === false}>View results</Button>
               </Col>
             </Row>
+            <Row className='mt-1'>
+              <Col>
+                <Button className="btn-ls" block color="warning" tag={Link} to='results-charts' disabled={this.props.isTestFinished === false}>View results charts</Button>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row className='left-sidebar-2'>

@@ -7,6 +7,7 @@ import AddSymbolAndPeriodRedux from '../redux/containers/AddSymbolAndPeriod.redu
 import SelectStrategyRedux from '../redux/containers/SelectStrategy.redux';
 import ChartsRedux from '../redux/containers/Charts.redux';
 import ResultsRedux from '../redux/containers/Results.redux';
+import ResultsChartsRedux from '../redux/containers/ResultsCharts.redux';
 import { Row, Col } from 'reactstrap';
 import './Main.layoutpart.css';
 
@@ -20,6 +21,7 @@ const MainLayoutPart = () => (
         <Route exact path='/strategy' component={SelectStrategyRedux} />
         <Route exact path='/charts' component={ChartsRedux} />
         <Route exact path='/results' component={ResultsRedux} />
+        <Route exact path='/results-charts' component={ResultsChartsRedux} />
       </Switch>
     </Col>
   </Row>
