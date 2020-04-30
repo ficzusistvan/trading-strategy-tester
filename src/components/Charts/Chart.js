@@ -144,9 +144,9 @@ class MyCandleStickChart extends React.Component {
 
     const macdCalculator = macd()
       .options({
-        fast: 12,
-        slow: 26,
-        signal: 9,
+        fast: 5,
+        slow: 8,
+        signal: 3,
       })
       .merge((d, c) => { d.macd = c; })
       .accessor(d => d.macd);
