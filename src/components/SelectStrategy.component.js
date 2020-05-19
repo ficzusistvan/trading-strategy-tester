@@ -41,6 +41,14 @@ class SelectStrategyComponent extends Component {
     this.props.onSetMarginToBalancePercent(e.target.value);
   }
 
+  onHandleDayTimeSpreadChanged(e) {
+    this.props.onSetDayTimeSpread(e.target.value);
+  }
+
+  onHandleNightTimeSpreadChanged(e) {
+    this.props.onSetNightTimeSpread(e.target.value);
+  }
+
   render() {
     const { strategies } = this.state
     const options = [];
@@ -83,6 +91,18 @@ class SelectStrategyComponent extends Component {
           <Label for="marginToBalancePercent" sm={4}>Margin to balance percent</Label>
           <Col sm={8}>
             <Input type="text" name="marginToBalancePercent" id="marginToBalancePercent" placeholder="Margin to balance percent" value={this.props.marginToBalancePercent} onChange={this.onHandleMarginToBalancePercentChanged.bind(this)} />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="dayTimeSpread" sm={4}>Typical daytime spread</Label>
+          <Col sm={8}>
+            <Input type="text" name="dayTimeSpread" id="dayTimeSpread" placeholder="Typical daytime spread" value={this.props.dayTimeSpread} onChange={this.onHandleDayTimeSpreadChanged.bind(this)} />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="nightTimeSpread" sm={4}>Typical nighttime spread</Label>
+          <Col sm={8}>
+            <Input type="text" name="nightTimeSpread" id="nightTimeSpread" placeholder="Typical nighttime spread" value={this.props.nightTimeSpread} onChange={this.onHandleNightTimeSpreadChanged.bind(this)} />
           </Col>
         </FormGroup>
       </>

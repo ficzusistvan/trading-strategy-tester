@@ -6,7 +6,9 @@ import {
   ADD_CANDLES,
   SET_STRATEGY,
   SET_INIT_BALANCE,
-  SET_MARGIN_TO_BALANCE_PERCENT
+  SET_MARGIN_TO_BALANCE_PERCENT,
+  SET_DAYTIME_SPREAD,
+  SET_NIGHTTIME_SPREAD
 } from "./types";
 
 export const setDataSource = (dataSource) => ({
@@ -45,9 +47,19 @@ export const setStrategy = (strategy) => ({
 export const setInitBalance = (initBalance) => ({
   type: SET_INIT_BALANCE,
   initBalance
-})
+});
 
 export const setMarginToBalancePercent = (marginToBalancePercent) => ({
   type: SET_MARGIN_TO_BALANCE_PERCENT,
   marginToBalancePercent
-})
+});
+
+export const setDayTimeSpread = (spread) => ({
+  type: SET_DAYTIME_SPREAD,
+  spread
+});
+
+export const setNightTimeSpread = (spread) => ({
+  type: SET_NIGHTTIME_SPREAD,
+  spread
+});

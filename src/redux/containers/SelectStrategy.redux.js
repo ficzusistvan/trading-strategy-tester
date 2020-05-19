@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
-import { setStrategy, setInitBalance, setMarginToBalancePercent } from '../actions/testerConfigs';
+import { setStrategy, setInitBalance, setMarginToBalancePercent, setDayTimeSpread, setNightTimeSpread } from '../actions/testerConfigs';
 import SelectStrategyComponent from "../../components/SelectStrategy.component"
 
 const mapStateToProps = state => {
   return {
     strategy: state.testerConfigs.strategy,
     initBalance: state.testerConfigs.initBalance,
-    marginToBalancePercent: state.testerConfigs.marginToBalancePercent
+    marginToBalancePercent: state.testerConfigs.marginToBalancePercent,
+    dayTimeSpread: state.testerConfigs.dayTimeSpread,
+    nightTimeSpread: state.testerConfigs.nightTimeSpread
   };
 };
 
@@ -20,6 +22,12 @@ const mapDispatchToProps = dispatch => {
     },
     onSetMarginToBalancePercent: (marginToBalancePercent) => {
       dispatch(setMarginToBalancePercent(marginToBalancePercent));
+    },
+    onSetDayTimeSpread: (spread) => {
+      dispatch(setDayTimeSpread(spread));
+    },
+    onSetNightTimeSpread: (spread) => {
+      dispatch(setNightTimeSpread(spread));
     }
   };
 };

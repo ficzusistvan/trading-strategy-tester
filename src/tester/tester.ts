@@ -38,7 +38,10 @@ let init = async function (strategy: any, allCandles: any) {
     leverage: Big(store.getState().dataSourceConfigs.leverage),
     nominalValue: Big(store.getState().dataSourceConfigs.nominalValue)
   };
-  strategyInst.init(insInfo, store.getState().testerConfigs.marginToBalancePercent);
+  strategyInst.init(insInfo, 
+    store.getState().testerConfigs.marginToBalancePercent,
+    store.getState().testerConfigs.dayTimeSpread,
+    store.getState().testerConfigs.nightTimeSpread);
   strategyInst.runTA(defaultCandles.candles);
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
 }

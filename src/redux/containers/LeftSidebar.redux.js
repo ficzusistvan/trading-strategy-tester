@@ -13,7 +13,9 @@ const mapStateToProps = state => {
     nominalValue: state.dataSourceConfigs.nominalValue,
     initBalance: state.testerConfigs.initBalance,
     marginToBalancePercent: state.testerConfigs.marginToBalancePercent,
-    chartMainCandles: state.testerResults.chartMainCandles
+    chartMainCandles: state.testerResults.chartMainCandles,
+    dayTimeSpread: state.testerConfigs.dayTimeSpread,
+    nightTimeSpread: state.testerConfigs.nightTimeSpread
   };
 };
 

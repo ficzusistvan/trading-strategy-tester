@@ -6,7 +6,9 @@ import {
   ADD_CANDLES,
   SET_STRATEGY,
   SET_INIT_BALANCE,
-  SET_MARGIN_TO_BALANCE_PERCENT
+  SET_MARGIN_TO_BALANCE_PERCENT,
+  SET_DAYTIME_SPREAD,
+  SET_NIGHTTIME_SPREAD
 } from "../actions/types";
 
 const testerConfigs = (state = {
@@ -16,8 +18,10 @@ const testerConfigs = (state = {
   isDefault: true,
   symbolsAndPeriods: [],
   strategy: '',
-  initBalance: 50000,
-  marginToBalancePercent: 50
+  initBalance: 5000,
+  marginToBalancePercent: 50,
+  dayTimeSpread: 2.8,
+  nightTimeSpread: 3
 }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
@@ -73,6 +77,18 @@ const testerConfigs = (state = {
       return {
         ...state,
         marginToBalancePercent: action.marginToBalancePercent
+      }
+    }
+    case SET_DAYTIME_SPREAD: {
+      return {
+        ...state,
+        dayTimeSpread: action.spread
+      }
+    }
+    case SET_NIGHTTIME_SPREAD: {
+      return {
+        ...state,
+        nightTimeSpread: action.spread
       }
     }
     default:
