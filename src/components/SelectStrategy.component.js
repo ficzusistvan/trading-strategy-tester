@@ -49,6 +49,10 @@ class SelectStrategyComponent extends Component {
     this.props.onSetNightTimeSpread(e.target.value);
   }
 
+  onHandleLotSizeChanged(e) {
+    this.props.onSetLotSize(e.target.value);
+  }
+
   render() {
     const { strategies } = this.state
     const options = [];
@@ -103,6 +107,12 @@ class SelectStrategyComponent extends Component {
           <Label for="nightTimeSpread" sm={4}>Typical nighttime spread</Label>
           <Col sm={8}>
             <Input type="text" name="nightTimeSpread" id="nightTimeSpread" placeholder="Typical nighttime spread" value={this.props.nightTimeSpread} onChange={this.onHandleNightTimeSpreadChanged.bind(this)} />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="lotSize" sm={4}>Lot size</Label>
+          <Col sm={8}>
+            <Input type="text" name="lotSize" id="lotSize" placeholder="Lot size" value={this.props.lotSize} onChange={this.onHandleLotSizeChanged.bind(this)} />
           </Col>
         </FormGroup>
       </>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setStrategy, setInitBalance, setMarginToBalancePercent, setDayTimeSpread, setNightTimeSpread } from '../actions/testerConfigs';
+import { setStrategy, setInitBalance, setMarginToBalancePercent, setDayTimeSpread, setNightTimeSpread, setLotSize } from '../actions/testerConfigs';
 import SelectStrategyComponent from "../../components/SelectStrategy.component"
 
 const mapStateToProps = state => {
@@ -8,7 +8,8 @@ const mapStateToProps = state => {
     initBalance: state.testerConfigs.initBalance,
     marginToBalancePercent: state.testerConfigs.marginToBalancePercent,
     dayTimeSpread: state.testerConfigs.dayTimeSpread,
-    nightTimeSpread: state.testerConfigs.nightTimeSpread
+    nightTimeSpread: state.testerConfigs.nightTimeSpread,
+    lotSize: state.testerConfigs.lotSize
   };
 };
 
@@ -28,6 +29,9 @@ const mapDispatchToProps = dispatch => {
     },
     onSetNightTimeSpread: (spread) => {
       dispatch(setNightTimeSpread(spread));
+    },
+    onSetLotSize: (lotSize) => {
+      dispatch(setLotSize(lotSize));
     }
   };
 };

@@ -8,7 +8,8 @@ import {
   SET_INIT_BALANCE,
   SET_MARGIN_TO_BALANCE_PERCENT,
   SET_DAYTIME_SPREAD,
-  SET_NIGHTTIME_SPREAD
+  SET_NIGHTTIME_SPREAD,
+  SET_LOT_SIZE
 } from "./types";
 
 export const setDataSource = (dataSource) => ({
@@ -62,4 +63,9 @@ export const setDayTimeSpread = (spread) => ({
 export const setNightTimeSpread = (spread) => ({
   type: SET_NIGHTTIME_SPREAD,
   spread
+});
+
+export const setLotSize = (lotSize) => ({
+  type: SET_LOT_SIZE,
+  lotSize
 });

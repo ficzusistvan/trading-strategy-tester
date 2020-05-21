@@ -15,7 +15,8 @@ const mapStateToProps = state => {
     marginToBalancePercent: state.testerConfigs.marginToBalancePercent,
     chartMainCandles: state.testerResults.chartMainCandles,
     dayTimeSpread: state.testerConfigs.dayTimeSpread,
-    nightTimeSpread: state.testerConfigs.nightTimeSpread
+    nightTimeSpread: state.testerConfigs.nightTimeSpread,
+    lotSize: state.testerConfigs.lotSize
   };
 };
 

@@ -103,6 +103,8 @@ class LeftSidebarLayoutPart extends React.Component {
                 <p>{numbers.formatPercent(this.props.marginToBalancePercent)}</p>
                 <p className="font-weight-bolder">Day and night spreads:</p>
                 <p>{numbers.formatNumber(this.props.dayTimeSpread)} and {numbers.formatNumber(this.props.nightTimeSpread)}</p>
+                <p className="font-weight-bolder">Lot size:</p>
+                <p>{numbers.formatNumber(this.props.lotSize)}</p>
               </Col>
             </Row>
           </Col>

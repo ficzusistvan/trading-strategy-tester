@@ -8,7 +8,8 @@ import {
   SET_INIT_BALANCE,
   SET_MARGIN_TO_BALANCE_PERCENT,
   SET_DAYTIME_SPREAD,
-  SET_NIGHTTIME_SPREAD
+  SET_NIGHTTIME_SPREAD,
+  SET_LOT_SIZE
 } from "../actions/types";
 
 const testerConfigs = (state = {
@@ -21,7 +22,8 @@ const testerConfigs = (state = {
   initBalance: 5000,
   marginToBalancePercent: 50,
   dayTimeSpread: 2.8,
-  nightTimeSpread: 3
+  nightTimeSpread: 3,
+  lotSize: 0
 }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
@@ -89,6 +91,12 @@ const testerConfigs = (state = {
       return {
         ...state,
         nightTimeSpread: action.spread
+      }
+    }
+    case SET_LOT_SIZE: {
+      return {
+        ...state,
+        lotSize: action.lotSize
       }
     }
     default:

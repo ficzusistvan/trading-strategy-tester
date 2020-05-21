@@ -41,7 +41,9 @@ let init = async function (strategy: any, allCandles: any) {
   strategyInst.init(insInfo, 
     store.getState().testerConfigs.marginToBalancePercent,
     store.getState().testerConfigs.dayTimeSpread,
-    store.getState().testerConfigs.nightTimeSpread);
+    store.getState().testerConfigs.nightTimeSpread,
+    store.getState().testerConfigs.lotSize
+    );
   strategyInst.runTA(defaultCandles.candles);
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
 }
