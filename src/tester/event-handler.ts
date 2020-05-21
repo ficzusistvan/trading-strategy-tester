@@ -1,7 +1,7 @@
 import Emittery from 'emittery';
 import * as tester from './tester'
 import store from '../redux/store'
-import { setIsTestFinished, setTrades, setEndBalance, setChartMainCandles, setFinishedReason } from '../redux/actions/testerResults';
+import { setIsTestFinished, setTrades, setEndBalance, setChartMainCandles, setFinishedReason, setIndicators } from '../redux/actions/testerResults';
 
 export const em = new Emittery(); // export as soon as possible. See: https://coderwall.com/p/myzvmg/circular-dependencies-in-node-js
 
@@ -31,4 +31,5 @@ em.on(FINISHED, (data: any) => {
   store.dispatch(setEndBalance(data.balance));
   store.dispatch(setChartMainCandles(data.chartMainCandles));
   store.dispatch(setFinishedReason(data.reason));
+  store.dispatch(setIndicators(data.indicators));
 });

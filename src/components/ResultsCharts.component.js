@@ -145,7 +145,7 @@ class ResultsChartsComponent extends Component {
       chartData1.datasets[2].data.push(trade.enter.openMargin);
 
       chartData2.labels.push(moment(trade.exit.closeDate).format('YY-M-D H:m'));
-      chartData2.datasets[0].data.push(trade.exit.profit);
+      //chartData2.datasets[0].data.push(trade.exit.profit);
       chartData2.datasets[1].data.push(trade.exit.newBalance);
     });
     return (

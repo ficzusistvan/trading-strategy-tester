@@ -8,6 +8,7 @@ import SelectStrategyRedux from '../redux/containers/SelectStrategy.redux';
 import ChartsRedux from '../redux/containers/Charts.redux';
 import ResultsRedux from '../redux/containers/Results.redux';
 import ResultsChartsRedux from '../redux/containers/ResultsCharts.redux';
+import IndicatorsChartsRedux from '../redux/containers/IndicatorsCharts.redux';
 import { Row, Col } from 'reactstrap';
 import './Main.layoutpart.css';
 
@@ -22,6 +23,7 @@ const MainLayoutPart = () => (
         <Route exact path='/charts' component={ChartsRedux} />
         <Route exact path='/results' component={ResultsRedux} />
         <Route exact path='/results-charts' component={ResultsChartsRedux} />
+        <Route exact path='/indicators-charts' component={IndicatorsChartsRedux} />
       </Switch>
     </Col>
   </Row>

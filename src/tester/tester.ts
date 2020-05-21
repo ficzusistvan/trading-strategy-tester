@@ -11,6 +11,7 @@ let trades: Array<i.ITesterTrade> = [];
 let balance: Big;
 let chartMainCandles: Array<i.IChartMainCandle> = [];
 let isVolumeZero: boolean;
+let indicators: Array<any> = [];
 
 let init = async function (strategy: any, allCandles: any) {
   isEntered = false;
@@ -44,7 +45,7 @@ let init = async function (strategy: any, allCandles: any) {
     store.getState().testerConfigs.nightTimeSpread,
     store.getState().testerConfigs.lotSize
     );
-  strategyInst.runTA(defaultCandles.candles);
+  indicators = strategyInst.runTA(defaultCandles.candles);
   eventHandler.em.emit(eventHandler.TESTER_INITIALIZED);
 }
 
@@ -86,10 +87,10 @@ let handleCandle = function (idx: number) {
     if (!isVolumeZero) {
       eventHandler.em.emit(eventHandler.CANDLE_HANDLED, { idx: idx });
     } else {
-      eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'Money not enough' });
+      eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'Money not enough', indicators: indicators });
     }
   } else {
-    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'All candles handled' });
+    eventHandler.em.emit(eventHandler.FINISHED, { trades: trades, balance: balance, chartMainCandles: chartMainCandles, reason: 'All candles handled', indicators: indicators });
   }
 }
 
