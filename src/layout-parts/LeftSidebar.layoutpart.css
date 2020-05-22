@@ -1,9 +1,10 @@
 .left-sidebar-1 {
-  height: 40vh;
+  height: 50vh;
   background-color: #F5F5F5;
+  overflow-y: scroll;
 }
 .left-sidebar-2 {
-  height: 60vh;
+  height: 50vh;
   background-color: #F5F5F5;
   align-items: center;
   overflow-y: scroll;

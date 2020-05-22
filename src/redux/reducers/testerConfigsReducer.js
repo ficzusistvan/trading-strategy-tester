@@ -23,7 +23,7 @@ const testerConfigs = (state = {
   marginToBalancePercent: 50,
   dayTimeSpread: 2.8,
   nightTimeSpread: 3,
-  lotSize: 0
+  lotSize: 0.01
 }, action) => {
   switch (action.type) {
     case SET_DATA_SOURCE: {
