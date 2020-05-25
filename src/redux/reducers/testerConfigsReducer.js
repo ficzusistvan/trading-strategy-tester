@@ -15,7 +15,7 @@ import {
 const testerConfigs = (state = {
   dataSource: '',
   symbol: null,
-  period: 5,
+  period: 1,
   isDefault: true,
   symbolsAndPeriods: [],
   strategy: '',
