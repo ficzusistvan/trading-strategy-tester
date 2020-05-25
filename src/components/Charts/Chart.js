@@ -8,12 +8,9 @@ import { timeFormat } from "d3-time-format";
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
   BarSeries,
-  AreaSeries,
   CandlestickSeries,
-  BollingerSeries,
   LineSeries,
-  RSISeries,
-  MACDSeries
+  StochasticSeries
 } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import {
@@ -35,41 +32,11 @@ import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 import {
   OHLCTooltip,
   MovingAverageTooltip,
-  BollingerBandTooltip,
-  RSITooltip,
-  SingleValueTooltip,
-  MACDTooltip
+  StochasticTooltip
 } from "react-stockcharts/lib/tooltip";
-import { ema, rsi, sma, atr, bollingerBand, macd } from "react-stockcharts/lib/indicator";
+import { sma, stochasticOscillator } from "react-stockcharts/lib/indicator";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from "react-stockcharts/lib/utils";
-
-const bbStroke = {
-  top: "#964B00",
-  middle: "#000000",
-  bottom: "#964B00",
-};
-
-const bbFill = "#4682B4";
-
-const macdAppearance = {
-  stroke: {
-    macd: "#FF0000",
-    signal: "#00F300",
-  },
-  fill: {
-    divergence: "#4682B4"
-  },
-};
-
-const mouseEdgeAppearance = {
-  textFill: "#542605",
-  stroke: "#05233B",
-  strokeOpacity: 1,
-  strokeWidth: 3,
-  arrowWidth: 5,
-  fill: "#BCDEFA",
-};
 
 const annotationProps = {
   fontSize: 18,
@@ -105,51 +72,38 @@ const shortAnnotationProps = {
   tooltip: "Go short",
 };
 
+const stoAppearance = {
+  stroke: Object.assign({},
+    StochasticSeries.defaultProps.stroke)
+};
+
 class MyCandleStickChart extends React.Component {
   render() {
-    const ema26 = ema()
-      .options({ windowSize: 26 })
-      .merge((d, c) => { d.ema26 = c; })
-      .accessor(d => d.ema26);
+    const height = 750;
+    const { type, data: initialData, width, ratio } = this.props;
+    const margin = { left: 70, right: 70, top: 20, bottom: 30 };
 
-    const ema12 = ema()
-      .options({ windowSize: 12 })
-      .merge((d, c) => { d.ema12 = c; })
-      .accessor(d => d.ema12);
+    const gridHeight = height - margin.top - margin.bottom;
+    const gridWidth = width - margin.left - margin.right;
 
-    const smaVolume50 = sma()
-      .options({ windowSize: 50, sourcePath: "volume" })
-      .merge((d, c) => { d.smaVolume50 = c; })
-      .accessor(d => d.smaVolume50);
+    const showGrid = true;
+    const yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 } : {};
+    const xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.1 } : {};
 
-    const rsiCalculator = rsi()
-      .options({ windowSize: 14 })
-      .merge((d, c) => { d.rsi = c; })
-      .accessor(d => d.rsi);
+    const smaFast = sma()
+      .options({ windowSize: 50 })
+      .merge((d, c) => { d.smaFast = c; })
+      .accessor(d => d.smaFast);
 
-    const atr14 = atr()
-      .options({ windowSize: 14 })
-      .merge((d, c) => { d.atr14 = c; })
-      .accessor(d => d.atr14);
+    const smaSlow = sma()
+      .options({ windowSize: 100 })
+      .merge((d, c) => { d.smaSlow = c; })
+      .accessor(d => d.smaSlow);
 
-    const bb = bollingerBand()
-      .options({
-        windowSize: 20,
-        multiplier: 2,
-        movingAverageType: 'sma',
-        sourcePath: 'close'
-      })
-      .merge((d, c) => { d.bb = c; })
-      .accessor(d => d.bb);
-
-    const macdCalculator = macd()
-      .options({
-        fast: 5,
-        slow: 8,
-        signal: 3,
-      })
-      .merge((d, c) => { d.macd = c; })
-      .accessor(d => d.macd);
+    const fullSTO = stochasticOscillator()
+      .options({ windowSize: 14, kWindowSize: 3, dWindowSize: 3 })
+      .merge((d, c) => { d.fullSTO = c; })
+      .accessor(d => d.fullSTO);
 
     const buySell = algo()
       .windowSize(2)
@@ -159,9 +113,7 @@ class MyCandleStickChart extends React.Component {
       })
       .merge((d, c) => { d.longShort = c; });
 
-    const { type, data: initialData, width, ratio } = this.props;
-
-    const calculatedData = buySell(smaVolume50(rsiCalculator(atr14(bb(macdCalculator(ema12(ema26(initialData))))))));
+    const calculatedData = buySell(smaFast(smaSlow(fullSTO(initialData))));
     console.log(calculatedData);
     const xScaleProvider = discontinuousTimeScaleProvider
       .inputDateAccessor(d => d.date);
@@ -177,10 +129,10 @@ class MyCandleStickChart extends React.Component {
     const xExtents = [start, end];
 
     return (
-      <ChartCanvas height={880}
+      <ChartCanvas height={600}
         width={width}
         ratio={ratio}
-        margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
+        margin={margin}
         type={type}
         seriesName="ToTheTop"
         data={data}
@@ -190,12 +142,12 @@ class MyCandleStickChart extends React.Component {
         xExtents={xExtents}
       >
 
-        <Chart id={1} height={270}
-          yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
+        <Chart id={1} height={325}
+          yExtents={[d => [d.high, d.low], smaFast.accessor(), smaSlow.accessor()]}
           padding={{ top: 10, bottom: 20 }}
         >
           <XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
-          <YAxis axisAt="right" orient="right" ticks={5} />
+          <YAxis axisAt="right" orient="right" ticks={5} {...yGrid} />
 
           <MouseCoordinateY
             at="right"
@@ -203,14 +155,12 @@ class MyCandleStickChart extends React.Component {
             displayFormat={format(".2f")} />
 
           <CandlestickSeries />
-          <BollingerSeries yAccessor={d => d.bb}
-            stroke={bbStroke}
-            fill={bbFill} />
-          <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
-          <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
 
-          <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
-          <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
+          <LineSeries yAccessor={smaFast.accessor()} stroke={smaFast.stroke()} />
+          <LineSeries yAccessor={smaSlow.accessor()} stroke={smaSlow.stroke()} />
+
+          <CurrentCoordinate yAccessor={smaFast.accessor()} fill={smaFast.stroke()} />
+          <CurrentCoordinate yAccessor={smaSlow.accessor()} fill={smaSlow.stroke()} />
 
           <EdgeIndicator itemType="last" orient="right" edgeAt="right"
             yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"} />
@@ -222,23 +172,19 @@ class MyCandleStickChart extends React.Component {
             origin={[-38, 15]}
             options={[
               {
-                yAccessor: ema26.accessor(),
-                type: "EMA",
-                stroke: ema26.stroke(),
-                windowSize: ema26.options().windowSize,
+                yAccessor: smaFast.accessor(),
+                type: "Fast SMA",
+                stroke: smaFast.stroke(),
+                windowSize: smaFast.options().windowSize,
               },
               {
-                yAccessor: ema12.accessor(),
-                type: "EMA",
-                stroke: ema12.stroke(),
-                windowSize: ema12.options().windowSize,
+                yAccessor: smaSlow.accessor(),
+                type: "Slow SMA",
+                stroke: smaSlow.stroke(),
+                windowSize: smaSlow.options().windowSize,
               },
             ]}
           />
-          <BollingerBandTooltip
-            origin={[-38, 60]}
-            yAccessor={d => d.bb}
-            options={bb.options()} />
 
           <Annotate with={LabelAnnotation}
             when={d => d.text.length > 0}
@@ -249,10 +195,11 @@ class MyCandleStickChart extends React.Component {
 
           <Annotate with={SvgPathAnnotation} when={d => d.longShort === "SHORT"}
             usingProps={shortAnnotationProps} />
+
         </Chart>
-        <Chart id={2} height={150}
-          yExtents={[d => d.volume, smaVolume50.accessor()]}
-          origin={(w, h) => { console.log('chart id 2:', w, h); return [0, h - 550] }}
+        <Chart id={2}
+          yExtents={d => d.volume}
+          height={100} origin={(w, h) => [0, h - 255]}
         >
           <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")} />
 
@@ -262,81 +209,34 @@ class MyCandleStickChart extends React.Component {
             displayFormat={format(".4s")} />
 
           <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"} />
-          <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()} />
         </Chart>
         <Chart id={3}
           yExtents={[0, 100]}
-          height={125} origin={(w, h) => { console.log('chart id 3:', w, h); return [0, h - 275] }}
+          height={125} origin={(w, h) => [0, h - 125]} 
+          padding={{ top: 10, bottom: 20 }}
         >
-          <XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
-          <YAxis axisAt="right"
-            orient="right"
-            tickValues={[30, 50, 70]} />
-          <MouseCoordinateY
-            at="right"
-            orient="right"
-            displayFormat={format(".2f")} />
-
-          <RSISeries yAccessor={d => d.rsi} />
-
-          <RSITooltip origin={[-38, 15]}
-            yAccessor={d => d.rsi}
-            options={rsiCalculator.options()} />
-        </Chart>
-        <Chart id={4}
-          yExtents={atr14.accessor()}
-          height={125} origin={(w, h) => [0, h - 400]} padding={{ top: 10, bottom: 10 }}
-        >
-          <XAxis axisAt="bottom" orient="bottom" />
-          <YAxis axisAt="right" orient="right" ticks={2} />
+          <XAxis axisAt="bottom" orient="bottom" {...xGrid} />
+          <YAxis axisAt="right" orient="right"
+            tickValues={[20, 50, 80]} />
 
           <MouseCoordinateX
             at="bottom"
             orient="bottom"
-            displayFormat={timeFormat("%Y-%m-%d %H:%M")} />
+            displayFormat={timeFormat("%Y-%m-%d")} />
           <MouseCoordinateY
             at="right"
             orient="right"
             displayFormat={format(".2f")} />
+          <StochasticSeries
+            yAccessor={d => d.fullSTO}
+            {...stoAppearance} />
 
-          <LineSeries yAccessor={atr14.accessor()} stroke={atr14.stroke()} />
-          <SingleValueTooltip
-            yAccessor={atr14.accessor()}
-            yLabel={`ATR (${atr14.options().windowSize})`}
-            yDisplayFormat={format(".2f")}
-            // valueStroke={atr14.stroke()} - optional prop
-            // labelStroke="#4682B4" - optional prop
-            origin={[-40, 15]} />
-        </Chart>
-        <Chart id={5} height={150}
-          yExtents={macdCalculator.accessor()}
-          origin={(w, h) => [0, h - 150]} padding={{ top: 10, bottom: 10 }}
-        >
-          <XAxis axisAt="bottom" orient="bottom" />
-          <YAxis axisAt="right" orient="right" ticks={2} />
-
-          <MouseCoordinateX
-            at="bottom"
-            orient="bottom"
-            displayFormat={timeFormat("%Y-%m-%d")}
-            rectRadius={5}
-            {...mouseEdgeAppearance}
-          />
-          <MouseCoordinateY
-            at="right"
-            orient="right"
-            displayFormat={format(".2f")}
-            {...mouseEdgeAppearance}
-          />
-
-          <MACDSeries yAccessor={d => d.macd}
-            {...macdAppearance} />
-          <MACDTooltip
+          <StochasticTooltip
             origin={[-38, 15]}
-            yAccessor={d => d.macd}
-            options={macdCalculator.options()}
-            appearance={macdAppearance}
-          />
+            yAccessor={d => d.fullSTO}
+            options={fullSTO.options()}
+            appearance={stoAppearance}
+            label="Full STO" />
         </Chart>
         <CrossHairCursor />
       </ChartCanvas>
