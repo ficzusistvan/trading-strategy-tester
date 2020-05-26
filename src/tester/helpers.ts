@@ -68,3 +68,11 @@ export let padStartWithUndefined = function (what: Array<any>, toLength: number)
   }
   return what;
 }
+
+export let padStartWithZeros = function (what: Array<any>, toLength: number): Array<any> {
+  const diff = (toLength - what.length);
+  for (let i = 0; i < diff; i++) {
+    what.unshift(0);
+  }
+  return what;
+}
