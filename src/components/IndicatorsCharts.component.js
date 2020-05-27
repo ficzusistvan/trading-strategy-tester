@@ -7,43 +7,58 @@ import moment from 'moment';
 class IndicatorsChartsComponent extends Component {
 
   render() {
-    let chartData1 = {
-      labels: [],
-      datasets: [
-        {
-          label: "k",
-          borderColor: 'rgb(255, 0, 0)',
-          backgroundColor: 'rgb(255, 0, 0)',
-          fill: false,
-          lineTension: 0,
-          data: []
-        },
-        {
-          label: "d",
-          borderColor: 'rgb(255, 255, 255)',
-          backgroundColor: 'rgb(255, 255, 255)',
-          fill: false,
-          lineTension: 0,
-          data: []
-        }
-      ]
-    };
-    let chartOptions1 = {
+    let charts = [];
+    let mycolorIdx = 0;
+
+    const mycolors = [
+      'rgb(0,0,0)',
+      'rgb(0,0,255)',
+      'rgb(0,255,0)',
+      'rgb(0,255,255)',
+      'rgb(255,0,0)',
+      'rgb(255,0,255)',
+      'rgb(255,255,255)'
+    ];
+
+    const NR_OF_VALUES = 100;
+
+    const chartOptions = {
       responsive: true
     }
 
-    const arr = this.props.indicators.slice(this.props.indicators.length - 100);
+    for (let i = 0; i < this.props.indicators.nrOfCharts; i++) {
+      let chartData = {
+        labels: [],
+        datasets: []
+      }
+      const trimmedValues = this.props.indicators.values.slice(this.props.indicators.values.length - NR_OF_VALUES);
+      for (let prop of this.props.indicators.props) {
+        if (prop.chartIdx === i) {
+          const mycolor = mycolors[mycolorIdx];
+          mycolorIdx++;
+          let dataset = {
+            label: prop.label,
+            borderColor: mycolor,
+            backgroundColor: mycolor,
+            fill: false,
+            lineTension: 0,
+            data: []
+          }
+          for (const value of trimmedValues) {
+            dataset.data.push(value[prop.key]);
+          }
+          chartData.datasets.push(dataset);
+        }
+      }
+      for (let value of trimmedValues) {
+        chartData.labels.push(moment(value.date).format('YY-M-D H:m'));
+      }
+      charts.push(<Line data={chartData} options={chartOptions} width={600} height={250} key={i} />);
+    }
 
-    arr.forEach((ind) => {
-      chartData1.labels.push(moment(ind.date).format('YY-M-D H:m'));
-      chartData1.datasets[0].data.push(ind.k);
-      chartData1.datasets[1].data.push(ind.d);
-    });
     return (
       <Row>
-        <Col>
-          <Line data={chartData1} options={chartOptions1} width={600} height={250} />
-        </Col>
+        {charts}
       </Row>
     );
   }
