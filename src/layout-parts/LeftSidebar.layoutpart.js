@@ -26,11 +26,6 @@ class LeftSidebarLayoutPart extends React.Component {
       <>
         <Row className='left-sidebar-1'>
           <Col>
-            <Row>
-              <Col className="text-center">
-                <h4>Trading Strategy Tester</h4>
-              </Col>
-            </Row>
             <Row className='mt-1'>
               <Col>
                 <Button className="btn-ls" block color="success" tag={Link} to='data-source'>Select data source</Button>
@@ -38,7 +33,7 @@ class LeftSidebarLayoutPart extends React.Component {
             </Row>
             <Row className='mt-1'>
               <Col>
-                <Button className="btn-ls" block color="success" tag={Link} to='setup-data-source'>Setup data source</Button>
+                <Button className="btn-ls" block color="secondary" tag={Link} to='setup-data-source'>Setup data source</Button>
               </Col>
             </Row>
             <Row className='mt-1'>
@@ -58,12 +53,12 @@ class LeftSidebarLayoutPart extends React.Component {
             </Row>
             <Row className='mt-1'>
               <Col>
-                <Button className="btn-ls" block color="warning" tag={Link} to='charts' disabled={this.props.isTestFinished === false || this.props.chartMainCandles.length === 0}>View charts</Button>
+              <Button className="btn-ls" block color="warning" tag={Link} to='results' disabled={this.props.isTestFinished === false}>View executed trades</Button>
               </Col>
             </Row>
             <Row className='mt-1'>
               <Col>
-                <Button className="btn-ls" block color="warning" tag={Link} to='results' disabled={this.props.isTestFinished === false}>View results</Button>
+                <Button className="btn-ls" block color="warning" tag={Link} to='charts' disabled={this.props.isTestFinished === false || this.props.chartMainCandles.length === 0}>View candles chart</Button>
               </Col>
             </Row>
             <Row className='mt-1'>
