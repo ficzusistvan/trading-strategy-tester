@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 import translate from 'redux-polyglot/translate';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
