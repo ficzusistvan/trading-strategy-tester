@@ -35,7 +35,7 @@ const testerConfigs = (state = {
         dataSource: action.dataSource,
         csv: null,
         symbol: null,
-        period: 5,
+        period: 1,
         symbolsAndPeriods: []
       }
     }

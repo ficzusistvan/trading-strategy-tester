@@ -141,7 +141,7 @@ class AddSymbolAndPeriodComponent extends Component {
                   accessor: d => d['currency']
                 }
               ]}
-              defaultPageSize={10}
+              defaultPageSize={5}
               className="-striped -highlight"
               loading={loading} // Display the loading overlay when we need it
               filterable
