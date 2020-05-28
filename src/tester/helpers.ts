@@ -76,3 +76,11 @@ export let padStartWithZeros = function (what: Array<any>, toLength: number): Ar
   }
   return what;
 }
+
+export let padStartWithEmptyString = function (what: Array<any>, toLength: number): Array<any> {
+  const diff = (toLength - what.length);
+  for (let i = 0; i < diff; i++) {
+    what.unshift('');
+  }
+  return what;
+}
