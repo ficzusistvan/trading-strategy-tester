@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ListGroupItem, ListGroupItemHeading, ListGroupItemText, Badge } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import moment from 'moment';
 import * as numbers from '../../utils/numbers';
 
@@ -39,4 +38,4 @@ class ResultComponent extends Component {
   }
 }
 
-export default translate(ResultComponent)
+export default ResultComponent

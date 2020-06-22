@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "react-table/react-table.css";
 import { Row, Col } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 
 const PERIODS = [
   { str: 'M1', val: 1 },
@@ -31,4 +30,4 @@ class SymbolAndPeriodItemComponent extends Component {
   }
 }
 
-export default translate(SymbolAndPeriodItemComponent)
+export default SymbolAndPeriodItemComponent

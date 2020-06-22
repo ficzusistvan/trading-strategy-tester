@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import translate from 'redux-polyglot/translate';
 import moment from 'moment';
 import { Col, Row } from 'reactstrap';
 import Chart from './Charts/Chart';
@@ -58,4 +57,4 @@ class ChartsComponent extends Component {
   }
 }
 
-export default translate(ChartsComponent)
+export default ChartsComponent

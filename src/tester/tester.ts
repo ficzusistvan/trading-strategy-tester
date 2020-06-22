@@ -1,14 +1,13 @@
 import * as i from './interfaces'
 import * as eventHandler from './event-handler'
 import store from '../redux/store'
-import Big from 'big.js';
 
 let strategyInst: any;
 let arrayOfCandles: Array<i.ICommonCandles>;
 let defaultCandles: i.ICommonCandles;
 let isEntered: boolean = false;
 let trades: Array<i.ITesterTrade> = [];
-let balance: Big;
+let balance: number;
 let chartMainCandles: Array<i.IChartMainCandle> = [];
 let isVolumeZero: boolean;
 let indicators: Array<any> = [];
@@ -16,7 +15,7 @@ let indicators: Array<any> = [];
 let init = async function (strategy: any, allCandles: any) {
   isEntered = false;
   trades = [];
-  balance = Big(store.getState().testerConfigs.initBalance);
+  balance = store.getState().testerConfigs.initBalance;
   console.log('Init balance:', balance.toFixed(2));
   chartMainCandles = [];
   isVolumeZero = false;
@@ -35,9 +34,9 @@ let init = async function (strategy: any, allCandles: any) {
   }
   strategyInst = await import('./' + path + '/strategies/' + strategy + '.ts');
   const insInfo: i.ICommonInstrumentBasicInfo = {
-    currencyPrice: Big(store.getState().dataSourceConfigs.currencyPrice),
-    leverage: Big(store.getState().dataSourceConfigs.leverage),
-    nominalValue: Big(store.getState().dataSourceConfigs.nominalValue)
+    currencyPrice: store.getState().dataSourceConfigs.currencyPrice,
+    leverage: store.getState().dataSourceConfigs.leverage,
+    nominalValue: store.getState().dataSourceConfigs.nominalValue
   };
   strategyInst.init(insInfo, 
     store.getState().testerConfigs.marginToBalancePercent,
@@ -61,7 +60,7 @@ let handleCandle = function (idx: number) {
         const trade: i.ITesterTrade = strategyInst.getTrade();
         curCandle.text = trade.enter.side === i.ETesterSide.BUY ? 'b' : 's';
         // Stop strategy if not enough money
-        if (trade.enter.volume.eq(0)) {
+        if (trade.enter.volume === 0) {
           isVolumeZero = true;
         }
       }
@@ -71,12 +70,12 @@ let handleCandle = function (idx: number) {
         //console.log('Exited order %O', res.trade);
         const trade: i.ITesterTrade = strategyInst.getTrade();
         trades.push(trade);
-        balance = Big(trade.exit.newBalance);
+        balance = trade.exit.newBalance;
         isEntered = false;
         console.log('New balance:', balance.toFixed(2));
-        if (trade.exit.profit.gt(0)) {
+        if (trade.exit.profit > 0) {
           curCandle.text = 'ep';
-        } else if (trade.exit.profit.lt(0)) {
+        } else if (trade.exit.profit < 0) {
           curCandle.text = 'en';
         } else {
           curCandle.text = 'ez';

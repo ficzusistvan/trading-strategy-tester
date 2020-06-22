@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import translate from 'redux-polyglot/translate';
 import SelectDataSourceRedux from '../redux/containers/SelectDataSource.redux';
 import SetupDataSourceRedux from '../redux/containers/SetupDataSource.redux';
 import AddSymbolAndPeriodRedux from '../redux/containers/AddSymbolAndPeriod.redux';
@@ -29,4 +28,4 @@ const MainLayoutPart = () => (
   </Row>
 )
 
-export default translate(MainLayoutPart);
+export default MainLayoutPart;

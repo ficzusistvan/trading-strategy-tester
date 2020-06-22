@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import CSVUploaderRedux from '../redux/containers/CSVUploader.redux';
 import MyRestApiUrlRedux from '../redux/containers/MyRestApiUrl.redux';
 
@@ -46,4 +45,4 @@ class SelectDataSourceComponent extends Component {
   }
 }
 
-export default translate(SelectDataSourceComponent)
+export default SelectDataSourceComponent

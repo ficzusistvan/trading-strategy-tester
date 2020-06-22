@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Button } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import './LeftSidebar.layoutpart.css';
 import { Link } from 'react-router-dom';
 import * as eventHandler from '../tester/event-handler';
@@ -114,4 +113,4 @@ class LeftSidebarLayoutPart extends React.Component {
   }
 }
 
-export default translate(LeftSidebarLayoutPart);
+export default LeftSidebarLayoutPart;

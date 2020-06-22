@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Row, ListGroup, Col } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import ResultComponent from './Results/Result.component';
 import './Results.css';
 import TradesCounterComponent from './Results/TradesCounter.component';
@@ -40,4 +39,4 @@ class StrategyResultsComponent extends Component {
   }
 }
 
-export default translate(StrategyResultsComponent)
+export default StrategyResultsComponent

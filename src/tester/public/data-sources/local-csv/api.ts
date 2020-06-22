@@ -1,6 +1,5 @@
 import * as i from '../../../interfaces'
 
-import moment from 'moment';
 import store from '../../../../redux/store'
 import Papa from 'papaparse'
 
@@ -15,7 +14,7 @@ let normalizeCandles = function (candles: Array<any>) {
     //console.log('localcsv candle timestamp:', candle['Local time']); // 24.04.2019 05:00:00.000 GMT+0300
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
-    obj.date = moment(candle['Local time'], "DD.MM.YYYY HH:mm:ss.SSS Z").toDate(); // 02.01.2019 01:00:00.000 GMT+0200
+    obj.date = candle['Local time'];
     obj.open = candle.Open;
     obj.high = candle.High;
     obj.low = candle.Low;

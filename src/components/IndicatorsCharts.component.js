@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Row } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
 
@@ -20,7 +19,7 @@ class IndicatorsChartsComponent extends Component {
       'rgb(255,255,255)'
     ];
 
-    const NR_OF_VALUES = 100;
+    const NR_OF_VALUES = 500;
 
     const chartOptions = {
       responsive: true
@@ -64,4 +63,4 @@ class IndicatorsChartsComponent extends Component {
   }
 }
 
-export default translate(IndicatorsChartsComponent)
+export default IndicatorsChartsComponent

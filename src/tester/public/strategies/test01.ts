@@ -1,20 +1,17 @@
-import moment from 'moment';
-//import moment from 'moment-timezone';
 import * as i from './../../interfaces';
 import * as helpers from '../../helpers';
-import Big from 'big.js';
 var colors = require('colors/safe');
 colors.enable();
 
-let instrumentInfo: i.ICommonInstrumentBasicInfo = { currencyPrice: Big(1), leverage: Big(1), nominalValue: Big(1) };
-let marginToBalancePercent: Big = Big(100);
+let instrumentInfo: i.ICommonInstrumentBasicInfo = { currencyPrice: 1, leverage: 1, nominalValue: 1 };
+let marginToBalancePercent: number = 100;
 let entr: i.ITesterEnter;
 let exiit: i.ITesterExit;
 
-const STOP_LOSS: Big = Big(-60);
-const TAKE_PROFIT: Big = Big(20);
+const STOP_LOSS: number = -60;
+const TAKE_PROFIT: number = 20;
 
-let init = function (insInfo: i.ICommonInstrumentBasicInfo, mToBPercent: Big) {
+let init = function (insInfo: i.ICommonInstrumentBasicInfo, mToBPercent: number) {
   instrumentInfo = insInfo;
   marginToBalancePercent = mToBPercent;
 }
@@ -22,11 +19,11 @@ let init = function (insInfo: i.ICommonInstrumentBasicInfo, mToBPercent: Big) {
 let runTA = function (candles: Array<i.ICommonCandle>) {
 }
 
-let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: Big): boolean {
+let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: number): boolean {
 
   console.log('Handling candle: %O', candles[idx]);
-  if (moment(candles[idx].date).hour() === 9 && moment(candles[idx].date).minute() === 5) {
-    const openPrice: Big = Big(candles[idx].open);
+  if (candles[idx].date == 9 && candles[idx].date == 5) {
+    const openPrice: number = candles[idx].open;
     const prevCandle = candles[idx - 1];
 
     const diff = candles[idx].open - prevCandle.close;
@@ -56,53 +53,53 @@ let enter = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandl
   return false;
 }
 
-let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: Big): boolean {
+let exit = function (candles: Array<i.ICommonCandle>, idx: number, arrayOfCandles: Array<i.ICommonCandles>, balance: number): boolean {
 
-  const curHighPrice: Big = Big(candles[idx].high);
-  const curLowPrice: Big = Big(candles[idx].low);
+  const curHighPrice: number = candles[idx].high;
+  const curLowPrice: number = candles[idx].low;
   if (entr.side === i.ETesterSide.BUY) {
-    if (curHighPrice.minus(entr.openPrice) > TAKE_PROFIT) {
-      const profit = (curHighPrice.minus(entr.openPrice)).mul(entr.pip);
+    if (curHighPrice - entr.openPrice > TAKE_PROFIT) {
+      const profit = (curHighPrice - entr.openPrice) * entr.pip;
       exiit = {
         closePrice: curHighPrice,
         closeDate: candles[idx].date,
         profit: profit,
-        newBalance: balance.plus(profit).toFixed(2)
+        newBalance: balance + profit
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
     }
-    if (curLowPrice.minus(entr.openPrice) < STOP_LOSS) {
-      const profit = (curLowPrice.minus(entr.openPrice)).mul(entr.pip);
+    if (curLowPrice - entr.openPrice < STOP_LOSS) {
+      const profit = (curLowPrice - entr.openPrice) * entr.pip;
       exiit = {
         closePrice: curLowPrice,
         closeDate: candles[idx].date,
         profit: profit,
-        newBalance: balance.plus(profit).toFixed(2)
+        newBalance: balance + profit
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
     }
   }
   if (entr.side === i.ETesterSide.SELL) {
-    if (entr.openPrice.minus(curLowPrice) > TAKE_PROFIT) {
-      const profit = (entr.openPrice.minus(curLowPrice)).mul(entr.pip);
+    if (entr.openPrice - curLowPrice > TAKE_PROFIT) {
+      const profit = (entr.openPrice - curLowPrice) * entr.pip;
       exiit = {
         closePrice: curLowPrice,
         closeDate: candles[idx].date,
         profit: profit,
-        newBalance: balance.plus(profit).toFixed(2)
+        newBalance: balance + profit
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;
     }
-    if (entr.openPrice.minus(curHighPrice) > STOP_LOSS) {
-      const profit = (entr.openPrice.minus(curHighPrice)).mul(entr.pip);
+    if (entr.openPrice - curHighPrice > STOP_LOSS) {
+      const profit = (entr.openPrice - curHighPrice) * entr.pip;
       exiit = {
         closePrice: curHighPrice,
         closeDate: candles[idx].date,
         profit: profit,
-        newBalance: balance.plus(profit).toFixed(2)
+        newBalance: balance + profit
       }
       console.log(colors.blue('Exit strategy: ' + JSON.stringify(exiit)));
       return true;

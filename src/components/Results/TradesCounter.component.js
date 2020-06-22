@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Badge } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 import * as numbers from '../../utils/numbers';
 
 class TradesCounterComponent extends Component {
@@ -18,4 +17,4 @@ class TradesCounterComponent extends Component {
   }
 }
 
-export default translate(TradesCounterComponent)
+export default TradesCounterComponent

@@ -1,6 +1,5 @@
 import * as helpers from '../../../helpers'
 import * as i from '../../../interfaces'
-import moment from 'moment';
 
 //const HOST = 'https://xapi.xtb.com';
 //const DEMO_PORTS = {
@@ -72,7 +71,7 @@ let normalizeCandles = function (candles: Array<i.IXAPIRateInfoRecord>, scale: n
     console.log('xapi candle timestamp:', candle['ctm']); // 1585830600000. Ok with doc!
     let obj: i.ICommonCandle = { date: 0, open: 0, high: 0, low: 0, close: 0, volume: 0 };
 
-    obj.date = moment(candle['ctm']).toDate(); // Time is number of milliseconds from 01.01.1970, 00:00 GMT. e.g.: 1272529161605
+    obj.date = candle['ctm']; // Time is number of milliseconds from 01.01.1970, 00:00 GMT. e.g.: 1272529161605
     obj.open = candle['open'] / scale;
     obj.high = obj.open + candle['high'] / scale;
     obj.low = obj.open + candle['low'] / scale;
@@ -108,7 +107,7 @@ let getCandles = async function (symbol: string, period: number) {
       const data = JSON.parse(msg.data);
       if (data.streamSessionId !== undefined) {
         //logger.info('Websocket logged in; sending "getChartLastRequest"...');
-        let msg: i.IXAPIChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: moment().subtract(since.get(Number(period)), 'month').valueOf(), symbol: symbol } } };
+        let msg: i.IXAPIChartLastRequest = { command: "getChartLastRequest", arguments: { info: { period: Number(period), start: since.get(Number(period)), symbol: symbol } } };
         let strin = JSON.stringify(msg);
         console.log('Strin', strin);
         ws.send(strin);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Input, Row, Col, FormGroup, Label } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 
 class SelectStrategyComponent extends Component {
 
@@ -120,4 +119,4 @@ class SelectStrategyComponent extends Component {
   }
 }
 
-export default translate(SelectStrategyComponent)
+export default SelectStrategyComponent

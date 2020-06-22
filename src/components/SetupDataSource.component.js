@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Input, FormGroup, Col, Label } from 'reactstrap';
-import translate from 'redux-polyglot/translate';
 
 class SetupDataSourceComponent extends Component {
 
@@ -43,4 +42,4 @@ class SetupDataSourceComponent extends Component {
   }
 }
 
-export default translate(SetupDataSourceComponent)
+export default SetupDataSourceComponent
