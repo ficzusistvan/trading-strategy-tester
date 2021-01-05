@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://ficzusistvan.github.io/trading-strategy-tester",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.3",
     "colors": "^1.4.0",
